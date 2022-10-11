@@ -4,26 +4,31 @@
  * @returns {array number}
  */
 function generatePrimes(bitSize: number): number[] {
-    let result = new Array(2, 3);
-    let finished = false;
-    while(!finished){
-        result.forEach((item) => {
-                if (item.toString(2).length <= bitSize) {
-                    result = result.filter(function (element) {
-                        return element !== item
-                    });
-                }
-            }
-        )
+    let result = new Array();
+    if(bitSize < 2) return result;
+    result.push(2,3);
+    if(bitSize == 2) return result;
+
+    let index = 1;
+    while(true){
+        if((6*index - 1).toString(2).length > bitSize) return result;
+        result.push(6*index - 1);
+
+        if((6*index + 1).toString(2).length > bitSize) return result;
+        result.push(6*index + 1);
+
+        index = index + 1;
     }
-
-
-    return new Array(1, 2);
 }
 
-const num = 12;
-console.log(num.toString(2))
-
+console.log("Erster test");
+console.log(generatePrimes(2));
+console.log("Zweiter test");
+console.log(generatePrimes(4));
+console.log("Dritter test");
+console.log(generatePrimes(8));
 
 // Run this script with the following command:
 // npx ts-node .\test.ts
+
+// ToDo: Automatische Tests schreiben.
