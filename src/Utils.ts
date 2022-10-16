@@ -44,12 +44,14 @@ export function generatePossibleE(p: number, q: number): number[] {
     const fnPrimeFact = new Array();
     const primes = generatePrimes(fn.toString(2).length);
     //Generating prime factors
+    // console.log("Primes: " + primes);
     primes.forEach((item) => {
         if (fn % item == 0) fnPrimeFact.push(item);
     })
+    // console.log("Prime facts:" + fnPrimeFact);
     //Testing other values if they have the same prime factors.
     let hasNCD = false;
-    for (let i = 2; i < fn; i++) {
+    for (let i = 2; result.length < 2 || i < fn; i++) {
         fnPrimeFact.every((item) => {
             if (i % item == 0) {
                 // console.log("Remainder= 0; i: " + i + ", item: " + item);
@@ -63,6 +65,5 @@ export function generatePossibleE(p: number, q: number): number[] {
         if (hasNCD) result.push(i);
         hasNCD = false;
     }
-    // console.log(result);
     return result;
 }
