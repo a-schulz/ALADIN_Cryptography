@@ -17,22 +17,6 @@ export class ConfigurationRsa {
      */
     constructor(bitLength: number) {
         this.bitLength = bitLength;
-        //generating primes for RSA
-        const primes = generatePrimes(this.bitLength);
-        let choiceOfPrime = new Set();
-        while (choiceOfPrime.size < 2) {
-            choiceOfPrime = new Set<number>(new Array(getRandomInt(primes.length), getRandomInt(primes.length)).sort((a, b) => {
-                return a - b;
-            }));
-        }
-        const choicesOfPrimeIterator = choiceOfPrime.values();
-        this.p = primes[choicesOfPrimeIterator.next().value];
-        this.q = primes[choicesOfPrimeIterator.next().value];
-        //calculating e for RSA
-        const possibleE = generatePossibleE(this.p, this.q);
-        this.e = possibleE[getRandomInt(possibleE.length)];
-        this.Rsa = new Rsa(this.p, this.q, this.e);
-        console.log("p: " + this.p + "\nq: "+ this.q + "\ne: " + this.e)
     }
 
     private _bitLength: number;
@@ -42,7 +26,7 @@ export class ConfigurationRsa {
     }
 
     set bitLength(value: number) {
-        if (value <= 0) throw new Error('Bitlength cannot be zero or below.');
+        if (value < 2) throw new Error('Bitlength cannot be less than 2. (No possible prime.)');
         this._bitLength = value;
     }
 
@@ -55,36 +39,26 @@ export class ConfigurationRsa {
     set Rsa(value: Rsa) {
         this._Rsa = value;
     }
+    startRsa = (): Rsa => {
+        //generating primes for RSA
+        const primes = generatePrimes(this.bitLength);
+        let choiceOfPrime = new Set();
+        while (choiceOfPrime.size < 2) {
+            choiceOfPrime = new Set<number>(new Array(getRandomInt(primes.length), getRandomInt(primes.length)).sort((a, b) => {
+                return a - b;
+            }));
+        }
+        const choicesOfPrimeIterator = choiceOfPrime.values();
+        const p = primes[choicesOfPrimeIterator.next().value];
+        const q = primes[choicesOfPrimeIterator.next().value];
+        //calculating e for RSA
+        const possibleE = generatePossibleE(p, q);
+        const e = possibleE[getRandomInt(possibleE.length)];
+        this.Rsa = new Rsa(p, q, e);
+        console.log("p: " + p + "\nq: "+ q + "\ne: " + e)
 
-    private _p: number;
-
-    get p(): number {
-        return this._p;
-    }
-
-    set p(value: number) {
-        this._p = value;
-    }
-
-    private _q: number;
-
-    get q(): number {
-        return this._q;
-    }
-
-    set q(value: number) {
-        this._q = value;
-    }
-
-    private _e: number;
-
-    get e(): number {
-        return this._e;
-    }
-
-    set e(value: number) {
-        this._e = value;
-    }
+        return this.Rsa;
+};
 }
 /*
 Es soll die Möglichkeit geben, dass Studenten einfach ihre Werte eingeben und dann für diese Aufgabe eine entsprechende Anleitung bekommen.
