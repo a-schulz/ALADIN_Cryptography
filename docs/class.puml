@@ -1,10 +1,34 @@
 @startuml "class diagram rsa"
+'top to bottom direction
+left to right direction
 
-class ConfigurationRsaGuided{
+class ConfigurationRsa{
     bitLength: number
+    startRsa(): Rsa
 }
 
+class ConfigurationRsaEasy{
+p, q, e werden vorgeneriert
+}
+class ConfigurationRsaMedium{
+    e: number
+    p, q werden vorgeneriert
+    e kommt vom Nutzer
+}
+class ConfigurationRsaHard{
+    bitLength ist vorgegeben
+    p, q, e kommen vom Nutzer
+}
 
+ConfigurationRsaEasy -u|> ConfigurationRsa
+ConfigurationRsaMedium -u|> ConfigurationRsa
+ConfigurationRsaHard -u|> ConfigurationRsa
+
+class Rsa{
+p: number
+q: number
+e: number
+}
 
 interface rsaKeys {
 publicKey: publicKey
@@ -23,4 +47,7 @@ d: number
 
 publicKey -|> rsaKeys
 privateKey -|> rsaKeys
+rsaKeys -> Rsa
+
+Rsa <- ConfigurationRsa
 @enduml
