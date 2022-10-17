@@ -18,16 +18,17 @@ export function generatePrimes(bitSize: number): number[] {
     result.push(2, 3);
     if (bitSize == 2) return result;
 
-    let index = 1;
-    while (true) {
-        if ((6 * index - 1).toString(2).length > bitSize) return result;
-        result.push(6 * index - 1);
-
-        if ((6 * index + 1).toString(2).length > bitSize) return result;
-        result.push(6 * index + 1);
-
-        index = index + 1;
+    for(let i = 4; i.toString(2).length <= bitSize; i++){
+        let isPrime = true;
+        result.every((item) =>{
+            if(i % item == 0) {
+                isPrime = false
+                return false;}
+            return true;
+        })
+        if(isPrime) result.push(i);
     }
+    return result;
 }
 
 /**
