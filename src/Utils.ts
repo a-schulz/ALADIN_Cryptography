@@ -18,15 +18,16 @@ export function generatePrimes(bitSize: number): number[] {
     result.push(2, 3);
     if (bitSize == 2) return result;
 
-    for(let i = 4; i.toString(2).length <= bitSize; i++){
+    for (let i = 4; i.toString(2).length <= bitSize; i++) {
         let isPrime = true;
-        result.every((item) =>{
-            if(i % item == 0) {
+        result.every((item) => {
+            if (i % item == 0) {
                 isPrime = false
-                return false;}
+                return false;
+            }
             return true;
         })
-        if(isPrime) result.push(i);
+        if (isPrime) result.push(i);
     }
     return result;
 }
@@ -67,4 +68,38 @@ export function generatePossibleE(p: number, q: number): number[] {
         hasNCD = false;
     }
     return result;
+}
+
+/**
+ * Generates d (private part - rsa key).
+ * @param {number} e
+ * @param {number} phi
+ * @returns {number}
+ */
+export function generateD(e: number, phi: number) {
+    const steps: euklAlgo[] = [];
+    steps.push({"e": e, "phi": phi, "q": Math.floor(e / phi), "r": e % phi});
+    for (let i = 1; steps[i - 1]["r"] != 0; i++) {
+        let newE = steps[i - 1]["phi"];
+        let newPhi = steps[i - 1]["r"];
+        steps.push({"e": newE, "phi": newPhi, "q": Math.floor(newE / newPhi), "r": newE % newPhi});
+    }
+    steps[steps.length - 1]["x"] = 0;
+    steps[steps.length - 1]["y"] = 1;
+    for (let i = steps.length - 2; i >= 0; i--) {
+        steps[i]["x"] = steps[i + 1]["y"];
+        steps[i]["y"] = steps[i + 1]["x"] - steps[i]["q"] * steps[i + 1]["y"];
+    }
+    console.log(steps);
+    if(steps[0]["x"] < 0) return phi + steps[0]["x"];
+    return steps[0]["x"];
+}
+
+interface euklAlgo {
+    e: number;
+    phi: number;
+    q: number;
+    r: number;
+    x?: number;
+    y?: number;
 }
