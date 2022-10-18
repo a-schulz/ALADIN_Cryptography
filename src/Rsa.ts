@@ -111,10 +111,21 @@ export class Rsa {
         return steps[0]["x"];
     }
 
+    /**
+     * Decodes a given number using its own private key.
+     * @param {number} number
+     * @returns {number}
+     */
     decode(number: number): number {
         return number ** this.privateKey["exponent"] % this.privateKey["divisor"];
     }
 
+    /**
+     * Encrypts a given number using the given public key.
+     * @param {number} number
+     * @param {number} publicKey
+     * @returns {number}
+     */
     encode(number: number, publicKey: IRsaKey): number {
         return number ** publicKey["exponent"] % publicKey["divisor"];
     }
