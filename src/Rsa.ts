@@ -4,39 +4,67 @@ Module for RSA tasks
 
 // Todo: Step-by-Step to solution.
 // Run this script with the following command:
-// npx ts-node .\RSA.ts
+// npx ts-node ./src/RSA.ts
 
 // ToDo: Automatische Tests schreiben.
-
-interface IRsaKeys{
-    publicKey: IPublicKey;
-    privateKey: IPrivateKey;
+/**
+ * Datastructure representing one rsa key.
+ */
+interface IRsaKey {
+    divisor: number;
+    exponent: number;
 }
 
-interface IPublicKey {
-    n: number;
+/**
+ * Datastructure used for representation of the extended euclidean algorithm.
+ */
+interface extEuclidAlgo {
     e: number;
+    phi: number;
+    q: number;
+    r: number;
+    x?: number;
+    y?: number;
 }
 
-interface IPrivateKey {
-    n: number;
-    d: number;
-}
-
-export class Rsa implements IRsaKeys{
+export class Rsa {
     private _p: number;
     private _q: number;
-    private _e: number;
+    public _publicKey: IRsaKey;
+    private _privateKey: IRsaKey;
+    private _calculatingSteps: extEuclidAlgo[];
 
+
+    get calculatingSteps(): extEuclidAlgo[] {
+        return this._calculatingSteps;
+    }
+
+    set calculatingSteps(value: extEuclidAlgo[]) {
+        this._calculatingSteps = value;
+    }
+
+    get publicKey(): IRsaKey {
+        return this._publicKey;
+    }
+
+    set publicKey(value: IRsaKey) {
+        this._publicKey = value;
+    }
+
+    get privateKey(): IRsaKey {
+        return this._privateKey;
+    }
+
+    set privateKey(value: IRsaKey) {
+        this._privateKey = value;
+    }
 
     constructor(p: number, q: number, e: number) {
         this.p = p;
         this.q = q;
-        this.e = e;
+        this.publicKey = {"divisor": p * q, "exponent": e};
+        this.privateKey = {"divisor": p * q, "exponent": this.generateDAndSetSteps(e, (p - 1) * (q - 1))}
     }
-
-    private _privateKey: IPrivateKey;
-    private _publicKey: IPublicKey;
 
     get p(): number {
         return this._p;
@@ -54,27 +82,40 @@ export class Rsa implements IRsaKeys{
         this._q = value;
     }
 
-    get e(): number {
-        return this._e;
+    /**
+     * Generates d (private part - rsa key) and set steps used for calculating.
+     * @param {number} e
+     * @param {number} phi
+     * @returns {number}
+     */
+    generateDAndSetSteps(e: number, phi: number): number {
+        const steps: extEuclidAlgo[] = [];
+        steps.push({"e": e, "phi": phi, "q": Math.floor(e / phi), "r": e % phi});
+        //normal euclidean algorithm
+        let idx = 1;
+        while (steps[idx - 1]["r"] != 0) {
+            let newE = steps[idx - 1]["phi"];
+            let newPhi = steps[idx - 1]["r"];
+            steps.push({"e": newE, "phi": newPhi, "q": Math.floor(newE / newPhi), "r": newE % newPhi});
+            idx++;
+        }
+        // extended euclidean algorithm
+        steps[steps.length - 1]["x"] = 0;
+        steps[steps.length - 1]["y"] = 1;
+        for (let i = steps.length - 2; i >= 0; i--) {
+            steps[i]["x"] = steps[i + 1]["y"];
+            steps[i]["y"] = steps[i + 1]["x"] - steps[i]["q"] * steps[i + 1]["y"];
+        }
+        this.calculatingSteps = steps;
+        if (steps[0]["x"] < 0) return phi + steps[0]["x"];
+        return steps[0]["x"];
     }
 
-    set e(value: number) {
-        this._e = value;
+    decode(number: number): number {
+        return number ** this.privateKey["exponent"] % this.privateKey["divisor"];
     }
 
-    get privateKey(): IPrivateKey {
-        return this._privateKey;
-    }
-
-    set privateKey(value: IPrivateKey) {
-        this._privateKey = value;
-    }
-
-    get publicKey(): IPublicKey {
-        return this._publicKey;
-    }
-
-    set publicKey(value: IPublicKey) {
-        this._publicKey = value;
+    encode(number: number, publicKey: IRsaKey): number {
+        return number ** publicKey["exponent"] % publicKey["divisor"];
     }
 }
