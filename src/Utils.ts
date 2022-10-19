@@ -41,31 +41,46 @@ export function generatePrimes(maxBitSize: number): number[] {
  */
 export function generatePossibleE(p: number, q: number): number[] {
     const result: number[] = [];
-
     const fn = (p - 1) * (q - 1);
-    const fnPrimeFact: number[] = [];
-    const primes = generatePrimes(fn.toString(2).length);
-    //Generating prime factors
-    // console.log("Primes: " + primes);
-    primes.forEach((item) => {
-        if (fn % item == 0) fnPrimeFact.push(item);
-    })
-    // console.log("Prime facts:" + fnPrimeFact);
-    //Testing other values if they have the same prime factors.
-    let hasNCD = false;
-    for (let i = 2; i < fn/2; i++) {
-        fnPrimeFact.every((item) => {
-            if (i % item == 0) {
-                // console.log("Remainder= 0; i: " + i + ", item: " + item);
-                hasNCD = false;
-                return false;
-            }
-            // console.log("i: " + i + ", item: " + item);
-            hasNCD = true;
-            return true;
-        })
-        if (hasNCD) result.push(i);
-        hasNCD = false;
+    let idx = 2;
+    while(idx < fn/2 && result.length < 10){
+        if (!hasCommonDivider(idx, fn)) result.push(idx);
+        idx++;
     }
     return result;
+}
+
+/**
+ * Test if the given number is a prime.
+ * @param {number} possiblePrime
+ * @returns {boolean}
+ */
+export function validatePrime(possiblePrime: number): boolean {
+    for (let i = 2; i < Math.sqrt(possiblePrime); i++) {
+        if (possiblePrime % i == 0) return false;
+    }
+    return true;
+}
+
+/**
+ * Tests whether the given two numbers have a common divider.
+ * @param {number} firstNumber
+ * @param {number} secondNumber
+ * @returns {boolean}
+ */
+export function hasCommonDivider(firstNumber: number, secondNumber: number): boolean {
+    const primeFact: number[] = [];
+    const primes = generatePrimes(firstNumber.toString(2).length);
+    primes.forEach((item) => {
+        if (firstNumber % item == 0) primeFact.push(item);
+    })
+    let hasNCD: boolean = true;
+    primeFact.every((item: number) =>{
+        if(secondNumber % item == 0){
+            hasNCD = false;
+            return false;
+        }
+        return true;
+    })
+    return !hasNCD;
 }
