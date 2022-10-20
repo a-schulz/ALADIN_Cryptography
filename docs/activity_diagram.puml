@@ -1,0 +1,60 @@
+@startuml
+'https://plantuml.com/activity-diagram-beta
+| User |
+start
+: Sends bitLength for primes and difficulty mode;
+|#AntiqueWhite| Configuration |
+switch(difficulty)
+    case(1)
+        : new ConfigurationRsaEasy(bitLength);
+        : this.prepRsa();
+        : this.startRsa();
+    case(2)
+        : new ConfigurationRsaMedium(bitLength);
+        : this.prepRsa();
+        : shows user the generated values for p, q;
+        | User |
+        : sends chosen e;
+        | Configuration |
+        : this.startRsa() incl. validating e;
+    case(3)
+        :new ConfigurationRsaHard(bitLength);
+        | User |
+        : sends chosen p, q, e;
+        | Configuration |
+        : this.prepRsa() incl. validating values;
+        : this.startRsa();
+endswitch
+stop
+':new page;
+'if (Page.onSecurityCheck) then (true)
+'  :Page.onInit();
+'  if (isForward?) then (no)
+'    :Process controls;
+'    if (continue processing?) then (no)
+'      stop
+'    endif
+'| Configuration |
+'    if (isPost?) then (yes)
+'      :Page.onPost();
+'    else (no)
+'      :Page.onGet();
+'    endif
+'    :Page.onRender();
+'  endif
+'else (false)
+'endif
+'
+'if (do redirect?) then (yes)
+'  :redirect process;
+'else
+'  if (do forward?) then (yes)
+'    :Forward request;
+'  else (no)
+'    :Render page template;
+'  endif
+'endif
+'
+'stop
+
+@enduml
