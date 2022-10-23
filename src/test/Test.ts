@@ -1,4 +1,4 @@
-import {ConfigurationRsa} from "../ConfigurationRsa";
+import {ConfigurationRsa, ConfigurationRsaEasy} from "../ConfigurationRsa";
 import {Rsa} from "../Rsa";
 
 const readline = require('readline')
@@ -7,9 +7,11 @@ const rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout
 })
-let rsa: Rsa;
+let configuration: ConfigurationRsa;
 rl.question('Enter bitLength:', (bitLength: string) => {
-    rsa = new ConfigurationRsa(parseInt(bitLength)).startRsa();
+    configuration = new ConfigurationRsaEasy(parseInt(bitLength));
+    configuration.prepRsa();
+    const rsa = configuration.startRsa();
     console.log("p: " + rsa.p + "\nq: "+ rsa.q + "\ne: " + rsa.publicKey["exponent"] + "\nd: " + rsa.privateKey["exponent"]);
     console.log(rsa.calculatingSteps);
     let encoded: number;
