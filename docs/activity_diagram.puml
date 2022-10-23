@@ -13,17 +13,19 @@ switch(difficulty)
         : new ConfigurationRsaMedium(bitLength);
         : this.prepRsa();
         : shows user the generated values for p, q;
+        : asks for e;
         | User |
         : sends chosen e;
         | Configuration |
         : this.startRsa() incl. validating e;
     case(3)
         :new ConfigurationRsaHard(bitLength);
+        : this.prepRsa() [does nothing];
+        : asks for p, q, e;
         | User |
         : sends chosen p, q, e;
         | Configuration |
-        : this.prepRsa() incl. validating values;
-        : this.startRsa();
+        : this.startRsa()  incl. validating values;
 endswitch
 stop
 ':new page;

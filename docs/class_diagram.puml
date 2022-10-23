@@ -27,27 +27,24 @@ ConfigurationRsaHard -u|> ConfigurationRsa
 class Rsa{
 p: number
 q: number
-e: number
+calculatingSteps: extEuclidAlgo
+privateKey: RsaKey
+publicKey: RsaKey
 }
 
-interface rsaKeys {
-publicKey: publicKey
-privateKey: privateKey
+interface RsaKey {
+exponent: number
+divisor: number
 }
 
-interface publicKey{
-n: number
-e: number
+interface extEuclidAlgo {
+    e: number
+    phi: number
+    q: number
+    r: number
+    x?: number
+    y?: number
 }
-
-interface privateKey{
-n: number
-d: number
-}
-
-publicKey -|> rsaKeys
-privateKey -|> rsaKeys
-rsaKeys -> Rsa
 
 Rsa <- ConfigurationRsa
 @enduml
