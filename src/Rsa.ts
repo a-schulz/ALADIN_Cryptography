@@ -117,7 +117,7 @@ export class Rsa {
      * @returns {number}
      */
     decode(number: number): number {
-        return number ** this.privateKey["exponent"] % this.privateKey["divisor"];
+        return Number(BigInt(number) ** BigInt(this.privateKey["exponent"]) % BigInt(this.privateKey["divisor"]));
     }
 
     /**
@@ -127,6 +127,6 @@ export class Rsa {
      * @returns {number}
      */
     encode(number: number, publicKey: IRsaKey): number {
-        return number ** publicKey["exponent"] % publicKey["divisor"];
+        return Number(BigInt(number) ** BigInt(publicKey["exponent"]) % BigInt(publicKey["divisor"]));
     }
 }
