@@ -39,7 +39,11 @@ export abstract class ConfigurationRsa {
     }
 
     set e(value: number) {
-        this._e = value;
+        if (hasCommonDivider(value, (this._p - 1)* (this._q -1))) {
+            throw new Error('Your chosen e has at least one common divider.');
+        } else {
+            this._e = value;
+        }
     }
 
     constructor(bitLength: number) {
@@ -67,8 +71,22 @@ export abstract class ConfigurationRsa {
         this._Rsa = value;
     }
 
-    abstract prepRsa(): void;
-    startRsa = (): Rsa => {
+    prepRsa(): void{
+        //generating primes for RSA
+        const primes = generatePrimes(this.bitLength);
+        let choiceOfPrime = new Set();
+        while (choiceOfPrime.size < 2) {
+            choiceOfPrime = new Set<number>([getRandomInt(primes.length - 1), getRandomInt(primes.length - 1)].sort((a, b) => {
+                return a - b;
+            }));
+        }
+        const choiceOfPrimeIterator = choiceOfPrime.values();
+        this.p = primes[choiceOfPrimeIterator.next().value];
+        this.q = primes[choiceOfPrimeIterator.next().value];
+        // console.log("p: " + this.p + ", q: " + this.q);
+
+    }
+    startRsa(): Rsa{
         this.Rsa = new Rsa(this.p, this.q, this.e);
         return this.Rsa;
     };
@@ -82,45 +100,26 @@ export class ConfigurationRsaEasy extends ConfigurationRsa{
     }
 
     prepRsa(): void {
-        //generating primes for RSA
-        const primes = generatePrimes(this.bitLength);
-        let choiceOfPrime = new Set();
-        while (choiceOfPrime.size < 2) {
-            choiceOfPrime = new Set<number>([getRandomInt(primes.length), getRandomInt(primes.length)].sort((a, b) => {
-                return a - b;
-            }));
-        }
-        const choicesOfPrimeIterator = choiceOfPrime.values();
-        super.p = primes[choicesOfPrimeIterator.next().value];
-        super.q = primes[choicesOfPrimeIterator.next().value];
+        super.prepRsa();
         //calculating e for RSA
         const possibleE = generatePossibleE(super.p, super.q);
-        super.e = possibleE[getRandomInt(possibleE.length)];
+        // console.log(possibleE);
+        super.e = possibleE[getRandomInt(possibleE.length - 1)];
     }
 }
 
 export class ConfigurationRsaMedium extends ConfigurationRsa{
     prepRsa(): void {
         //generating primes for RSA
-        const primes = generatePrimes(this.bitLength);
-        let choiceOfPrime = new Set();
-        while (choiceOfPrime.size < 2) {
-            choiceOfPrime = new Set<number>([getRandomInt(primes.length), getRandomInt(primes.length)].sort((a, b) => {
-                return a - b;
-            }));
-        }
-        const choicesOfPrimeIterator = choiceOfPrime.values();
-        super.p = primes[choicesOfPrimeIterator.next().value];
-        super.q = primes[choicesOfPrimeIterator.next().value];
-        console.log(super.p + "; " + super.q);
+        super.prepRsa();
         // Getting and validating e.
+        console.log("p: " + this.p + ", q: " + this.q);
         const rl = readline.createInterface({
             input: process.stdin,
             output: process.stdout
         });
         rl.question('Please enter your e: ', (input:string) => {
             const e = parseInt(input);
-            if (hasCommonDivider(e, (super.p -1 ) * (super.q -1))) throw new Error('Your chosen e has at least one common divider.');
             super.e = e;
             rl.close();
         });
