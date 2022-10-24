@@ -1,9 +1,15 @@
 @startuml "class diagram rsa"
+'https://plantuml.com/class-diagram
 'top to bottom direction
-left to right direction
+'left to right direction
+skinparam groupInheritance 4
 
-class ConfigurationRsa{
+abstract class ConfigurationRsa{
     bitLength: number
+    p: number
+    q: number
+    e: number
+    prepRsa(): void
     startRsa(): Rsa
 }
 
@@ -20,16 +26,16 @@ class ConfigurationRsaHard{
     p, q, e kommen vom Nutzer
 }
 
-ConfigurationRsaEasy -u|> ConfigurationRsa
-ConfigurationRsaMedium -u|> ConfigurationRsa
-ConfigurationRsaHard -u|> ConfigurationRsa
+ConfigurationRsaEasy --u|> ConfigurationRsa
+ConfigurationRsaMedium --u|> ConfigurationRsa
+ConfigurationRsaHard --u|> ConfigurationRsa
 
 class Rsa{
-p: number
-q: number
-calculatingSteps: extEuclidAlgo
-privateKey: RsaKey
-publicKey: RsaKey
+-p: number
+-q: number
+-calculatingSteps: extEuclidAlgo
+-privateKey: RsaKey
++publicKey: RsaKey
 }
 
 interface RsaKey {
@@ -45,6 +51,15 @@ interface extEuclidAlgo {
     x?: number
     y?: number
 }
+Rsa -- RsaKey
+Rsa -- extEuclidAlgo
+Rsa <- ConfigurationRsa: "instanziiert "
 
-Rsa <- ConfigurationRsa
+package idea <<Cloud>>{
+    class ConsoleProgramm{
+        Steuert die ConfigurationRsa, erstellt die jeweiligen Instanzen\n der Kindklassen etc.
+        \nHier findet auch die UserEingabe statt
+    }
+}
+ConsoleProgramm --> ConfigurationRsa
 @enduml

@@ -2,7 +2,7 @@
 'https://plantuml.com/activity-diagram-beta
 | User |
 start
-: Sends bitLength for primes and difficulty mode;
+: Sends bitLength for primes and difficulty mode via config.json;
 |#AntiqueWhite| Configuration |
 switch(difficulty)
     case(1)
