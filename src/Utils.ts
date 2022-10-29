@@ -33,24 +33,6 @@ export function generatePrimes(maxBitSize: number): number[] {
 }
 
 /**
- * Generate an array filled with numbers, that have no common divisor other than 1 in relation to (p-1)*(q-q).
- * https://www.maths2mind.com/schluesselwoerter/teilerfremde-zahlen
- * @param {number} p
- * @param {number} q
- * @returns {Array <number>}
- */
-export function generatePossibleE(p: number, q: number): number[] {
-    const result: number[] = [];
-    const fn = (p - 1) * (q - 1);
-    let idx = 2;
-    while(idx < fn/2 && result.length < 10){
-        if (!hasCommonDivider(idx, fn)) result.push(idx);
-        idx++;
-    }
-    return result;
-}
-
-/**
  * Test if the given number is a prime. Returns true if number is prime.
  * @param {number} possiblePrime
  * @returns {boolean}
@@ -70,6 +52,7 @@ export function isPrime(possiblePrime: number): boolean {
  */
 export function hasCommonDivider(firstNumber: number, secondNumber: number): boolean {
     const primeFact: number[] = [];
+    // console.log(firstNumber);
     const primes = generatePrimes(firstNumber.toString(2).length);
     primes.forEach((item) => {
         if (firstNumber % item == 0) primeFact.push(item);

@@ -7,10 +7,10 @@ Q:
     Switch between the different tasks?
     Switch to complex task?
  */
-// TODO: parsing config.json to generate the specific Configuration
+// TODO: parsing config.ts to generate the specific Configuration
 // TODO: choosing witch Class should be initialized.
 import {Rsa} from "./Rsa";
-import {generatePossibleE, generatePrimes, getRandomInt, hasCommonDivider, isPrime} from "./Utils";
+import {generatePrimes, getRandomInt, hasCommonDivider, isPrime} from "./Utils";
 const readline = require('readline')
 
 export abstract class ConfigurationRsa {
@@ -102,7 +102,7 @@ export class ConfigurationRsaEasy extends ConfigurationRsa{
     prepRsa(): void {
         super.prepRsa();
         //calculating e for RSA
-        const possibleE = generatePossibleE(super.p, super.q);
+        const possibleE = Rsa.generatePossibleE(super.p, super.q);
         // console.log(possibleE);
         super.e = possibleE[getRandomInt(possibleE.length - 1)];
     }
