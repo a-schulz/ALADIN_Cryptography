@@ -7,6 +7,8 @@ Module for RSA tasks
 // npx ts-node ./src/RSA.ts
 
 // ToDo: Automatische Tests schreiben.
+import {hasCommonDivider} from "./Utils";
+
 /**
  * Datastructure representing one rsa key.
  */
@@ -109,6 +111,24 @@ export class Rsa {
         this.calculatingSteps = steps;
         if (steps[0]["x"] < 0) return phi + steps[0]["x"];
         return steps[0]["x"];
+    }
+
+    /**
+     * Generate an array filled with numbers, that have no common divisor other than 1 in relation to (p-1)*(q-q).
+     * https://www.maths2mind.com/schluesselwoerter/teilerfremde-zahlen
+     * @param {number} p
+     * @param {number} q
+     * @returns {Array <number>}
+     */
+    static generatePossibleE(p: number, q: number): number[] {
+        const result: number[] = [];
+        const fn = (p - 1) * (q - 1);
+        let idx = 2;
+        while(idx < fn/2 || result.length < 10){
+            if (!hasCommonDivider(idx, fn)) result.push(idx);
+            idx++;
+        }
+        return result;
     }
 
     /**
