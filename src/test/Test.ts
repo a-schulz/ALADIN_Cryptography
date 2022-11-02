@@ -1,5 +1,5 @@
-import {ConfigurationRsa, ConfigurationRsaEasy} from "../ConfigurationRsa";
-import {Rsa} from "../Rsa";
+import {ConfigurationRsa, ConfigurationRsaEasy} from "../backend/ConfigurationRsa";
+import {Rsa} from "../backend/Rsa";
 
 const readline = require('readline')
 

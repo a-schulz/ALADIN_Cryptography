@@ -1,4 +1,4 @@
-import {ConfigurationRsaEasy, ConfigurationRsaHard, ConfigurationRsaMedium} from "./ConfigurationRsa";
+import {ConfigurationRsaEasy, ConfigurationRsaHard, ConfigurationRsaMedium} from "./backend/ConfigurationRsa";
 
 export enum Difficulty{
     easy = 1,
@@ -6,6 +6,9 @@ export enum Difficulty{
     hard = 3,
 }
 
+/**
+ * this is the format of the userinput
+ */
 export const config = {
     "bitLength": 5,
     "difficulty": Difficulty.easy

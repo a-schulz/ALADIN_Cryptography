@@ -1,0 +1,33 @@
+Manchmal kann die Ver-/Entschlüsselung nicht durchgeführt werden, weil die Zahlen sonst zu groß für JavaScript werden.
+   Verbesserung der Verschlüsselung (Einführung BigInt statt Number)
+Problem:
+    Testen der zwei ConfigRSAs -> da UserInput vorerst per Console und später über die UI asynchron. Verwendung von Promises notwendig.
+    Nach vielem probieren noch immer ohne Erfolg.
+
+   Bei Easy kann nach dem Prep direkt das Start ausgeführt werden.
+
+   enum für die schwierigkeitsgrade (kann mit in die json)
+   oder ansonsten über die klassen (klassenname im json und darüber initialisieren)
+
+
+   Hier evtl auch ein seperates Konsolenprogramm, welches dann die Klasse steuert, dadurch ist die Abfolge geregelt und entkoppelt die UI von den eigentlichen Klassen.
+
+RSA zuerst mit einem leeren Constructor und dann mit einenen settern die member variablen füllen
+Dadurch kann allein diese Klasse verwendet werden und später wird nur noch mit gecheckt ob alle werter schon mittels onfiguration gefüllt wurden die gefüllten werden ausgegeben und die leeren werden nochmal durch den user belegt
+check auf validität etc sollte dann innerhalb der setter von den Membervariabeln passieren
+
+
+getPossibleE kann in eine statische Methode direkt in der RSA klasse eingebettett werden
+https://www.logicbig.com/tutorials/misc/typescript/classes.html
+
+
+Verbesserung:
+    Configuration und Rsa haben meistens die gleichen Attribute -> evtl auslagern in Superklasse, von der das alle weriteren erben
+
+FÜr kw 44:
+    Verwendung von einem generischem Constructor
+    generate possibleE ist nun Teil der RSA
+
+
+    Hilfestellungen für selbst gewählte Paramenter:
+        Eingabe in der Maske prüfen und dann Anzeige ob korrekt oder falsch. Falls falsch seperate Klasse, die nochmal die Werte nimmt und für diese eine Anleitung bereitstellt.
