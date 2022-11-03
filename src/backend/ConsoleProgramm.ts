@@ -1,38 +1,45 @@
-import {ConfigurationRsa, ConfigurationRsaEasy, ConfigurationRsaHard, ConfigurationRsaMedium} from "./ConfigurationRsa";
+/**
+ * User schickt immer ein neues JSON welches die bestehenden Felder der userConfig überschreibt und weitere ergänzt.
+ * Diese müssen dann im Anschluss über setter geprüft werden.
+ * Da die Parameter selber gewählt werden müssen, muss es hierfür auch Lösungshilfen geben.
+ *
+ * -> Frontend anschließen
+ */
+
+import {Difficulty} from "../config";
+import {IUserConfig} from "./RsaParameterSetter"
 import {Rsa} from "./Rsa";
+import {RsaConfigHandler} from "./RsaConfigHandler";
 
-const config = require("../config");
-// console.log(config);
-enum difficulty {
-    easy=1,
-    medium=2,
-    hard=3
+function main() {
+    const prompt = require('prompt-sync')({sigint: true});
+    const userConfig = {} as IUserConfig;
+    let answer: string = prompt("Schwierigkeitsgrad? (1-3)");
+    userConfig.difficulty= Number.parseInt(answer);
+    answer = prompt("Bitlänge?");
+    userConfig.bitLength = Number.parseInt(answer);
+    const rsaConfig = new RsaConfigHandler(userConfig).getRSAConfig();
 
+    //TODO: Getter und setter beim RSAConfigHandler, damit kann dann hier auch die Übergabe mittels setter erfolgen und gleich auf validität geprüft werden
+    if(userConfig.difficulty == Difficulty.medium){
+        console.log("p: " + rsaConfig.p + ", q: " + rsaConfig.q);
+        answer = prompt("Chose your e: ");
+        rsaConfig.e = Number.parseInt(answer);
+    }else if(userConfig.difficulty == Difficulty.hard){
+        console.log("Bitlength: " + userConfig.bitLength);
+        answer = prompt("Chose your p: ");
+        rsaConfig.p = Number.parseInt(answer);
+        answer = prompt("Chose your q: ");
+        rsaConfig.q = Number.parseInt(answer);
+        answer = prompt("Chose your e: ");
+        rsaConfig.e = Number.parseInt(answer);
+    }
+    // Check ob die neue Configuration auch noch korrekt ist. hier werden nochmal alle setter druchlaufen.
+    const checkedConfig = new RsaConfigHandler({...userConfig, ...rsaConfig}).getRSAConfig();
+    const rsa = new Rsa(rsaConfig);
+    console.log("p: " + rsa.p + "\nq: "+ rsa.q + "\ne: " + rsa.publicKey["exponent"] + "\nd: " + rsa.privateKey["exponent"]);
+    console.log(rsa.calculatingSteps);
 }
 
-let configuration: ConfigurationRsa;
-switch(config.difficulty){
-    case difficulty.easy:
-        configuration = new ConfigurationRsaEasy(config.bitLength);
-        break;
-    case difficulty.medium:
-        configuration = new ConfigurationRsaMedium(config.bitLength);
-        break;
-    case difficulty.hard:
-        configuration = new ConfigurationRsaHard(config.bitLength);
-        break;
-}
-console.log(configuration);
-configuration.prepRsa();
-const rsa : Rsa = configuration.startRsa();
-console.log("p: " + rsa.p + "\nq: "+ rsa.q + "\ne: " + rsa.publicKey["exponent"] + "\nd: " + rsa.privateKey["exponent"]);
-console.log(rsa.calculatingSteps);
 
-
-
-//
-// var instance = new MyClass();
-// Object.keys(instance) //["myNum1", "myNum2", "myNum3", "myString", "myBoolean"]
-// instance["myNum1"] // 0
-// var numerics = Object.keys(instance).map(k => instance[k]).filter(v => v.constructor === Number)
-// console.log(numerics) //[0, 0, 0]
+main();
