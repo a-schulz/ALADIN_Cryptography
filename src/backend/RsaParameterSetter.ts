@@ -11,9 +11,26 @@ Q:
 // TODO: choosing witch Class should be initialized.
 import {Rsa} from "./Rsa";
 import {generatePrimes, getRandomInt, hasCommonDivider, isPrime} from "./Utils";
+import {Difficulty} from "../config";
+
 const readline = require('readline')
 
-export abstract class ConfigurationRsa {
+export interface IRsaConfig{
+    p: number,
+    q : number,
+    e : number
+}
+
+export interface IUserConfig {
+    bitLength? : number;
+    difficulty: Difficulty;
+    e?: number;
+    p?: number;
+    q?: number;
+}
+
+
+export abstract class RsaParameterSetter {
     private _p:number;
     private _q:number;
     private _e:number;
@@ -84,16 +101,12 @@ export abstract class ConfigurationRsa {
         this.p = primes[choiceOfPrimeIterator.next().value];
         this.q = primes[choiceOfPrimeIterator.next().value];
         // console.log("p: " + this.p + ", q: " + this.q);
-
     }
-    startRsa(): Rsa{
-        this.Rsa = new Rsa(this.p, this.q, this.e);
-        return this.Rsa;
-    };
+    public abstract setParameters(): IRsaConfig;
 }
 
 
-export class ConfigurationRsaEasy extends ConfigurationRsa{
+export class AutomaticParameterSetter extends RsaParameterSetter{
 
     constructor(bitLength: number) {
         super(bitLength);
@@ -106,9 +119,18 @@ export class ConfigurationRsaEasy extends ConfigurationRsa{
         // console.log(possibleE);
         super.e = possibleE[getRandomInt(possibleE.length - 1)];
     }
+
+    setParameters(): IRsaConfig {
+        this.prepRsa();
+        return  {
+            p: this.p,
+            q: this.q,
+            e: this.e
+        } as IRsaConfig;
+    }
 }
 
-export class ConfigurationRsaMedium extends ConfigurationRsa{
+export class ConfigurationRsaMedium extends RsaParameterSetter{
     prepRsa(): void {
         //generating primes for RSA
         super.prepRsa();
@@ -128,9 +150,13 @@ export class ConfigurationRsaMedium extends ConfigurationRsa{
     constructor(bitLength: number) {
         super(bitLength);
     }
+
+    setParameters(){
+        return {} as IRsaConfig;
+    }
 }
 
-export class ConfigurationRsaHard extends ConfigurationRsa{
+export class ConfigurationRsaHard extends RsaParameterSetter{
     prepRsa(): void {
         const rl = readline.createInterface({
             input: process.stdin,
@@ -161,6 +187,10 @@ export class ConfigurationRsaHard extends ConfigurationRsa{
 
     constructor(bitLength: number) {
         super(bitLength);
+    }
+
+    setParameters(): IRsaConfig {
+        return undefined;
     }
 }
 /*
