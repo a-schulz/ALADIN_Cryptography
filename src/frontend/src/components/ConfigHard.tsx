@@ -15,7 +15,7 @@ export const ConfigHard = () => {
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        navigate("/task", {
+        navigate("/task/get-keys", {
             state: {
                 "bitLength": userConfig.bitLength,
                 "e": e,

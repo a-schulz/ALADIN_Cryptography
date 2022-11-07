@@ -13,7 +13,7 @@ export const ConfigMedium = () => {
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        navigate("/task", {
+        navigate("/task/get-keys", {
             state: {
                 "e": e,
                 "p": rsaConfig.p,

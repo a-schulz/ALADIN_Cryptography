@@ -36,7 +36,16 @@ export class Rsa {
     public _publicKey: IRsaKey;
     private _privateKey: IRsaKey;
     private _calculatingSteps: IExtEuclidAlgo[];
+    private _rsaConfig : IRsaConfig;
 
+
+    get rsaConfig(): IRsaConfig {
+        return this._rsaConfig;
+    }
+
+    set rsaConfig(value: IRsaConfig) {
+        this._rsaConfig = value;
+    }
 
     get calculatingSteps(): IExtEuclidAlgo[] {
         return this._calculatingSteps;
@@ -63,6 +72,7 @@ export class Rsa {
     }
 
     constructor(rsaConfig : IRsaConfig) {
+        this.rsaConfig = rsaConfig;
         this.p = rsaConfig.p;
         this.q = rsaConfig.q;
         this.publicKey = {"divisor": this.p * this.q, "exponent": rsaConfig.e};

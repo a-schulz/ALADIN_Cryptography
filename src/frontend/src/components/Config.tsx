@@ -19,7 +19,7 @@ export const Config = () => {
     } as IUserConfig;
 
     const difficultyNavigation = {
-        [Difficulty.easy]: "/task",
+        [Difficulty.easy]: "/task/get-keys",
         [Difficulty.medium]: "/medium",
         [Difficulty.hard]: "/hard"
     }
