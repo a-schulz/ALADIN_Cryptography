@@ -8,6 +8,7 @@ Module for RSA tasks
 
 // ToDo: Automatische Tests schreiben.
 import {hasCommonDivider} from "./Utils";
+import {IRsaConfig} from "./RsaParameterSetter"
 
 /**
  * Datastructure representing one rsa key.
@@ -20,7 +21,7 @@ interface IRsaKey {
 /**
  * Datastructure used for representation of the extended euclidean algorithm.
  */
-interface extEuclidAlgo {
+interface IExtEuclidAlgo {
     e: number;
     phi: number;
     q: number;
@@ -34,14 +35,14 @@ export class Rsa {
     private _q: number;
     public _publicKey: IRsaKey;
     private _privateKey: IRsaKey;
-    private _calculatingSteps: extEuclidAlgo[];
+    private _calculatingSteps: IExtEuclidAlgo[];
 
 
-    get calculatingSteps(): extEuclidAlgo[] {
+    get calculatingSteps(): IExtEuclidAlgo[] {
         return this._calculatingSteps;
     }
 
-    set calculatingSteps(value: extEuclidAlgo[]) {
+    set calculatingSteps(value: IExtEuclidAlgo[]) {
         this._calculatingSteps = value;
     }
 
@@ -61,11 +62,11 @@ export class Rsa {
         this._privateKey = value;
     }
 
-    constructor(p: number, q: number, e: number) {
-        this.p = p;
-        this.q = q;
-        this.publicKey = {"divisor": p * q, "exponent": e};
-        this.privateKey = {"divisor": p * q, "exponent": this.generateDAndSetSteps(e, (p - 1) * (q - 1))}
+    constructor(rsaConfig : IRsaConfig) {
+        this.p = rsaConfig.p;
+        this.q = rsaConfig.q;
+        this.publicKey = {"divisor": this.p * this.q, "exponent": rsaConfig.e};
+        this.privateKey = {"divisor": this.p * this.q, "exponent": this.generateDAndSetSteps(rsaConfig.e, (this.p - 1) * (this.q - 1))}
     }
 
     get p(): number {
@@ -91,7 +92,7 @@ export class Rsa {
      * @returns {number}
      */
     generateDAndSetSteps(e: number, phi: number): number {
-        const steps: extEuclidAlgo[] = [];
+        const steps: IExtEuclidAlgo[] = [];
         steps.push({"e": e, "phi": phi, "q": Math.floor(e / phi), "r": e % phi});
         //normal euclidean algorithm
         let idx = 1;

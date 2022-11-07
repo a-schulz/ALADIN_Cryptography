@@ -1,4 +1,4 @@
-import {ConfigurationRsaEasy, ConfigurationRsaHard, ConfigurationRsaMedium} from "./backend/ConfigurationRsa";
+import {AutomaticParameterSetter, PseudoSetter, SetPQ} from "./backend/RsaParameterSetter";
 
 export enum Difficulty{
     easy = 1,
@@ -17,7 +17,7 @@ export const config = {
 // Ersetzt ihr Switch Case mit einem Dictionary ...
 // quasi Mapping, bei dem die Version der Configuration mit der Schwierigkeitsstufe dargestellt wird.
 export const configTypes = {
-    [Difficulty.easy]: ConfigurationRsaEasy,
-    [Difficulty.medium]: ConfigurationRsaMedium,
-    [Difficulty.hard]: ConfigurationRsaHard,
+    [Difficulty.easy]: AutomaticParameterSetter,
+    [Difficulty.medium]: SetPQ,
+    [Difficulty.hard]: PseudoSetter,
 };

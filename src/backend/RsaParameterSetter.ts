@@ -13,8 +13,6 @@ import {Rsa} from "./Rsa";
 import {generatePrimes, getRandomInt, hasCommonDivider, isPrime} from "./Utils";
 import {Difficulty} from "../config";
 
-const readline = require('readline')
-
 export interface IRsaConfig{
     p: number,
     q : number,
@@ -130,22 +128,22 @@ export class AutomaticParameterSetter extends RsaParameterSetter{
     }
 }
 
-export class ConfigurationRsaMedium extends RsaParameterSetter{
-    prepRsa(): void {
-        //generating primes for RSA
-        super.prepRsa();
-        // Getting and validating e.
-        console.log("p: " + this.p + ", q: " + this.q);
-        const rl = readline.createInterface({
-            input: process.stdin,
-            output: process.stdout
-        });
-        rl.question('Please enter your e: ', (input:string) => {
-            const e = parseInt(input);
-            super.e = e;
-            rl.close();
-        });
+export class SetPQ extends RsaParameterSetter{
+
+    constructor(bitLength: number) {
+        super(bitLength);
     }
+
+    setParameters(){
+        super.prepRsa();
+        return  {
+            p: this.p,
+            q: this.q,
+        } as IRsaConfig;
+    }
+}
+
+export class PseudoSetter extends RsaParameterSetter{
 
     constructor(bitLength: number) {
         super(bitLength);
@@ -153,44 +151,6 @@ export class ConfigurationRsaMedium extends RsaParameterSetter{
 
     setParameters(){
         return {} as IRsaConfig;
-    }
-}
-
-export class ConfigurationRsaHard extends RsaParameterSetter{
-    prepRsa(): void {
-        const rl = readline.createInterface({
-            input: process.stdin,
-            output: process.stdout
-        });
-        rl.question('Please enter your p and q [format: p, q]: ', (input : string) => {
-            // Validate input
-            // Todo: die prüfung nach validität und identität kann auch im setter erfolgen.
-            const inputP = parseInt(input.split(",")[0]);
-            const inputQ = parseInt(input.split(",")[1]);
-            if(!isPrime(inputP)) throw new Error("Your given p is no prime!");
-            if(!isPrime(inputQ)) throw new Error("Your given q is no prime!");
-            if(inputP == inputQ) throw new Error("RSA would be to weak if p and q are identical!");
-            super.p = inputP;
-            super.q = inputQ;
-
-            rl.question('Please enter your e: ', (input: string) => {
-                const e = parseInt(input);
-                if (hasCommonDivider(e, (super.p - 1)* (super.q -1))) {
-                    throw new Error('Your chosen e has at least one common divider.');
-                } else {
-                    super.e = e;
-                }
-            })
-        }
-    )
-    }
-
-    constructor(bitLength: number) {
-        super(bitLength);
-    }
-
-    setParameters(): IRsaConfig {
-        return undefined;
     }
 }
 /*
