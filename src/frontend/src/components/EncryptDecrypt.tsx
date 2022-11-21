@@ -36,13 +36,15 @@ export const EncryptDecrypt = () => {
 
     return (
         <div className="container">
+            <div className="form-check form-switch">
+                <input className="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault"/>
+                    <label className="form-check-label" htmlFor="flexSwitchCheckDefault">I want to encrypt text.</label>
+            </div>
             <h1>Encryption - Decryption</h1>
             <div className="container">
                 <h3>Here are your Keys!</h3>
-                <h5>Public key:</h5>
-                (e= {rsa._publicKey["exponent"]}, n= {rsa._publicKey["divisor"]})
-                <h5>Private key:</h5>
-                (d= {rsa.privateKey["exponent"]}, n= {rsa.privateKey["divisor"]})
+                <h5>Public key: e= {rsa._publicKey["exponent"]}, n= {rsa._publicKey["divisor"]}</h5>
+                <h5>Private key: d= {rsa.privateKey["exponent"]}, n= {rsa.privateKey["divisor"]} </h5>
 
             </div>
             <form onSubmit={(e) => handleSubmit(e)}>

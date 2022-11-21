@@ -1,8 +1,8 @@
 import {useState} from "react";
 import {RsaConfigHandler} from "../../../backend/RsaConfigHandler";
-import {AutomaticParameterSetter, IUserConfig} from "../../../backend/RsaParameterSetter";
 import {useNavigate} from 'react-router-dom';
 import {Difficulty} from "../../../backend/Difficulty";
+import {UserConfig} from "../../../backend/UserConfig";
 
 //TODO: Beim eingeben der Werte für hard und medium sollten jeweils die Fehler abgefangen und Lösungshilfen angeboten werden
 
@@ -16,7 +16,7 @@ export const Config = () => {
     const userConfig = {
         "difficulty": difficulty,
         "bitLength": bitLength
-    } as IUserConfig;
+    } as UserConfig;
 
     const difficultyNavigation = {
         [Difficulty.EASY]: "/task/get-keys",

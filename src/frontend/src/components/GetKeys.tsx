@@ -36,7 +36,7 @@ export const GetKeys = () => {
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         console.log(rsa);
-        console.log(inputs);
+        // console.log(inputs);
         if(!inputCorrect(inputs, rsa)){
             alert("Your keys are not correct!");
             return;
