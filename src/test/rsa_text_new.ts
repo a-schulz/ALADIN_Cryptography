@@ -4,15 +4,20 @@ import {RsaKey} from "../backend/RsaKey";
 import {Rsa} from "../backend/Rsa";
 import {RsaConfig} from "../backend/RsaConfig";
 
-const text = "AB";
+const text = "ALA";
 const number = 12;
 
-const rsaConfig : RsaConfig = {p: 167, q:173, e: 3};
+const rsaConfig : RsaConfig = {p: 3023, q:3037, e: 5};
 
 const publicKey : RsaKey = {divisor: rsaConfig["p"] * rsaConfig["q"], exponent: rsaConfig["e"]};
 const privateKey : RsaKey = {divisor: rsaConfig["p"] * rsaConfig["q"], exponent: 19035};
 
 const zeroPad = (num: string | number, places: number) => String(num).padStart(places, '0')
+const zeroPadBytes = (num: string | number) => {
+    const input = num.toString();
+    let padLength : number;
+    (input.length%8 == 0)? padLength= input.length : padLength= (Math.floor(input.length/8)+1) * 8;
+    return input.padStart(padLength, '0')}
 
 /**
  * @param string {string}
@@ -71,32 +76,15 @@ const decodeText = (string :string ) => {
     return decimal2Text(decode(binary2Decimal(text2Bytes(string))));
 }
 
-console.log(text)
-console.log(text2Bytes(text));
-console.log(bytes2String(text2Bytes(text)));
-
 const rsa = new Rsa(rsaConfig);
-console.log(Number.parseInt(text2Bytes(text), 2)); //Als Dezimalzahl
-console.log("Verschlüsselt dezimal: " + rsa.encode(Number.parseInt(text2Bytes(text),2), publicKey));
-console.log("Entschlüsselt binär: " + rsa.decode(rsa.encode(Number.parseInt(text2Bytes(text),2), publicKey)).toString(2));
-console.log(zeroPad(rsa.decode(rsa.encode(Number.parseInt(text2Bytes(text),2), publicKey)).toString(2), 16));
-console.log(bytes2String(zeroPad(rsa.decode(rsa.encode(Number.parseInt(text2Bytes(text),2), publicKey)).toString(2), 16)));
-
-
-// Test ob lieber jeder Buchstabe einzeln oder eine Nachricht als ganzes (ByteStream) verschlüsselt werden sollte.
-
-console.log("Test jeder Buchstabe einzeln:")
-console.log("Schritt für Schritt");
-console.log(text);
-console.log(text2Bytes(text));
-console.log(binary2Decimal(text2Bytes(text)))
-// console.log(encode(binary2Decimal(text2Bytes(text))))
-// console.log(decimal2Text(encode(binary2Decimal(text2Bytes(text)))))
-// console.log(decode(encode(binary2Decimal(text2Bytes(text)))))
-// console.log(decimal2Text(decode(encode(binary2Decimal(text2Bytes(text))))))
-// console.log(decimal2Text(decode(encode(binary2Decimal(text2Bytes(text))))))
-console.log(encodeText(text));
-console.log(decodeText(encodeText(text)));
-// Hatte mal funktioniert...siehe History Donnerstag den 10.11.2022
-
-console.log(bytes2String("0100000101000010"))
+const textAsBytes = text2Bytes(text);
+console.log(textAsBytes);
+const textAsDecimal = Number.parseInt(textAsBytes, 2)
+console.log("Text als Dezimalzahl: " + textAsDecimal);
+const encryptAsDecimal = rsa.encode(textAsDecimal, publicKey)
+console.log("Verschlüsselt dezimal: " + encryptAsDecimal);
+const encryptAsBytes = zeroPadBytes(encryptAsDecimal.toString(2));
+console.log("Verschlüsselt binär: " + encryptAsBytes);
+const decryptedAsBytes = zeroPadBytes(rsa.decode(encryptAsDecimal).toString(2));
+console.log("Entschlüsselt binär: " + decryptedAsBytes);
+console.log("Entschlüsselt Text: " + bytes2String(decryptedAsBytes));
