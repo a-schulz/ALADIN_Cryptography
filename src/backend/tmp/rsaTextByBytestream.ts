@@ -1,9 +1,14 @@
 import {Rsa} from "../Rsa";
 import {RsaConfig} from "../RsaConfig";
 
+
 const text = "ALA";
 
 const rsaConfig : RsaConfig = {p: 3023, q:3037, e: 5};
+//
+// const text = "ALADIN";
+//
+// const rsaConfig : RsaConfig = {p: 10000019, q:10000079, e: 41};
 
 /**
  * Adding zeros in front of given input.
@@ -46,7 +51,7 @@ const rsa = new Rsa(rsaConfig);
 console.log(rsa);
 console.log("Ausgangstext: " + text);
 const textAsBytes = text2Bytes(text);
-console.log(textAsBytes);
+console.log("Text als Bytestream: " + textAsBytes);
 const textAsDecimal = Number.parseInt(textAsBytes, 2)
 console.log("Text als Dezimalzahl: " + textAsDecimal);
 const encryptAsDecimal = rsa.encode(textAsDecimal, rsa.publicKey)

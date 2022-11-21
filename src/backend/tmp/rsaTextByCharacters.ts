@@ -1,7 +1,7 @@
 import {RsaConfig} from "../RsaConfig";
 import {Rsa} from "../Rsa";
 
-const text = "AB";
+const text = "ALADIN";
 
 const rsaConfig : RsaConfig = {p: 167, q:173, e: 3};
 
