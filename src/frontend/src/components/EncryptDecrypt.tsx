@@ -35,18 +35,26 @@ export const EncryptDecrypt = () => {
     }
 
     return (
-        <div>
+        <div className="container">
             <h1>Encryption - Decryption</h1>
+            <div className="container">
+                <h3>Here are your Keys!</h3>
+                <h5>Public key:</h5>
+                (e= {rsa._publicKey["exponent"]}, n= {rsa._publicKey["divisor"]})
+                <h5>Private key:</h5>
+                (d= {rsa.privateKey["exponent"]}, n= {rsa.privateKey["divisor"]})
+
+            </div>
             <form onSubmit={(e) => handleSubmit(e)}>
-                <h3>You want to send your friend the following message: "{getRandomInt(20)}". Please encrypt it. (e= {rsa._publicKey["exponent"]}, n= {rsa._publicKey["divisor"]})</h3>
+                <h3>You want to send your friend the following message: "{getRandomInt(20)}". Please encrypt it.</h3>
                 {/*<label htmlFor="bitlength" className="form-label">Enter your bitlength</label>*/}
                 <input type="text" placeholder="Enter your solution..." id="bitlength" className="form-control"
-                       onChange={(e) => setChiffrat(Number.parseInt(e.target.value))}/>
+                       onChange={(e) => setChiffrat(Number.parseInt(e.target.value))} required/>
 
-                <h3>You got the following message: "{getRandomInt(20)}". Decrypt it. (d= {rsa.privateKey["exponent"]}, n= {rsa.privateKey["divisor"]})</h3>
+                <h3>You got the following message: "{getRandomInt(20)}". Decrypt it.</h3>
                 {/*<label htmlFor="bitlength" className="form-label">Enter your bitlength</label>*/}
                 <input type="text" placeholder="Enter the original message..." id="bitlength" className="form-control"
-                       onChange={(e) => setPlainText(Number.parseInt(e.target.value))}/>
+                       onChange={(e) => setPlainText(Number.parseInt(e.target.value))} required/>
                 <button type="submit" className="btn btn-outline-primary">Submit</button>
             </form>
         </div>

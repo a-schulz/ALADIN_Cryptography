@@ -51,26 +51,26 @@ export const GetKeys = () => {
     }
 
     return (
-        <div>
+        <div className="container">
             <h1>Please calculate the public and private key.</h1>
             p= {rsa.p}, q= {rsa.q}, e= {rsa.publicKey.exponent}
             <form onSubmit={(e) => handleSubmit(e)}>
                 <h3>Enter your public key!</h3>
                 <div className="row">
                     <div className="col">
-                        <input name="publicE" type="text" className="form-control" placeholder="E" onChange={handleChange}/>
+                        <input name="publicE" type="text" className="form-control" placeholder="E" onChange={handleChange} required/>
                     </div>
                     <div className="col">
-                        <input name="publicN" type="text" className="form-control" placeholder="N" onChange={handleChange}/>
+                        <input name="publicN" type="text" className="form-control" placeholder="N" onChange={handleChange} required/>
                     </div>
                 </div>
                 <h3>Enter your private key!</h3>
                 <div className="row">
                     <div className="col">
-                        <input name="privateD" type="text" className="form-control" placeholder="D" onChange={handleChange}/>
+                        <input name="privateD" type="text" className="form-control" placeholder="D" onChange={handleChange} required/>
                     </div>
                     <div className="col">
-                        <input name="privateN" type="text" className="form-control" placeholder="N" onChange={handleChange}/>
+                        <input name="privateN" type="text" className="form-control" placeholder="N" onChange={handleChange} required/>
                     </div>
                 </div>
                 <button type="submit" className="btn btn-outline-primary">Submit</button>

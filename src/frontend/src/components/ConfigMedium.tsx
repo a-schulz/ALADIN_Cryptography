@@ -3,6 +3,8 @@ import {useState} from "react";
 import {useLocation, useNavigate} from "react-router-dom";
 import {RsaConfigHandler} from "../../../backend/RsaConfigHandler";
 import {Difficulty} from "../../../backend/Difficulty";
+import {Rsa} from "../../../backend/Rsa";
+import {hasCommonDivider} from "../../../backend/HasCommonDivider";
 
 export const ConfigMedium = () => {
     const location = useLocation();
@@ -13,6 +15,10 @@ export const ConfigMedium = () => {
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
+        if(!inputCorrect(e)){
+            alert("Your e is not correct!");
+            return;
+        }
         navigate("/task/get-keys", {
             state: {
                 "e": e,
@@ -23,12 +29,19 @@ export const ConfigMedium = () => {
         });
     };
 
+
+    const inputCorrect = (e: number) =>{
+        if(hasCommonDivider(e, (rsaConfig.p - 1) * (rsaConfig.q -1) )) return false;
+        return true;
+    }
+
     return (
-        <div>You are given p= {rsaConfig.p}, q= {rsaConfig.q}.
+        <div className="container">
+            You are given p= {rsaConfig.p}, q= {rsaConfig.q}.
             <form onSubmit={(e) => handleSubmit(e)}>
                 <label htmlFor="e" className="form-label">Choose a suitable value for e!</label>
                 <input type="text" placeholder="" id="e" className="form-control"
-                       onChange={(e) => setE(Number.parseInt(e.target.value))}/>
+                       onChange={(e) => setE(Number.parseInt(e.target.value))} required/>
                 <button type="submit" className="btn btn-outline-primary">Submit</button>
             </form>
         </div>
