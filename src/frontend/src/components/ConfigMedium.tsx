@@ -1,8 +1,8 @@
 import {IUserConfig} from "../../../backend/RsaParameterSetter";
-import {Difficulty} from "../../../config";
 import {useState} from "react";
 import {useLocation, useNavigate} from "react-router-dom";
 import {RsaConfigHandler} from "../../../backend/RsaConfigHandler";
+import {Difficulty} from "../../../backend/Difficulty";
 
 export const ConfigMedium = () => {
     const location = useLocation();
@@ -18,7 +18,7 @@ export const ConfigMedium = () => {
                 "e": e,
                 "p": rsaConfig.p,
                 "q": rsaConfig.q,
-                "difficulty": Difficulty.medium
+                "difficulty": Difficulty.MEDIUM
             }
         });
     };

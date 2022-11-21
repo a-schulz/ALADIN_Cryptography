@@ -1,8 +1,8 @@
 import {IUserConfig} from "../../../backend/RsaParameterSetter";
-import {Difficulty} from "../../../config";
 import {useState} from "react";
 import {useLocation, useNavigate} from "react-router-dom";
 import {RsaConfigHandler} from "../../../backend/RsaConfigHandler";
+import {Difficulty} from "../../../backend/Difficulty";
 
 export const ConfigHard = () => {
     const location = useLocation();
@@ -21,7 +21,7 @@ export const ConfigHard = () => {
                 "e": e,
                 "p": p,
                 "q": q,
-                "difficulty": Difficulty.hard
+                "difficulty": Difficulty.HARD
             }
         });
     }

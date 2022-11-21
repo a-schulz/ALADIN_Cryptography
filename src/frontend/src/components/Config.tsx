@@ -1,8 +1,8 @@
 import {useState} from "react";
-import {Difficulty} from "../../../config";
 import {RsaConfigHandler} from "../../../backend/RsaConfigHandler";
 import {AutomaticParameterSetter, IUserConfig} from "../../../backend/RsaParameterSetter";
 import {useNavigate} from 'react-router-dom';
+import {Difficulty} from "../../../backend/Difficulty";
 
 //TODO: Beim eingeben der Werte für hard und medium sollten jeweils die Fehler abgefangen und Lösungshilfen angeboten werden
 
@@ -19,9 +19,9 @@ export const Config = () => {
     } as IUserConfig;
 
     const difficultyNavigation = {
-        [Difficulty.easy]: "/task/get-keys",
-        [Difficulty.medium]: "/medium",
-        [Difficulty.hard]: "/hard"
+        [Difficulty.EASY]: "/task/get-keys",
+        [Difficulty.MEDIUM]: "/medium",
+        [Difficulty.HARD]: "/hard"
     }
 
     const renderOption = (text: string) => {
@@ -38,6 +38,7 @@ export const Config = () => {
     }
 
     return (
+        <div className="container">
         <form onSubmit={(e) => handleSubmit(e)}>
             <h3>Enter your configuration!</h3>
 
@@ -51,5 +52,6 @@ export const Config = () => {
                    onChange={(e) => setBitLength(Number.parseInt(e.target.value))}/>
             <button type="submit" className="btn btn-outline-primary">Submit</button>
         </form>
+        </div>
     );
 }

@@ -15,6 +15,8 @@ export const GetKeys = () => {
     const userConfig = location.state;
     //vlt sollt hier auch vorher schon dir Prüfung auf korrekte Parameter vorgenommen werden.
     const rsa = new Rsa({...userConfig});
+    // console.log(userConfig);
+    // console.log(rsa);
     rsa.generateDAndSetSteps(rsa.publicKey.exponent, (rsa.p - 1) * (rsa.q - 1));
 
     interface IUserKeys {
@@ -43,9 +45,7 @@ export const GetKeys = () => {
     }
     const inputCorrect = (input: IUserKeys, rsa :Rsa) =>{
         if(input.publicE != rsa.publicKey["exponent"]) return false;
-        console.log("first check")
         if(input.privateD != rsa.privateKey["exponent"]) return false;
-        console.log("first check")
         if(input.publicN != input.privateN && input.publicN != rsa.publicKey["divisor"]) return false;
         return true;
     }

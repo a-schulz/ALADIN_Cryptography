@@ -1,11 +1,9 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import './index.css'
-import './App.css'
+import 'bootstrap/dist/css/bootstrap.min.css';
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import {Config} from "./components/Config";
 import {ConfigMedium} from "./components/ConfigMedium";
-import 'bootstrap/dist/css/bootstrap.min.css';
 import {ConfigHard} from "./components/ConfigHard";
 import {GetKeys} from "./components/GetKeys";
 import {EncryptDecrypt} from "./components/EncryptDecrypt";
