@@ -6,14 +6,14 @@
  * -> Frontend anschließen
  */
 
-import {Difficulty} from "../config";
-import {IUserConfig} from "./RsaParameterSetter"
 import {Rsa} from "./Rsa";
 import {RsaConfigHandler} from "./RsaConfigHandler";
+import {Difficulty} from "./Difficulty";
+import {UserConfig} from "./UserConfig";
 
 function main() {
     const prompt = require('prompt-sync')({sigint: true});
-    const userConfig = {} as IUserConfig;
+    const userConfig = {} as UserConfig;
     let answer: string = prompt("Schwierigkeitsgrad? (1-3)");
     userConfig.difficulty= Number.parseInt(answer);
     answer = prompt("Bitlänge?");
@@ -21,11 +21,12 @@ function main() {
     const rsaConfig = new RsaConfigHandler(userConfig).getRSAConfig();
 
     //TODO: Getter und setter beim RSAConfigHandler, damit kann dann hier auch die Übergabe mittels setter erfolgen und gleich auf validität geprüft werden
-    if(userConfig.difficulty == Difficulty.medium){
+    //TODO: statt der rsaConfig sollte durch den User immer die userConfig angepasst werden, und diese später dann geprüft werden
+    if(userConfig.difficulty == Difficulty.MEDIUM){
         console.log("p: " + rsaConfig.p + ", q: " + rsaConfig.q);
         answer = prompt("Chose your e: ");
         rsaConfig.e = Number.parseInt(answer);
-    }else if(userConfig.difficulty == Difficulty.hard){
+    }else if(userConfig.difficulty == Difficulty.HARD){
         console.log("Bitlength: " + userConfig.bitLength);
         answer = prompt("Chose your p: ");
         rsaConfig.p = Number.parseInt(answer);

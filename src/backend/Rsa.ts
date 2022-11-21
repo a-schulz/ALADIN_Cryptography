@@ -7,71 +7,53 @@ Module for RSA tasks
 // npx ts-node ./src/RSA.ts
 
 // ToDo: Automatische Tests schreiben.
-import {hasCommonDivider} from "./Utils";
-import {IRsaConfig} from "./RsaParameterSetter"
-
-/**
- * Datastructure representing one rsa key.
- */
-interface IRsaKey {
-    divisor: number;
-    exponent: number;
-}
-
-/**
- * Datastructure used for representation of the extended euclidean algorithm.
- */
-interface IExtEuclidAlgo {
-    e: number;
-    phi: number;
-    q: number;
-    r: number;
-    x?: number;
-    y?: number;
-}
+import {RsaConfig} from "./RsaConfig";
+import {hasCommonDivider} from "./HasCommonDivider";
+import {RsaKey} from "./RsaKey";
+import {ExtEuclidAlgo} from "./ExtEuclidAlgo";
 
 export class Rsa {
     private _p: number;
     private _q: number;
-    public _publicKey: IRsaKey;
-    private _privateKey: IRsaKey;
-    private _calculatingSteps: IExtEuclidAlgo[];
-    private _rsaConfig : IRsaConfig;
+    public _publicKey: RsaKey;
+    private _privateKey: RsaKey;
+    private _calculatingSteps: ExtEuclidAlgo[];
+    private _rsaConfig : RsaConfig;
 
 
-    get rsaConfig(): IRsaConfig {
+    get rsaConfig(): RsaConfig {
         return this._rsaConfig;
     }
 
-    set rsaConfig(value: IRsaConfig) {
+    set rsaConfig(value: RsaConfig) {
         this._rsaConfig = value;
     }
 
-    get calculatingSteps(): IExtEuclidAlgo[] {
+    get calculatingSteps(): ExtEuclidAlgo[] {
         return this._calculatingSteps;
     }
 
-    set calculatingSteps(value: IExtEuclidAlgo[]) {
+    set calculatingSteps(value: ExtEuclidAlgo[]) {
         this._calculatingSteps = value;
     }
 
-    get publicKey(): IRsaKey {
+    get publicKey(): RsaKey {
         return this._publicKey;
     }
 
-    set publicKey(value: IRsaKey) {
+    set publicKey(value: RsaKey) {
         this._publicKey = value;
     }
 
-    get privateKey(): IRsaKey {
+    get privateKey(): RsaKey {
         return this._privateKey;
     }
 
-    set privateKey(value: IRsaKey) {
+    set privateKey(value: RsaKey) {
         this._privateKey = value;
     }
 
-    constructor(rsaConfig : IRsaConfig) {
+    constructor(rsaConfig : RsaConfig) {
         this.rsaConfig = rsaConfig;
         this.p = rsaConfig.p;
         this.q = rsaConfig.q;
@@ -102,7 +84,7 @@ export class Rsa {
      * @returns {number}
      */
     generateDAndSetSteps(e: number, phi: number): number {
-        const steps: IExtEuclidAlgo[] = [];
+        const steps: ExtEuclidAlgo[] = [];
         steps.push({"e": e, "phi": phi, "q": Math.floor(e / phi), "r": e % phi});
         //normal euclidean algorithm
         let idx = 1;
@@ -157,7 +139,7 @@ export class Rsa {
      * @param {number} publicKey
      * @returns {number}
      */
-    encode(number: number, publicKey: IRsaKey): number {
+    encode(number: number, publicKey: RsaKey): number {
         return Number(BigInt(number) ** BigInt(publicKey["exponent"]) % BigInt(publicKey["divisor"]));
     }
 }

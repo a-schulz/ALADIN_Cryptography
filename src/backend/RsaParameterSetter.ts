@@ -7,26 +7,13 @@ Q:
     Switch between the different tasks?
     Switch to complex task?
  */
-// TODO: parsing config.ts to generate the specific Configuration
+// TODO: parsing configTypes.ts to generate the specific Configuration
 // TODO: choosing witch Class should be initialized.
 import {Rsa} from "./Rsa";
-import {generatePrimes, getRandomInt, hasCommonDivider, isPrime} from "./Utils";
-import {Difficulty} from "../config";
-
-export interface IRsaConfig{
-    p: number,
-    q : number,
-    e : number
-}
-
-export interface IUserConfig {
-    bitLength? : number;
-    difficulty: Difficulty;
-    e?: number;
-    p?: number;
-    q?: number;
-}
-
+import {getRandomInt} from "./GetRandomInt";
+import {RsaConfig} from "./RsaConfig";
+import {hasCommonDivider} from "./HasCommonDivider";
+import {generatePrimes} from "./GeneratePrimes";
 
 export abstract class RsaParameterSetter {
     private _p:number;
@@ -100,7 +87,7 @@ export abstract class RsaParameterSetter {
         this.q = primes[choiceOfPrimeIterator.next().value];
         // console.log("p: " + this.p + ", q: " + this.q);
     }
-    public abstract setParameters(): IRsaConfig;
+    public abstract setParameters(): RsaConfig;
 }
 
 
@@ -114,17 +101,16 @@ export class AutomaticParameterSetter extends RsaParameterSetter{
         super.prepRsa();
         //calculating e for RSA
         const possibleE = Rsa.generatePossibleE(super.p, super.q);
-        // console.log(possibleE);
         super.e = possibleE[getRandomInt(possibleE.length - 1)];
     }
 
-    setParameters(): IRsaConfig {
+    setParameters(): RsaConfig {
         this.prepRsa();
         return  {
             p: this.p,
             q: this.q,
             e: this.e
-        } as IRsaConfig;
+        } as RsaConfig;
     }
 }
 
@@ -139,10 +125,13 @@ export class SetPQ extends RsaParameterSetter{
         return  {
             p: this.p,
             q: this.q,
-        } as IRsaConfig;
+        } as RsaConfig;
     }
 }
 
+/**
+ * Used if nothing needs to be set.
+ */
 export class PseudoSetter extends RsaParameterSetter{
 
     constructor(bitLength: number) {
@@ -150,14 +139,6 @@ export class PseudoSetter extends RsaParameterSetter{
     }
 
     setParameters(){
-        return {} as IRsaConfig;
+        return {} as RsaConfig;
     }
 }
-/*
-Es soll die Möglichkeit geben, dass Studenten einfach ihre Werte eingeben und dann für diese Aufgabe eine entsprechende Anleitung bekommen.
-
-Bei dem zweiten Construcor sollen erstmal Primzahlen für die Bitlänge geliefert werden und dann vom User ein e zurückkonmmen, welches erstmal auf teilerfremdheit getestet wird. Falls die Bedingung erfüllt ist, wird die Berechnung durchgeführt.
-Diese Unterscheidung muss dann beim Aufrufen des Construktors RSA geschehen.
-
-Dritter Typ: vorgegebene Bitlänge der Primzahlen: eigentliche Primzahlen und e kommen vom Benutzer. Diese erst prüfen und dann Rechnung durchführen.
- */
