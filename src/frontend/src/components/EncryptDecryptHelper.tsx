@@ -1,31 +1,27 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import Button from 'react-bootstrap/Button';
 import Collapse from 'react-bootstrap/Collapse';
 
 export const EncryptDecryptHelper = () => {
-    const [collapseState, setCollapseState] = useState(false);
-
-    const showHide = (e : React.FormEvent) =>{
-        e.preventDefault();
-        setCollapseState(!collapseState);
-    }
 
     return (
         <div className="container">
-            <Button
-                onClick={() => setCollapseState(!collapseState)}
-                aria-controls="example-collapse-text"
-                aria-expanded={collapseState}
-            >
-                click
-            </Button>
-            <Collapse in={collapseState}>
-                <div id="example-collapse-text">
-                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus
-                    terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer
-                    labore wes anderson cred nesciunt sapiente ea proident.
+            <p>
+                <a className="btn btn-primary" data-bs-toggle="collapse" href="#collapseExample" role="button"
+                   aria-expanded="false" aria-controls="collapseExample">
+                    Link with href
+                </a>
+                <button className="btn btn-primary" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                    Button with data-bs-target
+                </button>
+            </p>
+            <div className="collapse" id="collapseExample">
+                <div className="card card-body">
+                    Some placeholder content for the collapse component. This panel is hidden by default but revealed
+                    when the user activates the relevant trigger.
                 </div>
-            </Collapse>
+            </div>
         </div>
     );
 };
