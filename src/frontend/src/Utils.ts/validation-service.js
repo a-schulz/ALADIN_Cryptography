@@ -1,19 +1,25 @@
 import {getErrorMsg} from './error-messages';
 
+/**
+ * retruns true if value is valid
+ * @param value
+ * @returns {boolean}
+ */
+
 const requiredValidator = (value) => {
-    return value !== '';
+    return value === undefined? false :  value !== '';
 }
 
 const minLengthValidator = (value, minlength) => {
-    return !(value.length < minlength);
+    return value === undefined? false :  !(value.length < minlength);
 }
 
 const maxLengthValidator = (value, maxlength) => {
-    return !(value.length > maxlength);
+    return value === undefined? false : !(value.length > maxlength);
 }
 
 const patternValidator = (value, regex) => {
-    return regex.test(value);
+    return value === undefined? false : regex.test(value);
 }
 
 const checkValidators = (value, err, errObj) => {
