@@ -1,4 +1,4 @@
-import {ConfigurationRsa, ConfigurationRsaEasy} from "../backend/ConfigurationRsa";
+import {RsaParameterSetter, AutomaticParameterSetter} from "../backend/RsaParameterSetter";
 import {Rsa} from "../backend/Rsa";
 
 const readline = require('readline')
@@ -7,9 +7,9 @@ const rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout
 })
-let configuration: ConfigurationRsa;
+let configuration: RsaParameterSetter;
 rl.question('Enter bitLength:', (bitLength: string) => {
-    configuration = new ConfigurationRsaEasy(parseInt(bitLength));
+    configuration = new AutomaticParameterSetter(parseInt(bitLength));
     configuration.prepRsa();
     const rsa = configuration.startRsa();
     console.log("p: " + rsa.p + "\nq: "+ rsa.q + "\ne: " + rsa.publicKey["exponent"] + "\nd: " + rsa.privateKey["exponent"]);

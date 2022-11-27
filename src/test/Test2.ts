@@ -1,9 +1,9 @@
-import {ConfigurationRsa, ConfigurationRsaEasy, ConfigurationRsaMedium} from "../backend/ConfigurationRsa";
+import {RsaParameterSetter, AutomaticParameterSetter, SetPQ} from "../backend/RsaParameterSetter";
 import {Rsa} from "../backend/Rsa";
 
 
-let configuration: ConfigurationRsa;
-configuration = new ConfigurationRsaMedium(4);
+let configuration: RsaParameterSetter;
+configuration = new SetPQ(4);
 
 function preptPromise() {
     return new Promise(function(res, rej){
