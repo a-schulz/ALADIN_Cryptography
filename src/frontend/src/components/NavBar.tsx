@@ -6,7 +6,7 @@ export const NavBar = () =>{
     });
 
     return(
-        <div className="container">
+        <div id="navbar" className="container">
         <nav className="navbar navbar-light bg-light">
             <a className="navbar-brand" href="/">Home</a>
         </nav>
