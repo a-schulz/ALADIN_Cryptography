@@ -9,7 +9,6 @@ import {customValidityFromChecks} from "../Utils.ts/customValidityFromChecks";
 
 export const Config = () => {
 
-
     const [difficulty, setDifficulty] = useState<Difficulty>();
     const [bitLength, setBitLength] = useState<number>();
     const navigate = useNavigate();
@@ -24,6 +23,18 @@ export const Config = () => {
         [Difficulty.MEDIUM]: "/medium",
         [Difficulty.HARD]: "/hard"
     }
+
+    const validation = {
+        difficulty: {required: true},
+        bitLength: {required: true, minlength: {requiredLength: 5}}
+    };
+
+    const validationMessages = {
+        difficulty: customValidityFromChecks(difficulty, validation.difficulty),
+        bitLength: customValidityFromChecks(bitLength, validation.bitLength)
+    };
+
+    const isValidForm : boolean = Object.values(validationMessages).every(x => x === null || x === '');
 
     const renderOption = (text: string) => {
         return <option key={text}>{text}</option>
@@ -40,18 +51,27 @@ export const Config = () => {
 
     return (
         <div className="container">
-        <form onSubmit={(e) => handleSubmit(e)}>
-            <h3>Enter your configuration!</h3>
-            <label htmlFor="difficulty" className="form-label">Enter your preffered difficulty</label>
-            <select className="form-select" onChange={(e) => setDifficulty(Difficulty[e.target.value])} required>
-                <option value="">Select Difficulty</option>
-                {options.map(renderOption)}
-            </select>
-            <label htmlFor="bitlength" className="form-label">Enter your bitlength</label>
-            <input type="text" placeholder="3-7" id="bitlength" className="form-control"
-                   onChange={(e) => {setBitLength(Number.parseInt(e.target.value));e.target.setCustomValidity('')}} onInvalid={(e) => e.target.setCustomValidity(customValidityFromChecks(e.target.value, {required: true, minlength: { requiredLength: 5 }}))} required/>
-            <button type="submit" className="btn btn-outline-primary">Submit</button>
-        </form>
+            <form onSubmit={(e) => handleSubmit(e)}>
+                <h3>Enter your configuration!</h3>
+                <label htmlFor="difficulty" className="form-label">Enter your preffered difficulty</label>
+                <select id="difficulty" className="form-select"
+                        onChange={(e) => setDifficulty(Difficulty[e.target.value])}
+                        onInvalid={(e) => e.target.setCustomValidity(validationMessages[e.target.id])}
+                        required>
+                    <option value="">Select Difficulty</option>
+                    {options.map(renderOption)}
+                </select>
+                <label htmlFor="bitLength" className="form-label">Enter your bitlength</label>
+                <input type="text" placeholder="3-7" id="bitLength" className="form-control"
+                       onChange={(e) => {
+                           setBitLength(Number.parseInt(e.target.value));
+                           e.target.setCustomValidity('');
+                           console.log(isValidForm);
+                       }}
+                       onInvalid={(e) => e.target.setCustomValidity(validationMessages[e.target.id])}
+                       required/>
+                <button type="submit" className="btn btn-outline-primary">Submit</button>
+            </form>
         </div>
     );
 }
