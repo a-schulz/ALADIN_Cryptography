@@ -3,6 +3,7 @@ import {RsaConfigHandler} from "../../../backend/RsaConfigHandler";
 import {useNavigate} from 'react-router-dom';
 import {Difficulty} from "../../../backend/Difficulty";
 import {UserConfig} from "../../../backend/UserConfig";
+import {customValidityFromChecks} from "../Utils.ts/customValidityFromChecks";
 
 //TODO: Beim eingeben der Werte für hard und medium sollten jeweils die Fehler abgefangen und Lösungshilfen angeboten werden
 
@@ -10,7 +11,7 @@ export const Config = () => {
 
 
     const [difficulty, setDifficulty] = useState<Difficulty>();
-    const [bitLength, setBitLength] = useState<number>(0);
+    const [bitLength, setBitLength] = useState<number>();
     const navigate = useNavigate();
 
     const userConfig = {
@@ -48,7 +49,7 @@ export const Config = () => {
             </select>
             <label htmlFor="bitlength" className="form-label">Enter your bitlength</label>
             <input type="text" placeholder="3-7" id="bitlength" className="form-control"
-                   onChange={(e) => {setBitLength(Number.parseInt(e.target.value));e.target.setCustomValidity('')}} onInvalid={(e) => e.target.setCustomValidity("Please enter a Bitlength.")} required/>
+                   onChange={(e) => {setBitLength(Number.parseInt(e.target.value));e.target.setCustomValidity('')}} onInvalid={(e) => e.target.setCustomValidity(customValidityFromChecks(e.target.value, {required: true, minlength: { requiredLength: 5 }}))} required/>
             <button type="submit" className="btn btn-outline-primary">Submit</button>
         </form>
         </div>
