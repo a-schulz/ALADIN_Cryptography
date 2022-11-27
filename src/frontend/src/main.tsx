@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import 'bootstrap/dist/css/bootstrap.min.css';
-import 'bootstrap/dist/js/bootstrap.min.js';
+import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import {Config} from "./components/Config";
 import {ConfigMedium} from "./components/ConfigMedium";
@@ -21,7 +21,6 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
                 <Route path="/hard" element={<ConfigHard/>}/>
                 <Route path="/task/get-keys" element={<GetKeys/>}/>
                 <Route path="/task/encrypt-decrypt" element={<EncryptDecrypt/>}/>
-                <Route path="/helper" element={<EncryptDecryptHelper/>}/>
             </Routes>
         </BrowserRouter>
     </React.StrictMode>
