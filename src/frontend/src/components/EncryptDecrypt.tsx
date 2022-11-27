@@ -2,6 +2,7 @@ import {useState} from "react";
 import {useLocation, useNavigate} from "react-router-dom";
 import {Rsa} from "../../../backend/Rsa";
 import {getRandomInt} from "../../../backend/GetRandomInt";
+import {EncryptDecryptHelper} from "./EncryptDecryptHelper";
 
 //Todo: die Prüfung auf valide Parameter muss noch in der RSA programmiert werden.
 //Prüfung sollte schon eher in den jeweiligen Tasks geschehen und evtl dort dann auch gleich Hilfen dazu
@@ -59,6 +60,7 @@ export const EncryptDecrypt = () => {
                        onChange={(e) => setPlainText(Number.parseInt(e.target.value))} required/>
                 <button type="submit" className="btn btn-outline-primary">Submit</button>
             </form>
+            <EncryptDecryptHelper></EncryptDecryptHelper>
         </div>
     )
 }
