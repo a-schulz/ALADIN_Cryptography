@@ -12,7 +12,6 @@ export const Config = () => {
 
     const [submitted, setSubmitted] = useState(false);
     const [difficulty, setDifficulty] = useState<Difficulty>();
-    // TODO Typecheck for number
     const [bitLength, setBitLength] = useState<number>();
     const navigate = useNavigate();
 
@@ -29,7 +28,8 @@ export const Config = () => {
 
     const validation = {
         difficulty: {required: true},
-        bitLength: {required: true, minlength: {requiredLength: 5}}
+        bitLength: {required: true}
+        // bitLength: {required: true, minlength: {requiredLength: 5}}
     };
 
     const validationMessages = {
@@ -49,7 +49,6 @@ export const Config = () => {
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         setSubmitted(true);
-        console.log(validationMessages)
         if(!isValidForm){
             document.getElementById(Object.keys(validationMessages).filter((key:string)=>(validationMessages[key] != ""))[0]).focus();
             return;
@@ -73,8 +72,8 @@ export const Config = () => {
                 </select>
                 <ShowErrors value={difficulty} validations={validation.difficulty} display={submitted}></ShowErrors>
                 <label htmlFor="bitLength" className="form-label">Enter your bitlength</label>
-                <input type="text" placeholder="3-7" id="bitLength" className="form-control"
-                       onChange={(e) => {
+                <input type="number" placeholder="3-7" id="bitLength" className="form-control"
+                       onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                            setBitLength(Number.parseInt(e.target.value));
                        }}
                        />
