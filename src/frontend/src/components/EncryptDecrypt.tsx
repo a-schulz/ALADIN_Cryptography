@@ -14,27 +14,28 @@ import {EncryptDecryptHelper} from "./EncryptDecryptHelper";
 export const EncryptDecrypt = () => {
     const location = useLocation();
     const navigate = useNavigate();
-    // const rsa = location.state;
-    // console.log(rsa);
     const rsa = new Rsa(location.state._rsaConfig);
     const [textToEncrypt, setTextToEncrypt] = useState(getRandomInt(20));
     const [textToDecrypt, setTextToDecrypt] = useState(getRandomInt(20));
-    const [chiffrat, setChiffrat] = useState<number>(0);
-    const [plainText, setPlainText] = useState<number>(0);
-    const [inputs, setInputs] = useState({});
+    const [inputs, setInputs] = useState({
+        chiffrat: 0,
+        plainText: 0
+    });
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const name = event.target.name;
-        const value = event.target.value;
+        const name = event.target.id;
+        const value = event.target.type === "number"? Number.parseInt(event.target.value): event.target.value;
         setInputs(values => ({...values, [name]: value}))
     }
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        console.log(rsa.decode(12));
-        console.log(rsa._publicKey);
-        console.log(inputs);
-        // console.log(rsaClass);
+        if (rsa.encode(textToEncrypt, rsa.publicKey) == inputs.chiffrat && rsa.decode(textToDecrypt) == inputs.plainText) {
+            alert("Correct")
+        } else {
+            alert("Wrong");
+
+        }
     }
 
     return (
@@ -52,14 +53,12 @@ export const EncryptDecrypt = () => {
             </div>
             <form onSubmit={(e) => handleSubmit(e)}>
                 <h3>You want to send your friend the following message: "{textToEncrypt}". Please encrypt it.</h3>
-                {/*<label htmlFor="bitlength" className="form-label">Enter your bitlength</label>*/}
-                <input type="text" placeholder="Enter your solution..." id="bitlength" className="form-control"
-                       onChange={(e) => setChiffrat(Number.parseInt(e.target.value))} required/>
+                <input type="number" placeholder="Enter your solution..." id="chiffrat" className="form-control"
+                       onChange={handleChange} required/>
 
                 <h3>You got the following message: "{textToDecrypt}". Decrypt it.</h3>
-                {/*<label htmlFor="bitlength" className="form-label">Enter your bitlength</label>*/}
-                <input type="text" placeholder="Enter the original message..." id="bitlength" className="form-control"
-                       onChange={(e) => setPlainText(Number.parseInt(e.target.value))} required/>
+                <input type="number" placeholder="Enter the original message..." id="plainText" className="form-control"
+                       onChange={handleChange} required/>
                 <button type="submit" className="btn btn-outline-primary">Submit</button>
             </form>
             <EncryptDecryptHelper textToEncrypt={textToEncrypt} textToDecrypt={textToDecrypt} rsa={rsa}></EncryptDecryptHelper>

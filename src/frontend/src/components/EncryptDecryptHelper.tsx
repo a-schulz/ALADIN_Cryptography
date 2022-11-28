@@ -19,7 +19,7 @@ const useEffectOnce = (func: EffectCallback) => {
 export const EncryptDecryptHelper = (props) => {
 
     const encryptFormula = 'Geheimtext = Klartext^e \\mod  N';
-    const decryptFormula = 'Klartext = Geheimtext^e \\mod  N';
+    const decryptFormula = 'Klartext = Geheimtext^d \\mod  N';
     const encryptFormulaApplied = 'Geheimtext = '+ props.textToEncrypt + '^{'+ props.rsa.publicKey.exponent + '} \\mod  '+ props.rsa.publicKey.divisor + '';
     const decryptFormulaApplied = 'Klartext = '+ props.textToDecrypt + '^{'+ props.rsa.privateKey.exponent + '} \\mod  '+ props.rsa.privateKey.divisor + '';
 
