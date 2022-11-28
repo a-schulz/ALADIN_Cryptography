@@ -7,7 +7,7 @@ import {validations} from "./validations";
  * @returns {boolean} true if valid.
  */
 const requiredValidator = (value: any): boolean => {
-    return value === undefined? false :  value !== '';
+    return (!value && value != 0)? false :  value !== '';
 }
 
 /**
@@ -17,7 +17,7 @@ const requiredValidator = (value: any): boolean => {
  * @returns {boolean} true if valid.
  */
 const minLengthValidator = (value: any, minlength: number):boolean => {
-    return value === undefined? false :  !(value.toString().length < minlength);
+    return (!value && value != 0)? false :  !(value.toString().length < minlength);
 }
 
 /**
@@ -27,7 +27,7 @@ const minLengthValidator = (value: any, minlength: number):boolean => {
  * @returns {boolean} true if valid.
  */
 const maxLengthValidator = (value: any, maxlength: number):boolean => {
-    return value === undefined? false : !(value.toString().length > maxlength);
+    return (!value && value != 0)? false : !(value.toString().length > maxlength);
 }
 
 /**
@@ -37,7 +37,7 @@ const maxLengthValidator = (value: any, maxlength: number):boolean => {
  * @returns {boolean} true if valid.
  */
 const patternValidator = (value: any, regex: RegExp): boolean => {
-    return value === undefined? false : regex.test(value);
+    return (!value && value != 0)? false : regex.test(value);
 }
 
 /**

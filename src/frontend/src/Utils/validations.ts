@@ -4,3 +4,7 @@ export interface validations {
     maxlength?: { requiredLength: number },
     pattern?: RegExp
 }
+
+
+// type fehlt hier auch noch
+// https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/minlength
