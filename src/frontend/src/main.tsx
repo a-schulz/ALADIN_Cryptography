@@ -9,7 +9,6 @@ import {ConfigHard} from "./components/ConfigHard";
 import {GetKeys} from "./components/GetKeys";
 import {EncryptDecrypt} from "./components/EncryptDecrypt";
 import {NavBar} from "./components/NavBar";
-import {EncryptDecryptHelper} from "./components/EncryptDecryptHelper";
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
     <React.StrictMode>

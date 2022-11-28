@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {checkErrors} from "./validation-service";
 
 export const ShowErrors = (props) => {
@@ -7,10 +7,11 @@ export const ShowErrors = (props) => {
         const [validations, value] = [props.validations, props.value];
         return checkErrors(value, validations);
     }
+    if (!props.display) { return null; }
     return (
         <div>
             {listOfErrors().map(
-                err => <small key={err}>{err}</small>
+                err => <small className={"validation-error"} key={err}>{err}</small>
             )}
         </div>
     );
