@@ -5,6 +5,7 @@ import {Difficulty} from "../../../backend/Difficulty";
 import {UserConfig} from "../../../backend/UserConfig";
 import {customValidityFromChecks} from "../Utils/customValidityFromChecks";
 import { ShowErrors } from "../Utils/ShowErrors";
+import {validations} from "../Utils/validations";
 
 //TODO: Beim eingeben der Werte für hard und medium sollten jeweils die Fehler abgefangen und Lösungshilfen angeboten werden
 //TODO Styling Error messages
@@ -26,7 +27,7 @@ export const Config = () => {
         [Difficulty.HARD]: "/hard"
     }
 
-    const validation = {
+    const validation:Record<string, validations> = {
         difficulty: {required: true},
         bitLength: {required: true}
         // bitLength: {required: true, minlength: {requiredLength: 5}}
