@@ -1,6 +1,9 @@
 import React, {EffectCallback, useEffect, useState} from 'react';
 import Button from 'react-bootstrap/Button';
 import Collapse from 'react-bootstrap/Collapse';
+import 'katex/dist/katex.min.css';
+import { InlineMath, BlockMath } from 'react-katex';
+import {Rsa} from "../../../backend/Rsa";
 
 const useEffectOnce = (func: EffectCallback) => {
     const calledOnce = React.useRef(false);
@@ -13,7 +16,12 @@ const useEffectOnce = (func: EffectCallback) => {
     }, [])
 };
 
-export const EncryptDecryptHelper = () => {
+export const EncryptDecryptHelper = (props) => {
+
+    const encryptFormula = 'Geheimtext = Klartext^e \\mod  N';
+    const decryptFormula = 'Klartext = Geheimtext^e \\mod  N';
+    const encryptFormulaApplied = 'Geheimtext = '+ props.textToEncrypt + '^{'+ props.rsa.publicKey.exponent + '} \\mod  '+ props.rsa.publicKey.divisor + '';
+    const decryptFormulaApplied = 'Klartext = '+ props.textToDecrypt + '^{'+ props.rsa.privateKey.exponent + '} \\mod  '+ props.rsa.privateKey.divisor + '';
 
     const addButtonToNav = () => {
         const element = document.createElement("div")
@@ -51,12 +59,12 @@ export const EncryptDecryptHelper = () => {
                             <div id="panelsStayOpen-collapseOne" className="accordion-collapse collapse"
                                  aria-labelledby="panelsStayOpen-headingOne">
                                 <div className="accordion-body">
-                                    <strong>This is the first item's accordion body.</strong> It is shown by default,
-                                    until the collapse plugin adds the appropriate classes that we use to style each
-                                    element. These classes control the overall appearance, as well as the showing and
-                                    hiding via CSS transitions. You can modify any of this with custom CSS or overriding
-                                    our default variables. It's also worth noting that just about any HTML can go within
-                                    the <code>.accordion-body</code>, though the transition does limit overflow.
+                                    <h5>Encryption:</h5>
+                                    <BlockMath math={encryptFormula} />
+                                    <h5>Decryption:</h5>
+                                    <BlockMath math={decryptFormula} />
+                                    <h6>Note</h6>
+                                    <p>Use the public key for encryption and the private key for decryption.</p>
                                 </div>
                             </div>
                         </div>
@@ -71,12 +79,10 @@ export const EncryptDecryptHelper = () => {
                             <div id="panelsStayOpen-collapseTwo" className="accordion-collapse collapse"
                                  aria-labelledby="panelsStayOpen-headingTwo">
                                 <div className="accordion-body">
-                                    <strong>This is the second item's accordion body.</strong> It is hidden by default,
-                                    until the collapse plugin adds the appropriate classes that we use to style each
-                                    element. These classes control the overall appearance, as well as the showing and
-                                    hiding via CSS transitions. You can modify any of this with custom CSS or overriding
-                                    our default variables. It's also worth noting that just about any HTML can go within
-                                    the <code>.accordion-body</code>, though the transition does limit overflow.
+                                    <h5>Encryption:</h5>
+                                    <BlockMath math={encryptFormulaApplied} />
+                                    <h5>Decryption:</h5>
+                                    <BlockMath math={decryptFormulaApplied} />
                                 </div>
                             </div>
                         </div>
@@ -91,12 +97,10 @@ export const EncryptDecryptHelper = () => {
                             <div id="panelsStayOpen-collapseThree" className="accordion-collapse collapse"
                                  aria-labelledby="panelsStayOpen-headingThree">
                                 <div className="accordion-body">
-                                    <strong>This is the third item's accordion body.</strong> It is hidden by default,
-                                    until the collapse plugin adds the appropriate classes that we use to style each
-                                    element. These classes control the overall appearance, as well as the showing and
-                                    hiding via CSS transitions. You can modify any of this with custom CSS or overriding
-                                    our default variables. It's also worth noting that just about any HTML can go within
-                                    the <code>.accordion-body</code>, though the transition does limit overflow.
+                                    <h5>Encryption:</h5>
+                                    <BlockMath math={encryptFormulaApplied + "=" + props.rsa.encode(props.textToEncrypt, props.rsa.publicKey)} />
+                                    <h5>Decryption:</h5>
+                                    <BlockMath math={decryptFormulaApplied + "=" + props.rsa.decode(props.textToDecrypt)} />
                                 </div>
                             </div>
                         </div>

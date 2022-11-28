@@ -17,6 +17,8 @@ export const EncryptDecrypt = () => {
     // const rsa = location.state;
     // console.log(rsa);
     const rsa = new Rsa(location.state._rsaConfig);
+    const [textToEncrypt, setTextToEncrypt] = useState(getRandomInt(20));
+    const [textToDecrypt, setTextToDecrypt] = useState(getRandomInt(20));
     const [chiffrat, setChiffrat] = useState<number>(0);
     const [plainText, setPlainText] = useState<number>(0);
     const [inputs, setInputs] = useState({});
@@ -45,22 +47,22 @@ export const EncryptDecrypt = () => {
             <div className="container">
                 <h3>Here are your Keys!</h3>
                 <h5>Public key: e= {rsa._publicKey["exponent"]}, n= {rsa._publicKey["divisor"]}</h5>
-                <h5>Private key: d= {rsa.privateKey["exponent"]}, n= {rsa.privateKey["divisor"]} </h5>
+                <h5>Private key: d= {rsa.privateKey["exponent"]}, n= {rsa.privateKey["divisor"]}</h5>
 
             </div>
             <form onSubmit={(e) => handleSubmit(e)}>
-                <h3>You want to send your friend the following message: "{getRandomInt(20)}". Please encrypt it.</h3>
+                <h3>You want to send your friend the following message: "{textToEncrypt}". Please encrypt it.</h3>
                 {/*<label htmlFor="bitlength" className="form-label">Enter your bitlength</label>*/}
                 <input type="text" placeholder="Enter your solution..." id="bitlength" className="form-control"
                        onChange={(e) => setChiffrat(Number.parseInt(e.target.value))} required/>
 
-                <h3>You got the following message: "{getRandomInt(20)}". Decrypt it.</h3>
+                <h3>You got the following message: "{textToDecrypt}". Decrypt it.</h3>
                 {/*<label htmlFor="bitlength" className="form-label">Enter your bitlength</label>*/}
                 <input type="text" placeholder="Enter the original message..." id="bitlength" className="form-control"
                        onChange={(e) => setPlainText(Number.parseInt(e.target.value))} required/>
                 <button type="submit" className="btn btn-outline-primary">Submit</button>
             </form>
-            <EncryptDecryptHelper></EncryptDecryptHelper>
+            <EncryptDecryptHelper textToEncrypt={textToEncrypt} textToDecrypt={textToDecrypt} rsa={rsa}></EncryptDecryptHelper>
         </div>
     )
 }
