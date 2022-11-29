@@ -2,9 +2,6 @@ import React, {EffectCallback, useEffect, useState} from 'react';
 import {ExtEuclidAlgo} from "../../../backend/ExtEuclidAlgo";
 import {InlineMath, BlockMath} from 'react-katex';
 
-// TODO: How to EuclidicAlgo
-
-
 const useEffectOnce = (func: EffectCallback) => {
     const calledOnce = React.useRef(false);
     useEffect(() => {
@@ -78,7 +75,7 @@ export const GetKeysHelper = (props) => {
                                 <div id="panelsStayOpen-collapseEuclidicAlgo" className="accordion-collapse collapse"
                                      aria-labelledby="panelsStayOpen-headingEuclidicAlgo">
                                     <div className="accordion-body">
-                                        <h5>This is the Euclidic-Algorithm</h5>
+                                        <h5>This is the table for the Euclidic-Algorithm</h5>
                                         <table className="table table-striped table-bordered">
                                             <thead>
                                             <tr key={0}>
@@ -110,14 +107,48 @@ export const GetKeysHelper = (props) => {
                                             }
                                             </tbody>
                                         </table>
-
                                         <h6>What is?</h6>
-                                        <BlockMath math={"\\phi = (p-1) \\times (q-1)"}></BlockMath>
-                                        <BlockMath math={"q = \\lfloor e \\div \\phi \\rfloor"}></BlockMath>
-                                        <p>(q => whole result of the integer division)</p>
-                                        <BlockMath math={"r = e \\mod \\phi"}></BlockMath>
+                                        <p><InlineMath math={"\\phi = (p-1) \\times (q-1)"}></InlineMath></p>
+                                        <p><InlineMath math={"q = \\lfloor e \\div \\phi \\rfloor"}></InlineMath>
+                                            <small>(q => whole result of the integer division, not the q we used to calculate N)</small></p>
+                                        <p><InlineMath math={"r = e \\mod \\phi"}></InlineMath></p>
+                                        <h5>Do the following steps:</h5>
+                                        <ol className="list-group list-group-numbered">
+                                            <li className="list-group-item">
+                                                Fill in the initial state for e and <InlineMath math={"\\phi"}/> using the blank value and the formula from above.
+                                            </li>
+                                            <li className="list-group-item">
+                                                Divide e by <InlineMath math={"\\phi"}/> and fill in the values for q and r.<br/>
+                                                View the formula from above.
+                                            </li>
+                                            <li className="list-group-item">
+                                                Now fill in e and <InlineMath math={"\\phi"}/> using the following formulas:
+                                                <p><InlineMath math={"e_i = \\phi_{i-1}"}/></p>
+                                                <p><InlineMath math={"\\phi_i = r_{i-1}"}/></p>
+                                            </li>
+                                            <li className="list-group-item">
+                                            Repeate step 2. to 4. until <InlineMath math={"r = 0"}/>
+                                            </li>
+                                        </ol>
 
                                     </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="accordion-item">
+                            <h2 className="accordion-header" id="panelsStayOpen-headingInteractiveEuclidicAlgo">
+                                <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#panelsStayOpen-collapseInteractiveEuclidicAlgo" aria-expanded="false"
+                                        aria-controls="panelsStayOpen-collapseInteractiveEuclidicAlgo">
+                                    Interactive Euclidic-Algorithm TODO
+                                </button>
+                            </h2>
+                            <div id="panelsStayOpen-collapseInteractiveEuclidicAlgo" className="accordion-collapse collapse"
+                                 aria-labelledby="panelsStayOpen-headingInteractiveEuclidicAlgo">
+                                <div className="accordion-body">
+                                    <h5>This is the table for the Euclidic-Algorithm</h5>
+
+
                                 </div>
                             </div>
                         </div>
@@ -163,6 +194,7 @@ export const GetKeysHelper = (props) => {
                                         }
                                         </tbody>
                                     </table>
+                                    <p>Now you have to do the extended Algorithm.</p>
                                 </div>
                             </div>
                         </div>
@@ -224,13 +256,29 @@ export const GetKeysHelper = (props) => {
                                         </tbody>
                                     </table>
 
-                                    <p>Initial values of x=0 and y=1 in the last row.</p>
+                                    <p>Initial values of x=0 and y=1 in the last row. The values above can be calculated using the following formulas:</p>
                                     <BlockMath math={"x_i =  y_{(i+1)},\\ y_i =  x_{(i + 1)} - (q_i \\times y_{(i+1)})"}/>
                                     <p>Now you can work your way up and fill in the missing values using the formulas above.</p>
                                 </div>
                             </div>
                         </div>
+                        <div className="accordion-item">
+                            <h2 className="accordion-header" id="panelsStayOpen-headingInteractiveExtendedEuclidicAlgo">
+                                <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#panelsStayOpen-collapseInteractiveExtendedEuclidicAlgo" aria-expanded="false"
+                                        aria-controls="panelsStayOpen-collapseInteractiveExtendedEuclidicAlgo">
+                                    Interactive Extended Euclidic-Algorithm TODO
+                                </button>
+                            </h2>
+                            <div id="panelsStayOpen-collapseInteractiveExtendedEuclidicAlgo" className="accordion-collapse collapse"
+                                 aria-labelledby="panelsStayOpen-headingInteractiveExtendedEuclidicAlgo">
+                                <div className="accordion-body">
+                                    <h5>This is the table for the Euclidic-Algorithm</h5>
 
+
+                                </div>
+                            </div>
+                        </div>
                         <div className="accordion-item">
                             <h2 className="accordion-header" id="panelsStayOpen-headingThree">
                                 <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse"
@@ -292,9 +340,9 @@ export const GetKeysHelper = (props) => {
                                     <p><InlineMath math={"D = x_1"}/></p>
                                     <p>If it is negative than you have to do one more step. </p>
                                     <p><InlineMath math={"D = \\phi_1 - x_1"}/></p>
-                                    <h5>The Formulas:</h5>
-                                    <BlockMath math={"D = x_1 \\ \\big \\vert x >= 0"}/>
-                                    <BlockMath math={"D = \\phi_1 - x_1 \\ \\big \\vert x < 0"}/>
+                                    <h5>The Formula:</h5>
+                                    <BlockMath math={"D=\\left\\{\\begin{array}{ll} x_1, & x \\ge 0 \\\\\n" +
+                                        "\\phi_1 - x_1, & x<0\\end{array}\\right."}/>
                                 </div>
                             </div>
                         </div>
