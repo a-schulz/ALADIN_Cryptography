@@ -1,9 +1,6 @@
 import React, {EffectCallback, useEffect, useState} from 'react';
-import Button from 'react-bootstrap/Button';
-import Collapse from 'react-bootstrap/Collapse';
 import 'katex/dist/katex.min.css';
 import { InlineMath, BlockMath } from 'react-katex';
-import {Rsa} from "../../../backend/Rsa";
 
 const useEffectOnce = (func: EffectCallback) => {
     const calledOnce = React.useRef(false);
