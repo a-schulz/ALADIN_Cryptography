@@ -4,6 +4,7 @@ import {Rsa} from "../../../backend/Rsa";
 import {getRandomInt} from "../../../backend/GetRandomInt";
 import {EncryptDecryptHelper} from "./EncryptDecryptHelper";
 import {useEffectOnce} from "../Utils/useEffectOnce";
+import {fetchAndSetAll, fetchJson} from "../Utils/fetchHelper";
 
 export const EncryptDecrypt = () => {
     // import('random-word-by-length')
@@ -23,21 +24,17 @@ export const EncryptDecrypt = () => {
     });
 
     useEffectOnce(() => {
-
-        const fetchJson = async (url: string, init = {}) => {
-            const res = await fetch(url, init);
-            if (!res.ok) {
-                throw new Error(`${res.status}: ${await res.text()}`);
-            }
-            return res.json();
-        }
-
-        const setWords = async () => {
-            const data = await fetchJson("https://random-word-api.herokuapp.com/word?number=2&length=6");
-            setTextToEncrypt(data[0].toLowerCase());
-            setTextToDecrypt(data[1].toLowerCase());
-        }
-        setWords()
+        fetchAndSetAll([
+                {
+                    url: "https://random-word-api.herokuapp.com/word?length=6",
+                    setter: setTextToEncrypt
+                },
+                {
+                    url: "https://random-word-api.herokuapp.com/word?length=6",
+                    setter: setTextToDecrypt
+                }
+            ]
+        )
     });
 
 
