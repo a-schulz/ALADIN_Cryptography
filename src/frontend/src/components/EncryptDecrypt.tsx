@@ -1,12 +1,15 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {useLocation, useNavigate} from "react-router-dom";
 import {Rsa} from "../../../backend/Rsa";
 import {getRandomInt} from "../../../backend/GetRandomInt";
 import {EncryptDecryptHelper} from "./EncryptDecryptHelper";
+import {useEffectOnce} from "../Utils/useEffectOnce";
 
 export const EncryptDecrypt = () => {
     // import('random-word-by-length')
-    const randomWord = (length: number) => {return "dummy";}
+    const randomWord = (length: number) => {
+        return "dummy";
+    }
     const location = useLocation();
     const navigate = useNavigate();
     const rsa = new Rsa(location.state._rsaConfig);
@@ -19,6 +22,25 @@ export const EncryptDecrypt = () => {
         plainText: 0
     });
 
+    useEffectOnce(() => {
+
+        const fetchJson = async (url: string, init = {}) => {
+            const res = await fetch(url, init);
+            if (!res.ok) {
+                throw new Error(`${res.status}: ${await res.text()}`);
+            }
+            return res.json();
+        }
+
+        const setWords = async () => {
+            const data = await fetchJson("https://random-word-api.herokuapp.com/word?number=2&length=6");
+            setTextToEncrypt(data[0].toLowerCase());
+            setTextToDecrypt(data[1].toLowerCase());
+        }
+        setWords()
+    });
+
+
     // true if text should be used
     const [encryptText, setEncryptText] = useState("");
 
@@ -30,6 +52,7 @@ export const EncryptDecrypt = () => {
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
+        console.log(textToEncrypt)
         if (rsa.encode(numberToEncrypt, rsa.publicKey) == inputs.chiffrat && rsa.decode(numberToDecrypt) == inputs.plainText) {
             alert("Correct")
         } else {

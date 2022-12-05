@@ -1,17 +1,7 @@
 import React, {EffectCallback, useEffect, useState} from 'react';
 import 'katex/dist/katex.min.css';
 import { InlineMath, BlockMath } from 'react-katex';
-
-const useEffectOnce = (func: EffectCallback) => {
-    const calledOnce = React.useRef(false);
-    useEffect(() => {
-        if (calledOnce.current) {
-            return;
-        }
-        func();
-        calledOnce.current = true;
-    }, [])
-};
+import {useEffectOnce} from "../Utils/useEffectOnce";
 
 export const EncryptDecryptHelper = (props) => {
 

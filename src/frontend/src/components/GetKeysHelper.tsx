@@ -1,17 +1,7 @@
 import React, {EffectCallback, useEffect, useState} from 'react';
 import {ExtEuclidAlgo} from "../../../backend/ExtEuclidAlgo";
 import {InlineMath, BlockMath} from 'react-katex';
-
-const useEffectOnce = (func: EffectCallback) => {
-    const calledOnce = React.useRef(false);
-    useEffect(() => {
-        if (calledOnce.current) {
-            return;
-        }
-        func();
-        calledOnce.current = true;
-    }, [])
-};
+import {useEffectOnce} from "../Utils/useEffectOnce";
 
 export const GetKeysHelper = (props) => {
 
