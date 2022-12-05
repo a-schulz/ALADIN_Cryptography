@@ -141,23 +141,23 @@ export const GetKeysHelper = (props) => {
                                 </div>
                             </div>
                         </div>
-                        <div className="accordion-item">
-                            <h2 className="accordion-header" id="panelsStayOpen-headingInteractiveEuclidicAlgo">
-                                <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                        data-bs-target="#panelsStayOpen-collapseInteractiveEuclidicAlgo" aria-expanded="false"
-                                        aria-controls="panelsStayOpen-collapseInteractiveEuclidicAlgo">
-                                    Interactive Euclidic-Algorithm TODO
-                                </button>
-                            </h2>
-                            <div id="panelsStayOpen-collapseInteractiveEuclidicAlgo" className="accordion-collapse collapse"
-                                 aria-labelledby="panelsStayOpen-headingInteractiveEuclidicAlgo">
-                                <div className="accordion-body">
-                                    <h5>This is the table for the Euclidic-Algorithm</h5>
+                        {/*<div className="accordion-item">*/}
+                        {/*    <h2 className="accordion-header" id="panelsStayOpen-headingInteractiveEuclidicAlgo">*/}
+                        {/*        <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse"*/}
+                        {/*                data-bs-target="#panelsStayOpen-collapseInteractiveEuclidicAlgo" aria-expanded="false"*/}
+                        {/*                aria-controls="panelsStayOpen-collapseInteractiveEuclidicAlgo">*/}
+                        {/*            Interactive Euclidic-Algorithm TODO*/}
+                        {/*        </button>*/}
+                        {/*    </h2>*/}
+                        {/*    <div id="panelsStayOpen-collapseInteractiveEuclidicAlgo" className="accordion-collapse collapse"*/}
+                        {/*         aria-labelledby="panelsStayOpen-headingInteractiveEuclidicAlgo">*/}
+                        {/*        <div className="accordion-body">*/}
+                        {/*            <h5>This is the table for the Euclidic-Algorithm</h5>*/}
 
 
-                                </div>
-                            </div>
-                        </div>
+                        {/*        </div>*/}
+                        {/*    </div>*/}
+                        {/*</div>*/}
                         <div className="accordion-item">
                             <h2 className="accordion-header" id="panelsStayOpen-headingTwo">
                                 <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse"
@@ -268,23 +268,23 @@ export const GetKeysHelper = (props) => {
                                 </div>
                             </div>
                         </div>
-                        <div className="accordion-item">
-                            <h2 className="accordion-header" id="panelsStayOpen-headingInteractiveExtendedEuclidicAlgo">
-                                <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                        data-bs-target="#panelsStayOpen-collapseInteractiveExtendedEuclidicAlgo" aria-expanded="false"
-                                        aria-controls="panelsStayOpen-collapseInteractiveExtendedEuclidicAlgo">
-                                    Interactive Extended Euclidic-Algorithm TODO
-                                </button>
-                            </h2>
-                            <div id="panelsStayOpen-collapseInteractiveExtendedEuclidicAlgo" className="accordion-collapse collapse"
-                                 aria-labelledby="panelsStayOpen-headingInteractiveExtendedEuclidicAlgo">
-                                <div className="accordion-body">
-                                    <h5>This is the table for the Euclidic-Algorithm</h5>
+                        {/*<div className="accordion-item">*/}
+                        {/*    <h2 className="accordion-header" id="panelsStayOpen-headingInteractiveExtendedEuclidicAlgo">*/}
+                        {/*        <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse"*/}
+                        {/*                data-bs-target="#panelsStayOpen-collapseInteractiveExtendedEuclidicAlgo" aria-expanded="false"*/}
+                        {/*                aria-controls="panelsStayOpen-collapseInteractiveExtendedEuclidicAlgo">*/}
+                        {/*            Interactive Extended Euclidic-Algorithm TODO*/}
+                        {/*        </button>*/}
+                        {/*    </h2>*/}
+                        {/*    <div id="panelsStayOpen-collapseInteractiveExtendedEuclidicAlgo" className="accordion-collapse collapse"*/}
+                        {/*         aria-labelledby="panelsStayOpen-headingInteractiveExtendedEuclidicAlgo">*/}
+                        {/*        <div className="accordion-body">*/}
+                        {/*            <h5>This is the table for the Euclidic-Algorithm</h5>*/}
 
 
-                                </div>
-                            </div>
-                        </div>
+                        {/*        </div>*/}
+                        {/*    </div>*/}
+                        {/*</div>*/}
                         <div className="accordion-item">
                             <h2 className="accordion-header" id="panelsStayOpen-headingThree">
                                 <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse"
@@ -349,8 +349,6 @@ export const GetKeysHelper = (props) => {
                                     <h5>The Formula:</h5>
                                     <BlockMath math={"D=\\left\\{\\begin{array}{ll} x_1, & x \\ge 0 \\\\\n" +
                                         "\\phi_1 - x_1, & x<0\\end{array}\\right."}/>
-                                    <h5>Final solution:</h5>
-                                    <BlockMath math={formulaD}/>
                                 </div>
                             </div>
                         </div>
