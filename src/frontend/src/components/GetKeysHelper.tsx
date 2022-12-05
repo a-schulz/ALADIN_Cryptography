@@ -18,7 +18,7 @@ export const GetKeysHelper = (props) => {
     const rsa = props.rsa;
     let formulaD = "";
     if(rsa._calculatingSteps[0].x < 0){
-        formulaD =  "D = " + rsa._calculatingSteps[0].phi + "-"+ rsa._calculatingSteps[0].x + "=" + (rsa._calculatingSteps[0].phi - rsa._calculatingSteps[0].x);
+        formulaD =  "D = " + rsa._calculatingSteps[0].phi + "-"+ rsa._calculatingSteps[0].x + "=" + (rsa._calculatingSteps[0].phi + rsa._calculatingSteps[0].x);
     }else{
         formulaD ="D = " + rsa._calculatingSteps[0].x;
         }
@@ -350,6 +350,23 @@ export const GetKeysHelper = (props) => {
                                     <BlockMath math={"D=\\left\\{\\begin{array}{ll} x_1, & x \\ge 0 \\\\\n" +
                                         "\\phi_1 - x_1, & x<0\\end{array}\\right."}/>
                                     <h5>Final solution:</h5>
+                                    <BlockMath math={formulaD}/>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="accordion-item">
+                            <h2 className="accordion-header" id="panelsStayOpen-headingSolution">
+                                <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#panelsStayOpen-collapseSolution" aria-expanded="false"
+                                        aria-controls="panelsStayOpen-collapseSolution">
+                                    Complete solution
+                                </button>
+                            </h2>
+                            <div id="panelsStayOpen-collapseSolution" className="accordion-collapse collapse"
+                                 aria-labelledby="panelsStayOpen-headingSolution">
+                                <div className="accordion-body">
+                                    <h5>Final solution:</h5>
+                                    <BlockMath math={"N = ("+ rsa._p + "-1)\\times (" + rsa._q+"-1) =" + rsa._publicKey["divisor"]}/>
                                     <BlockMath math={formulaD}/>
                                 </div>
                             </div>
