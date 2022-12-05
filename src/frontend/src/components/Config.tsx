@@ -8,7 +8,6 @@ import { ShowErrors } from "../Utils/ShowErrors";
 import {validations} from "../Utils/validations";
 
 //TODO: Beim eingeben der Werte für hard und medium sollten jeweils die Fehler abgefangen und Lösungshilfen angeboten werden
-//TODO Styling Error messages
 export const Config = () => {
 
     const [submitted, setSubmitted] = useState(false);

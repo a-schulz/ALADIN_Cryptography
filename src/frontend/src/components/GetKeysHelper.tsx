@@ -16,6 +16,12 @@ const useEffectOnce = (func: EffectCallback) => {
 export const GetKeysHelper = (props) => {
 
     const rsa = props.rsa;
+    let formulaD = "";
+    if(rsa._calculatingSteps[0].x < 0){
+        formulaD =  "D = " + rsa._calculatingSteps[0].phi + "-"+ rsa._calculatingSteps[0].x + "=" + (rsa._calculatingSteps[0].phi - rsa._calculatingSteps[0].x);
+    }else{
+        formulaD ="D = " + rsa._calculatingSteps[0].x;
+        }
 
     const addButtonToNav = () => {
         const element = document.createElement("div")
@@ -343,6 +349,8 @@ export const GetKeysHelper = (props) => {
                                     <h5>The Formula:</h5>
                                     <BlockMath math={"D=\\left\\{\\begin{array}{ll} x_1, & x \\ge 0 \\\\\n" +
                                         "\\phi_1 - x_1, & x<0\\end{array}\\right."}/>
+                                    <h5>Final solution:</h5>
+                                    <BlockMath math={formulaD}/>
                                 </div>
                             </div>
                         </div>
