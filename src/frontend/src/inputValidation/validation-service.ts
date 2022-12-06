@@ -1,5 +1,5 @@
 import {getErrorMsg} from './error-messages';
-import {validations} from "./validations";
+import {validationConstraints} from "./validationConstraints";
 
 /**
  * Validator for required input fields.
@@ -40,6 +40,7 @@ const patternValidator = (value: any, regex: RegExp): boolean => {
     return (!value && value != 0)? false : regex.test(value);
 }
 
+// ToDo: improve by using mapping
 /**
  * Checks for validity using the belonging validator.
  * @param value
@@ -68,7 +69,7 @@ const checkValidators = (value: any, err:string, errObj: { requiredLength: numbe
  * @param validators
  * @returns {string[]} Resulting error messages.
  */
-export const checkErrors = (value: any, validators: validations): string[] => {
+export const checkErrors = (value: any, validators: validationConstraints): string[] => {
     const errors = Object.keys(validators);
     let errorsOccurred: string[] = [];
     for (let err of errors) {
