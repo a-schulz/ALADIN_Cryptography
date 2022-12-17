@@ -15,7 +15,7 @@ import OrgChartTree from "./test/Tree";
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
     <React.StrictMode>
         <NavBar></NavBar>
-        <BrowserRouter>
+        <BrowserRouter basename={'/~s82105'}>
             <Routes>
                 <Route path="/" element={<Config/>}/>
                 <Route path="/medium" element={<ConfigMedium/>}/>

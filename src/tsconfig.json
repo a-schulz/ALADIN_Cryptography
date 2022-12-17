@@ -1,5 +1,7 @@
 {
   "compilerOptions": {
+    "strictPropertyInitialization": false,
+    "suppressImplicitAnyIndexErrors": true,
     "module": "commonjs",
     "noImplicitAny": true,
     "removeComments": true,

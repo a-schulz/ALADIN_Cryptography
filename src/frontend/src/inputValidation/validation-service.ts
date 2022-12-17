@@ -48,16 +48,31 @@ const patternValidator = (value: any, regex: RegExp): boolean => {
  * @param errObj
  * @returns {boolean} true if valid
  */
-const checkValidators = (value: any, err:string, errObj: { requiredLength: number } | RegExp): boolean => {
+
+interface ErrorObj {
+    requiredLength?: number,
+    RegExp?: RegExp
+}
+const checkValidators = (value: any, err:string, errObj: ErrorObj): boolean => {
     switch (err) {
         case 'required':
             return requiredValidator(value);
         case 'minlength':
-            return minLengthValidator(value, errObj.requiredLength);
+            if(errObj.requiredLength) {
+                return minLengthValidator(value, errObj.requiredLength);
+            }
+            return false;
         case 'maxlength':
-            return maxLengthValidator(value, errObj.requiredLength);
+            if(errObj.requiredLength) {
+                return minLengthValidator(value, errObj.requiredLength);
+            }
+            return false;
         case 'pattern':
-            return patternValidator(value, errObj)
+            if(errObj.RegExp) {
+                return patternValidator(value, errObj.RegExp);
+            }
+            return false;
+
         default:
             return false;
     }
