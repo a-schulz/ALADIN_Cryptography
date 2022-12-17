@@ -63,7 +63,7 @@ export const EncryptDecrypt = () => {
             <div className="form-check form-switch">
                 <input className="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault"
                        onClick={(e) => {
-                           setEncryptText(e.target.checked);
+                           setEncryptText(e.target["checked"]);
                        }}/>
                 <label className="form-check-label" htmlFor="flexSwitchCheckDefault">I want to encrypt text.</label>
             </div>

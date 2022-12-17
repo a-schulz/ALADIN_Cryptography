@@ -66,7 +66,7 @@ export const Config = () => {
                     {options.map(renderOption)}
                 </select>
                 <label htmlFor="bitLength" className="form-label">Enter your bitlength</label>
-                <input type="text" placeholder="3-7" id="bitLength" className="form-control"
+                <input type="number" placeholder="3-7" id="bitLength" className="form-control"
                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                            setBitLength(Number.parseInt(e.target.value));
                        }}

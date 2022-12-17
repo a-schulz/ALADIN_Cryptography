@@ -13,12 +13,12 @@ import {RsaKey} from "./RsaKey";
 import {ExtEuclidAlgo} from "./ExtEuclidAlgo";
 
 export class Rsa {
-    private _p: number;
-    private _q: number;
-    public _publicKey: RsaKey;
-    private _privateKey: RsaKey;
-    private _calculatingSteps: ExtEuclidAlgo[];
-    private _rsaConfig : RsaConfig;
+    private _p!: number;
+    private _q!: number;
+    public _publicKey!: RsaKey;
+    private _privateKey!: RsaKey;
+    private _calculatingSteps!: ExtEuclidAlgo[];
+    private _rsaConfig!: RsaConfig;
 
 
     get rsaConfig(): RsaConfig {
@@ -83,7 +83,7 @@ export class Rsa {
      * @param {number} phi
      * @returns {number}
      */
-    generateDAndSetSteps(e: number, phi: number): number {
+    generateDAndSetSteps(e: number, phi: number): number{
         const steps: ExtEuclidAlgo[] = [];
         steps.push({"e": e, "phi": phi, "q": Math.floor(e / phi), "r": e % phi});
         //normal euclidean algorithm
@@ -95,15 +95,22 @@ export class Rsa {
             idx++;
         }
         // extended euclidean algorithm
+        //initial allocation
         steps[steps.length - 1]["x"] = 0;
         steps[steps.length - 1]["y"] = 1;
+        //initial allocation is skipped -> length - 2
         for (let i = steps.length - 2; i >= 0; i--) {
             steps[i]["x"] = steps[i + 1]["y"];
-            steps[i]["y"] = steps[i + 1]["x"] - steps[i]["q"] * steps[i + 1]["y"];
+            //casting so ts knows its not undefined
+            //Typescript doesn't keep type information about values at specific array indices.
+            steps[i]["y"] = <number>steps[i + 1]["x"] - steps[i]["q"] * <number>steps[i + 1]["y"];
         }
         this.calculatingSteps = steps;
-        if (steps[0]["x"] < 0) return phi + steps[0]["x"];
-        return steps[0]["x"];
+        if(steps[0]["x"] != null){
+            if (steps[0]["x"] < 0) return phi + steps[0]["x"];
+            return steps[0]["x"];
+        }
+        return 0;
     }
 
     /**

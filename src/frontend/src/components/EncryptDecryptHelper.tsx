@@ -1,9 +1,11 @@
 import React, {EffectCallback, useEffect, useState} from 'react';
 import 'katex/dist/katex.min.css';
+// @ts-ignore
 import { InlineMath, BlockMath } from 'react-katex';
 import {useEffectOnce} from "../Utils/useEffectOnce";
+import {Rsa} from "../../../backend/Rsa";
 
-export const EncryptDecryptHelper = (props) => {
+export const EncryptDecryptHelper = (props: {textToEncrypt:number, textToDecrypt:number, rsa:Rsa}) => {
 
     const encryptFormula = 'Geheimtext = Klartext^e \\mod  N';
     const decryptFormula = 'Klartext = Geheimtext^d \\mod  N';
@@ -27,7 +29,7 @@ export const EncryptDecryptHelper = (props) => {
 
     return (
         <div className="container">
-            <div className="offcanvas offcanvas-start" data-bs-scroll="true" data-bs-backdrop="false" tabIndex="-1"
+            <div className="offcanvas offcanvas-start" data-bs-scroll="true" data-bs-backdrop="false" //tabIndex="-1"
                  id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
                 <div className="offcanvas-header">
                     <h5 className="offcanvas-title" id="offcanvasScrollingLabel">Solution aids</h5>

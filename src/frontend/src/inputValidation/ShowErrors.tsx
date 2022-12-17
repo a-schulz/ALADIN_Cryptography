@@ -1,7 +1,8 @@
 import React, {useState} from 'react';
 import {checkErrors} from "./validation-service";
+import {validationConstraints} from "./validationConstraints";
 
-export const ShowErrors = (props) => {
+export const ShowErrors = (props: {validations: validationConstraints, value:any, display:boolean}) => {
 
     const listOfErrors = () => {
         const [validations, value] = [props.validations, props.value];

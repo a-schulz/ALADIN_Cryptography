@@ -11,15 +11,16 @@ export const addValidationAttributes = (element: HTMLInputElement, validation: v
     if (!element) return;
     const errors = Object.keys(validation);
     errors.forEach((err) => {
+        const requiredLength = validation[err];
         switch (err) {
             case 'required':
                 element.required = true;
                 return;
             case 'minlength':
-                element.minLength = validation[err].requiredLength;
+                element.minLength = requiredLength;
                 return;
             case 'maxlength':
-                element.maxLength = validation[err].requiredLength;
+                element.maxLength = requiredLength;
                 return;
             case 'pattern':
                 console.log(validation[err]);

@@ -3,11 +3,13 @@ import {useLocation, useNavigate} from "react-router-dom";
 import {Difficulty} from "../../../backend/Difficulty";
 import {UserConfig} from "../../../backend/UserConfig";
 import {hasCommonDivider} from "../../../backend/HasCommonDivider";
+import {isPrime} from "../../../backend/IsPrime";
 
 export const ConfigHard = () => {
     const location = useLocation();
 
     const userConfig = location.state;
+    console.log(userConfig)
     const [p, setP] = useState<number>(0);
     const [q, setQ] = useState<number>(0);
     const [e, setE] = useState<number>(0);
@@ -16,7 +18,7 @@ export const ConfigHard = () => {
         p,
         q,
         e
-    }
+    } as UserConfig;
     const navigate = useNavigate();
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -37,11 +39,18 @@ export const ConfigHard = () => {
     }
 
     const inputCorrect = (input: UserConfig) =>{
-        if(input.bitLength > input.p.toString(2).length) return false;
-        if(input.bitLength > input.q.toString(2).length) return false;
-        if(input.p == input.q) return false;
-        if(hasCommonDivider(input.e, (input.p - 1) * (input.q -1) )) return false;
-        return true;
+        if(
+            input.p &&
+            input.q &&
+            input.e &&
+            isPrime(input.p) &&
+            isPrime(input.q) &&
+            input.p != input.q &&
+            input.bitLength <= input.p.toString(2).length &&
+            input.bitLength <= input.q.toString(2).length &&
+            hasCommonDivider(input.e, (input.p - 1) * (input.q -1) )
+        ) return true;
+        return false;
     }
 
 

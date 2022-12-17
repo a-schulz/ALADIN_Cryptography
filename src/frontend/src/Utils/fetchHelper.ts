@@ -7,10 +7,10 @@ export const fetchJson = async (url: string, init = {}) => {
 }
 
 
-export const fetchAndSetAll = async (collection) => {
+export const fetchAndSetAll = async (collection: {url:string, setter:any}[]) => {
     // fetch all data first
     const allData = await Promise.all(
-        collection.map(({ url, init }) => fetchJson(url, init))
+        collection.map(({ url}) => fetchJson(url))
     );
 
     // iterate setters and pass in data

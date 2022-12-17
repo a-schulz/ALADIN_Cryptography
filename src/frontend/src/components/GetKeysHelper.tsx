@@ -1,16 +1,17 @@
 import React, {EffectCallback, useEffect, useState} from 'react';
 import {ExtEuclidAlgo} from "../../../backend/ExtEuclidAlgo";
+// @ts-ignore
 import {InlineMath, BlockMath} from 'react-katex';
 import {useEffectOnce} from "../Utils/useEffectOnce";
-
-export const GetKeysHelper = (props) => {
+import {Rsa} from "../../../backend/Rsa";
+export const GetKeysHelper = (props: {rsa:Rsa}) => {
 
     const rsa = props.rsa;
     let formulaD = "";
-    if(rsa._calculatingSteps[0].x < 0){
-        formulaD =  "D = " + rsa._calculatingSteps[0].phi + "-"+ rsa._calculatingSteps[0].x + "=" + (rsa._calculatingSteps[0].phi + rsa._calculatingSteps[0].x);
+    if(rsa.calculatingSteps[0].x && rsa.calculatingSteps[0].x < 0){
+        formulaD =  "D = " + rsa.calculatingSteps[0].phi + "-"+ rsa.calculatingSteps[0].x + "=" + (rsa.calculatingSteps[0].phi + rsa.calculatingSteps[0].x);
     }else{
-        formulaD ="D = " + rsa._calculatingSteps[0].x;
+        formulaD ="D = " + rsa.calculatingSteps[0].x;
         }
 
     const addButtonToNav = () => {
@@ -30,7 +31,7 @@ export const GetKeysHelper = (props) => {
 
     return (
         <div className="container">
-            <div className="offcanvas offcanvas-start" data-bs-scroll="true" data-bs-backdrop="false" tabIndex="-1"
+            <div className="offcanvas offcanvas-start" data-bs-scroll="true" data-bs-backdrop="false" //tabIndex="-1"
                  id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
                 <div className="offcanvas-header">
                     <h5 className="offcanvas-title" id="offcanvasScrollingLabel">Solution aids</h5>
@@ -53,7 +54,7 @@ export const GetKeysHelper = (props) => {
                                     Here is the Formular:
                                     <BlockMath math={"N = p \\times q"}></BlockMath>
                                     <h5>How to calculate D?</h5>
-                                    -> Use the extended Euclidic-Algorithm!
+                                    -{'>'} Use the extended Euclidic-Algorithm!
                                 </div>
                             </div>
                         </div>
@@ -77,7 +78,7 @@ export const GetKeysHelper = (props) => {
                                             <tr key={0}>
                                                 <th scope="col">i</th>
                                                 {
-                                                    Object.keys(rsa._calculatingSteps[0]).map((key: string, index: number) => {
+                                                    Object.keys(rsa.calculatingSteps[0]).map((key: string, index: number) => {
                                                         if(index == 1) return <th scope="col"><InlineMath math={"\\phi"}/>(phi)</th>
                                                         if(index > 3) return;
                                                         return (
@@ -89,7 +90,7 @@ export const GetKeysHelper = (props) => {
                                             </thead>
                                             <tbody>
                                             {
-                                                rsa._calculatingSteps.map((row: ExtEuclidAlgo, index: number) => {
+                                                rsa.calculatingSteps.map((row: ExtEuclidAlgo, index: number) => {
                                                     return (
                                                         <tr key={index+1} style={{textAlign: "center"}}>
                                                             <td>{index+1}</td>
@@ -106,7 +107,7 @@ export const GetKeysHelper = (props) => {
                                         <h6>What is?</h6>
                                         <p><InlineMath math={"\\phi = (p-1) \\times (q-1)"}></InlineMath></p>
                                         <p><InlineMath math={"q = \\lfloor e \\div \\phi \\rfloor"}></InlineMath>
-                                            <small>(q => whole result of the integer division, not the q we used to calculate N)</small></p>
+                                            <small>(q ={'>'} whole result of the integer division, not the q we used to calculate N)</small></p>
                                         <p><InlineMath math={"r = e \\mod \\phi"}></InlineMath></p>
                                         <h5>Do the following steps:</h5>
                                         <ol className="list-group list-group-numbered">
@@ -119,8 +120,8 @@ export const GetKeysHelper = (props) => {
                                             </li>
                                             <li className="list-group-item">
                                                 Now fill in e and <InlineMath math={"\\phi"}/> using the following formulas:
-                                                <p><InlineMath math={"e_i = \\phi_{i-1}"}/></p>
-                                                <p><InlineMath math={"\\phi_i = r_{i-1}"}/></p>
+                                                <p><InlineMath math={"ei = \\phi{i-1}"}/></p>
+                                                <p><InlineMath math={"\\phii = r{i-1}"}/></p>
                                             </li>
                                             <li className="list-group-item">
                                             Repeate step 2. to 4. until <InlineMath math={"r = 0"}/>
@@ -164,7 +165,7 @@ export const GetKeysHelper = (props) => {
                                         <tr key={0}>
                                             <th scope="col">i</th>
                                             {
-                                                Object.keys(rsa._calculatingSteps[0]).map((key: string, index: number) => {
+                                                Object.keys(rsa.calculatingSteps[0]).map((key: string, index: number) => {
                                                     if(index == 1) return <th scope="col"><InlineMath math={"\\phi"}/>(phi)</th>
                                                     if(index > 3) return;
                                                     return (
@@ -176,7 +177,7 @@ export const GetKeysHelper = (props) => {
                                         </thead>
                                         <tbody>
                                         {
-                                            rsa._calculatingSteps.map((row: ExtEuclidAlgo, index: number) => {
+                                            rsa.calculatingSteps.map((row: ExtEuclidAlgo, index: number) => {
                                                 return (
                                                     <tr key={index+1} style={{textAlign: "center"}}>
                                                         <td>{index+1}</td>
@@ -211,7 +212,7 @@ export const GetKeysHelper = (props) => {
                                         <tr key={0}>
                                             <th scope="col">i</th>
                                             {
-                                                Object.keys(rsa._calculatingSteps[0]).map((key: string, index: number) => {
+                                                Object.keys(rsa.calculatingSteps[0]).map((key: string, index: number) => {
                                                     if(index == 1) return <th scope="col"><InlineMath math={"\\phi"}/>(phi)</th>
                                                     return (
                                                         <th scope="col">{key}</th>
@@ -222,8 +223,8 @@ export const GetKeysHelper = (props) => {
                                         </thead>
                                         <tbody>
                                         {
-                                            rsa._calculatingSteps.map((row: ExtEuclidAlgo, index: number) => {
-                                                if(index == rsa._calculatingSteps.length - 1){
+                                            rsa.calculatingSteps.map((row: ExtEuclidAlgo, index: number) => {
+                                                if(index == rsa.calculatingSteps.length - 1){
                                                     return(
                                                         <tr key={index+1} style={{textAlign: "center"}}>
                                                             <td>{index+1}</td>
@@ -253,7 +254,7 @@ export const GetKeysHelper = (props) => {
                                     </table>
 
                                     <p>Initial values of x=0 and y=1 in the last row. The values above can be calculated using the following formulas:</p>
-                                    <BlockMath math={"x_i =  y_{(i+1)},\\ y_i =  x_{(i + 1)} - (q_i \\times y_{(i+1)})"}/>
+                                    <BlockMath math={"xi =  y{(i+1)},\\ yi =  x{(i + 1)} - (qi \\times y{(i+1)})"}/>
                                     <p>Now you can work your way up and fill in the missing values using the formulas above.</p>
                                 </div>
                             </div>
@@ -291,7 +292,7 @@ export const GetKeysHelper = (props) => {
                                         <tr key={0}>
                                             <th scope="col">i</th>
                                             {
-                                                Object.keys(rsa._calculatingSteps[0]).map((key: string, index: number) => {
+                                                Object.keys(rsa.calculatingSteps[0]).map((key: string, index: number) => {
                                                     if(index == 1) return <th scope="col"><InlineMath math={"\\phi"}/>(phi)</th>
                                                     return (
                                                         <th scope="col">{key}</th>
@@ -302,7 +303,7 @@ export const GetKeysHelper = (props) => {
                                         </thead>
                                         <tbody>
                                         {
-                                            rsa._calculatingSteps.map((row: ExtEuclidAlgo, index: number) => {
+                                            rsa.calculatingSteps.map((row: ExtEuclidAlgo, index: number) => {
                                                 return (
                                                     <tr key={index+1} style={{textAlign: "center"}}>
                                                         <td>{index+1}</td>
@@ -332,13 +333,13 @@ export const GetKeysHelper = (props) => {
                             <div id="panelsStayOpen-collapseWhatsD" className="accordion-collapse collapse"
                                  aria-labelledby="panelsStayOpen-headingWhatsD">
                                 <div className="accordion-body">
-                                    <p>Look at the value of <InlineMath math={"x_1"}/> if this value is positive then this is your D! </p>
-                                    <p><InlineMath math={"D = x_1"}/></p>
+                                    <p>Look at the value of <InlineMath math={"x1"}/> if this value is positive then this is your D! </p>
+                                    <p><InlineMath math={"D = x1"}/></p>
                                     <p>If it is negative than you have to do one more step. </p>
-                                    <p><InlineMath math={"D = \\phi_1 - x_1"}/></p>
+                                    <p><InlineMath math={"D = \\phi1 - x1"}/></p>
                                     <h5>The Formula:</h5>
-                                    <BlockMath math={"D=\\left\\{\\begin{array}{ll} x_1, & x \\ge 0 \\\\\n" +
-                                        "\\phi_1 - x_1, & x<0\\end{array}\\right."}/>
+                                    <BlockMath math={"D=\\left\\{\\begin{array}{ll} x1, & x \\ge 0 \\\\\n" +
+                                        "\\phi1 - x1, & x<0\\end{array}\\right."}/>
                                 </div>
                             </div>
                         </div>
@@ -354,7 +355,7 @@ export const GetKeysHelper = (props) => {
                                  aria-labelledby="panelsStayOpen-headingSolution">
                                 <div className="accordion-body">
                                     <h5>Final solution:</h5>
-                                    <BlockMath math={"N = ("+ rsa._p + "-1)\\times (" + rsa._q+"-1) =" + rsa._publicKey["divisor"]}/>
+                                    <BlockMath math={"N = ("+ rsa.p + "-1)\\times (" + rsa.q+"-1) =" + rsa.publicKey["divisor"]}/>
                                     <BlockMath math={formulaD}/>
                                 </div>
                             </div>

@@ -52,7 +52,7 @@ export abstract class RsaParameterSetter {
         this.bitLength = bitLength;
     }
 
-    private _bitLength: number;
+    private _bitLength!: number;
 
     get bitLength(): number {
         return this._bitLength;
@@ -100,8 +100,8 @@ export class AutomaticParameterSetter extends RsaParameterSetter{
     prepRsa(): void {
         super.prepRsa();
         //calculating e for RSA
-        const possibleE = Rsa.generatePossibleE(super.p, super.q);
-        super.e = possibleE[getRandomInt(possibleE.length - 1)];
+        const possibleE = Rsa.generatePossibleE(this.p, this.q);
+        this.e = possibleE[getRandomInt(possibleE.length - 1)];
     }
 
     setParameters(): RsaConfig {

@@ -1,9 +1,6 @@
-import {IUserConfig} from "../../../backend/RsaParameterSetter";
 import {useState} from "react";
 import {useLocation, useNavigate} from "react-router-dom";
-import {RsaConfigHandler} from "../../../backend/RsaConfigHandler";
 import {Difficulty} from "../../../backend/Difficulty";
-import {Rsa} from "../../../backend/Rsa";
 import {hasCommonDivider} from "../../../backend/HasCommonDivider";
 
 export const ConfigMedium = () => {
@@ -31,8 +28,8 @@ export const ConfigMedium = () => {
 
 
     const inputCorrect = (e: number) =>{
-        if(hasCommonDivider(e, (rsaConfig.p - 1) * (rsaConfig.q -1) )) return false;
-        return true;
+        if(!hasCommonDivider(e, (rsaConfig.p - 1) * (rsaConfig.q -1) )) return true;
+        return false;
     }
 
     return (
