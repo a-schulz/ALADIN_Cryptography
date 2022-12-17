@@ -9,7 +9,7 @@ export const GetKeysHelper = (props: {rsa:Rsa}) => {
     const rsa = props.rsa;
     let formulaD = "";
     if(rsa.calculatingSteps[0].x && rsa.calculatingSteps[0].x < 0){
-        formulaD =  "D = " + rsa.calculatingSteps[0].phi + "-"+ rsa.calculatingSteps[0].x + "=" + (rsa.calculatingSteps[0].phi + rsa.calculatingSteps[0].x);
+        formulaD =  "D = " + rsa.calculatingSteps[0].phi + rsa.calculatingSteps[0].x + "=" + (rsa.calculatingSteps[0].phi + rsa.calculatingSteps[0].x);
     }else{
         formulaD ="D = " + rsa.calculatingSteps[0].x;
         }
@@ -339,7 +339,7 @@ export const GetKeysHelper = (props: {rsa:Rsa}) => {
                                     <p><InlineMath math={"D = \\phi1 - x1"}/></p>
                                     <h5>The Formula:</h5>
                                     <BlockMath math={"D=\\left\\{\\begin{array}{ll} x1, & x \\ge 0 \\\\\n" +
-                                        "\\phi1 - x1, & x<0\\end{array}\\right."}/>
+                                        "\\phi1 + x1, & x<0\\end{array}\\right."}/>
                                 </div>
                             </div>
                         </div>
