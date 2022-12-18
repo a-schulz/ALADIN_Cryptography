@@ -23,3 +23,16 @@ export function hasCommonDivider(firstNumber: number, secondNumber: number): boo
     })
     return !hasNCD;
 }
+
+/**
+ * Calculates all possible divisors where the remainder is zero.
+ * @param base
+ * @returns number[]
+ */
+export const calculateDividerSet = (base: number): number[] => {
+    let result: number[] = [];
+    for (let idx = 1; idx <= base; idx++) {
+        if (base % idx == 0) result.push(idx);
+    }
+    return result;
+}

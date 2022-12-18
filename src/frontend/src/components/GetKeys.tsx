@@ -3,21 +3,11 @@ import {useLocation, useNavigate} from "react-router-dom";
 import {Rsa} from "../../../backend/Rsa";
 import {GetKeysHelper} from "./GetKeysHelper";
 
-//Todo: die Prüfung auf valide Parameter muss noch in der RSA programmiert werden.
-//Prüfung sollte schon eher in den jeweiligen Tasks geschehen und evtl dort dann auch gleich Hilfen dazu
-/**
- * Hier muss nun noch die weitere Implementierung für die Eingabe der Lösungen erfolgen. Außerdem, werden hier die Lösungshilfen angezeigt.
- */
-
-
 export const GetKeys = () => {
     const location = useLocation();
     const navigate = useNavigate();
     const userConfig = location.state;
-    //vlt sollt hier auch vorher schon dir Prüfung auf korrekte Parameter vorgenommen werden.
     const rsa = new Rsa({...userConfig});
-    // console.log(userConfig);
-    // console.log(rsa);
     rsa.generateDAndSetSteps(rsa.publicKey.exponent, (rsa.p - 1) * (rsa.q - 1));
 
     interface IUserKeys {
@@ -37,9 +27,10 @@ export const GetKeys = () => {
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         console.log(rsa);
-        // console.log(inputs);
         if(!inputCorrect(inputs, rsa)){
-            alert("Your keys are not correct!");
+            alert("Your keys are not correct!\n" +
+                "Please check your input.\n" +
+                "Consider looking into the solution aids.");
             return;
         }
         navigate("/task/encrypt-decrypt", {state: rsa})

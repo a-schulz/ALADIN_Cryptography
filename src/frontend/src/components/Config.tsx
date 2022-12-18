@@ -7,8 +7,6 @@ import {validationConstraints} from "../inputValidation/validationConstraints";
 import {addCustomValidity, addValidationAttributesToElements} from "../inputValidation/addValidation";
 import {useEffectOnce} from "../Utils/useEffectOnce";
 
-//TODO: Beim eingeben der Werte für hard und medium sollten jeweils die Fehler abgefangen und Lösungshilfen angeboten werden
-
 export const Config = () => {
     const navigate = useNavigate();
     const [difficulty, setDifficulty] = useState<Difficulty>();
@@ -33,8 +31,7 @@ export const Config = () => {
      */
     const validationConstraints: Record<string, validationConstraints> = {
         difficulty: {required: true},
-        bitLength: {required: true}
-        // bitLength: {required: true, min: {requiredValue: 3}, max: {requiredValue: 12}}
+        bitLength: {required: true, min: {requiredValue: 3}, max: {requiredValue: 12}}
     };
 
     const renderOption = (text: string) => {
@@ -49,7 +46,7 @@ export const Config = () => {
 
     useEffectOnce(() => {
         addValidationAttributesToElements(validationConstraints);
-        addCustomValidity(validationConstraints)
+        addCustomValidity(validationConstraints);
     })
 
     return (

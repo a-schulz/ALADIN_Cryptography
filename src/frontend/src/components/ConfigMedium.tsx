@@ -2,6 +2,10 @@ import {useState} from "react";
 import {useLocation, useNavigate} from "react-router-dom";
 import {Difficulty} from "../../../backend/Difficulty";
 import {hasCommonDivider} from "../../../backend/HasCommonDivider";
+import {validationConstraints} from "../inputValidation/validationConstraints";
+import {useEffectOnce} from "../Utils/useEffectOnce";
+import {addCustomValidity, addValidationAttributesToElements} from "../inputValidation/addValidation";
+import {ConfigMediumHelper} from "./ConfigMediumHelper";
 
 export const ConfigMedium = () => {
     const location = useLocation();
@@ -10,10 +14,23 @@ export const ConfigMedium = () => {
     const [e, setE] = useState<number>(0);
     const navigate = useNavigate();
 
+    /**
+     * Containing the validity-checks and the ids of the elements as keys.
+     */
+    const validationConstraints: Record<string, validationConstraints> = {
+        e: {required: true},
+    };
+
+    useEffectOnce(() => {
+        addValidationAttributesToElements(validationConstraints);
+        addCustomValidity(validationConstraints);
+    })
+
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        if(!inputCorrect(e)){
-            alert("Your e is not correct!");
+        if (!inputCorrect(e)) {
+            alert("Your e is not correct!\n" +
+                "Check your input or consider looking into the solution aids.");
             return;
         }
         navigate("/task/get-keys", {
@@ -27,8 +44,11 @@ export const ConfigMedium = () => {
     };
 
 
-    const inputCorrect = (e: number) =>{
-        if(!hasCommonDivider(e, (rsaConfig.p - 1) * (rsaConfig.q -1) )) return true;
+    const inputCorrect = (e: number) => {
+        if (
+            !hasCommonDivider(e, (rsaConfig.p - 1) * (rsaConfig.q - 1)) &&
+            e > 1
+        ) return true;
         return false;
     }
 
@@ -38,9 +58,11 @@ export const ConfigMedium = () => {
             <form onSubmit={(e) => handleSubmit(e)}>
                 <label htmlFor="e" className="form-label">Choose a suitable value for e!</label>
                 <input type="text" placeholder="" id="e" className="form-control"
-                       onChange={(e) => setE(Number.parseInt(e.target.value))} required/>
+                       onChange={(e) => setE(Number.parseInt(e.target.value))}/>
                 <button type="submit" className="btn btn-outline-primary">Submit</button>
             </form>
+            <ConfigMediumHelper p={rsaConfig.p} q={rsaConfig.q}/>
         </div>
+
     )
 }
