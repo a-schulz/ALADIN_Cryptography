@@ -7,7 +7,7 @@ import {validationConstraints} from "./validationConstraints";
  * @returns {boolean} true if valid.
  */
 const requiredValidator = (value: any): boolean => {
-    return (!value && value != 0)? false :  value !== '';
+    return (!value && value != 0) ? false : value !== '';
 }
 
 /**
@@ -16,8 +16,8 @@ const requiredValidator = (value: any): boolean => {
  * @param minlength
  * @returns {boolean} true if valid.
  */
-const minLengthValidator = (value: any, minlength: number):boolean => {
-    return (!value && value != 0)? false :  !(value.toString().length < minlength);
+const minLengthValidator = (value: any, minlength: number): boolean => {
+    return (!value && value != 0) ? false : !(value.toString().length < minlength);
 }
 
 /**
@@ -26,8 +26,8 @@ const minLengthValidator = (value: any, minlength: number):boolean => {
  * @param maxlength
  * @returns {boolean} true if valid.
  */
-const maxLengthValidator = (value: any, maxlength: number):boolean => {
-    return (!value && value != 0)? false : !(value.toString().length > maxlength);
+const maxLengthValidator = (value: any, maxlength: number): boolean => {
+    return (!value && value != 0) ? false : !(value.toString().length > maxlength);
 }
 
 /**
@@ -37,45 +37,52 @@ const maxLengthValidator = (value: any, maxlength: number):boolean => {
  * @returns {boolean} true if valid.
  */
 const patternValidator = (value: any, regex: RegExp): boolean => {
-    return (!value && value != 0)? false : regex.test(value);
+    return (!value && value != 0) ? false : regex.test(value);
 }
 
-// ToDo: improve by using mapping
-/**
- * Checks for validity using the belonging validator.
- * @param value
- * @param err
- * @param errObj
- * @returns {boolean} true if valid
- */
-
-interface ErrorObj {
+export interface ErrorObj {
     requiredLength?: number,
+    requiredValue?: number;
     RegExp?: RegExp
 }
-const checkValidators = (value: any, err:string, errObj: ErrorObj): boolean => {
-    switch (err) {
-        case 'required':
-            return requiredValidator(value);
-        case 'minlength':
-            if(errObj.requiredLength) {
-                return minLengthValidator(value, errObj.requiredLength);
-            }
-            return false;
-        case 'maxlength':
-            if(errObj.requiredLength) {
-                return minLengthValidator(value, errObj.requiredLength);
-            }
-            return false;
-        case 'pattern':
-            if(errObj.RegExp) {
-                return patternValidator(value, errObj.RegExp);
-            }
-            return false;
 
-        default:
-            return false;
-    }
+/**
+ * Mapping validating input and specified validator.
+ */
+const validatorFunction: { [key: string]: (value: any, errObj: ErrorObj) => boolean } = {
+    required: (value, errObj) => {
+        return requiredValidator(value);
+    },
+    minlength: (value, errObj) => {
+        if (errObj.requiredLength) {
+            return minLengthValidator(value, errObj.requiredLength);
+        }
+        return false
+    },
+    maxlength: (value, errObj) => {
+        if (errObj.requiredLength) {
+            return maxLengthValidator(value, errObj.requiredLength);
+        }
+        return false
+    },
+    min: (value, errObj) => {
+        if (errObj.requiredValue) {
+            value >= errObj.requiredValue;
+        }
+        return false;
+    },
+    max: (value, errObj) => {
+        if (errObj.requiredValue) {
+            value <= errObj.requiredValue;
+        }
+        return false;
+    },
+    pattern: (value, errObj) => {
+        if (errObj.RegExp) {
+            return patternValidator(value, errObj.RegExp);
+        }
+        return false
+    },
 }
 
 /**
@@ -88,8 +95,11 @@ export const checkErrors = (value: any, validators: validationConstraints): stri
     const errors = Object.keys(validators);
     let errorsOccurred: string[] = [];
     for (let err of errors) {
-        if (!checkValidators(value, err, validators[err])) {
-            errorsOccurred.push(getErrorMsg(err, validators[err]));
+        const handler = validatorFunction[err];
+        if (handler) {
+            if (!handler(value, validators[err])) {
+                errorsOccurred.push(getErrorMsg(err, validators[err]));
+            }
         }
     }
     return errorsOccurred;

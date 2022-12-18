@@ -3,8 +3,8 @@ export interface validationConstraints {
     minlength?: { requiredLength: number },
     maxlength?: { requiredLength: number },
     pattern?: RegExp,
-    // min?: {requiredValue: number},
-    // max?: {requiredValue: number},
+    min?: {requiredValue: number},
+    max?: {requiredValue: number},
     // type?: string,
     // step?: {requiredStep: number},
 
