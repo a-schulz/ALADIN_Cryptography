@@ -115,6 +115,7 @@ export class Rsa {
 
     /**
      * Generate an array filled with numbers, that have no common divisor other than 1 in relation to (p-1)*(q-q).
+     * Returns empty array if parameters are incorrect.
      * https://www.maths2mind.com/schluesselwoerter/teilerfremde-zahlen
      * @param {number} p
      * @param {number} q
@@ -122,6 +123,7 @@ export class Rsa {
      */
     static generatePossibleE(p: number, q: number): number[] {
         const result: number[] = [];
+        if(!p || !q) return result;
         const fn = (p - 1) * (q - 1);
         let idx = 2;
         while(idx < fn/2 || result.length < 10){
