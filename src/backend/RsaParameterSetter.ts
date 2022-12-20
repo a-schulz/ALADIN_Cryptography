@@ -83,7 +83,6 @@ export abstract class RsaParameterSetter {
         const finalPrimes: number[] = [...choiceOfPrime].sort((a, b) => a - b)
         this.p = finalPrimes[0];
         this.q = finalPrimes[1];
-        console.log("p: " + this.p + ", q: " + this.q);
     }
     public abstract setParameters(): RsaConfig;
 }

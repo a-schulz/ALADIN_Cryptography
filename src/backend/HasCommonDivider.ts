@@ -8,7 +8,6 @@ import {generatePrimes} from "./GeneratePrimes";
  */
 export function hasCommonDivider(firstNumber: number, secondNumber: number): boolean {
     const primeFact: number[] = [];
-    // console.log(firstNumber);
     const primes = generatePrimes(firstNumber.toString(2).length);
     primes.forEach((item) => {
         if (firstNumber % item == 0) primeFact.push(item);
