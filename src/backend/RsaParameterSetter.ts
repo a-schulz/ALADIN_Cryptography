@@ -76,16 +76,14 @@ export abstract class RsaParameterSetter {
     prepRsa(): void{
         //generating primes for RSA
         const primes = generatePrimes(this.bitLength);
-        let choiceOfPrime = new Set();
+        let choiceOfPrime = new Set<number>();
         while (choiceOfPrime.size < 2) {
-            choiceOfPrime = new Set<number>([getRandomInt(primes.length - 1), getRandomInt(primes.length - 1)].sort((a, b) => {
-                return a - b;
-            }));
+            choiceOfPrime.add(primes[getRandomInt(primes.length - 1)]);
         }
-        const choiceOfPrimeIterator = choiceOfPrime.values();
-        this.p = primes[choiceOfPrimeIterator.next().value];
-        this.q = primes[choiceOfPrimeIterator.next().value];
-        // console.log("p: " + this.p + ", q: " + this.q);
+        const finalPrimes: number[] = [...choiceOfPrime].sort((a, b) => a - b)
+        this.p = finalPrimes[0];
+        this.q = finalPrimes[1];
+        console.log("p: " + this.p + ", q: " + this.q);
     }
     public abstract setParameters(): RsaConfig;
 }
