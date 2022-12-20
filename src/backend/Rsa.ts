@@ -126,7 +126,7 @@ export class Rsa {
         if(!p || !q) return result;
         const fn = (p - 1) * (q - 1);
         let idx = 2;
-        while(idx < fn/2 || result.length < 10){
+        while(idx < fn/2 && result.length < 10){
             if (!hasCommonDivider(idx, fn)) result.push(idx);
             idx++;
         }
