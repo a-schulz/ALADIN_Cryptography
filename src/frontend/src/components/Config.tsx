@@ -31,7 +31,7 @@ export const Config = () => {
      */
     const validationConstraints: Record<string, validationConstraints> = {
         difficulty: {required: true},
-        bitLength: {required: true, min: {requiredValue: 3}, max: {requiredValue: 12}}
+        bitLength: {required: true, min: {requiredValue: 2}, max: {requiredValue: 10}, step: {requiredStep: 2}}
     };
 
     const renderOption = (text: string) => {
@@ -63,7 +63,7 @@ export const Config = () => {
                     {options.map(renderOption)}
                 </select>
                 <label htmlFor="bitLength" className="form-label">Enter your bitlength</label>
-                <input type="number" placeholder="3-7" id="bitLength" className="form-control"
+                <input type="number" placeholder={validationConstraints.bitLength.min?.requiredValue + " - " + validationConstraints.bitLength.max?.requiredValue} id="bitLength" className="form-control"
                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                            setBitLength(Number.parseInt(e.target.value));
                        }}
