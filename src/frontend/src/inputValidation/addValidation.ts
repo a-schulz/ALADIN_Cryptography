@@ -11,6 +11,7 @@ const validationAttributes: { [key: string]: (el: HTMLInputElement, val: any) =>
     min: (el, val) => { el.min = val.requiredValue; },
     max: (el, val) => { el.max = val.requiredValue; },
     pattern: (el, val) => { console.log(val); },
+    step: (el, val) => { el.step = val.requiredStep; },
 };
 
 /**
@@ -48,7 +49,7 @@ export const addCustomValidity = (validation: validationConstraints): void => {
         const addOnInvalid = () => {
             const errors: string[] = checkErrors(element.value, validation[id]);
             element.addEventListener("invalid", () => {
-                element.setCustomValidity(errors.join(" and "));
+                element.setCustomValidity(errors.filter(Boolean).join(" and "));
             });
         }
         element.addEventListener("change", () => {

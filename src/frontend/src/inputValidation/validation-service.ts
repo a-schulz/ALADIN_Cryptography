@@ -1,6 +1,9 @@
 import {getErrorMsg} from './error-messages';
 import {validationConstraints} from "./validationConstraints";
 
+// Bei den Funktionen muss beachtet werden, dass hier alles rein gesteckt werden kann. Deshalb muss innerhalb der
+// Funktionen immer geprüft werden, ob der Wert überhaupt existiert und vom richtigen Typ ist.
+
 /**
  * Validator for required input fields.
  * @param value
@@ -40,10 +43,21 @@ const patternValidator = (value: any, regex: RegExp): boolean => {
     return (!value && value != 0) ? false : regex.test(value);
 }
 
+/**
+ * Validator to check for minimum value of numbers.
+ * @param value
+ * @param step
+ * @returns {boolean} true if valid.
+ */
+const stepValidator = (value: any, step: number): boolean => {
+    return (!value && value != 0) ? false : Number.parseInt(value) % step == 0;
+}
+
 export interface ErrorObj {
     requiredLength?: number,
     requiredValue?: number;
-    RegExp?: RegExp
+    RegExp?: RegExp,
+    requiredStep?: number,
 }
 
 /**
@@ -67,13 +81,13 @@ const validatorFunction: { [key: string]: (value: any, errObj: ErrorObj) => bool
     },
     min: (value, errObj) => {
         if (errObj.requiredValue) {
-            value >= errObj.requiredValue;
+            return Number.parseInt(value) >= errObj.requiredValue;
         }
         return false;
     },
     max: (value, errObj) => {
         if (errObj.requiredValue) {
-            value <= errObj.requiredValue;
+            return Number.parseInt(value) <= errObj.requiredValue;
         }
         return false;
     },
@@ -83,6 +97,12 @@ const validatorFunction: { [key: string]: (value: any, errObj: ErrorObj) => bool
         }
         return false
     },
+    step: (value, errObj) => {
+        if (errObj.requiredStep) {
+            return stepValidator(value, errObj.requiredStep);
+        }
+        return false;
+    }
 }
 
 /**
@@ -95,11 +115,15 @@ export const checkErrors = (value: any, validators: validationConstraints): stri
     const errors = Object.keys(validators);
     let errorsOccurred: string[] = [];
     for (let err of errors) {
-        const handler = validatorFunction[err];
-        if (handler) {
-            if (!handler(value, validators[err])) {
+        const functionElement = validatorFunction[err];
+        if (functionElement) {
+            if (!functionElement(value, validators[err])) {
                 errorsOccurred.push(getErrorMsg(err, validators[err]));
-            }
+            }// else {
+            // console.log("No error found");
+            //}
+        }else{
+            console.log('No validatorFunction for error: ', err);
         }
     }
     return errorsOccurred;

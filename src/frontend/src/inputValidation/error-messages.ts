@@ -10,6 +10,7 @@ const errorMessages = {
     maxlength: (param: {requiredLength: number}) => `Max chars allowed is ${param.requiredLength}`,
     min: (param: {requiredValue: number}) => `Input must be at least ${param.requiredValue}`,
     max: (param: {requiredValue: number}) => `Input must not exceed ${param.requiredValue}`,
+    step: (param: {requiredStep: number}) => `Input must be a multiple of ${param.requiredStep}`,
 };
 
 /**
@@ -22,5 +23,6 @@ export const getErrorMsg = (err:string, errObj : ErrorObj): string => {
     if(errorMessages[err]) {
         return errorMessages[err](errObj);
     }
-    return "No errosMessage found"
+    console.log("Error message not found");
+    return "";
 }

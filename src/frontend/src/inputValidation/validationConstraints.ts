@@ -6,7 +6,7 @@ export interface validationConstraints {
     min?: {requiredValue: number},
     max?: {requiredValue: number},
     // type?: string,
-    // step?: {requiredStep: number},
+    step?: {requiredStep: number},
 
 }
 // https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/minlength
