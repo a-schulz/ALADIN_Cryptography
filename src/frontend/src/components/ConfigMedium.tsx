@@ -1,10 +1,10 @@
 import {useState} from "react";
 import {useLocation, useNavigate} from "react-router-dom";
-import {Difficulty} from "../../../backend/Difficulty";
-import {hasCommonDivider} from "../../../backend/HasCommonDivider";
-import {validationConstraints} from "../inputValidation/validationConstraints";
-import {useEffectOnce} from "../Utils/useEffectOnce";
-import {addCustomValidity, addValidationAttributesToElements} from "../inputValidation/addValidation";
+import {Difficulty} from "../../../backend/rsaCryptograpy/Difficulty";
+import {hasCommonDivider} from "../../../backend/rsaCryptograpy/HasCommonDivider";
+import {validationConstraints} from "../utils/inputValidation/validationConstraints";
+import {useEffectOnce} from "../utils/useEffectOnce";
+import {addCustomValidity, addValidationAttributesToElements} from "../utils/inputValidation/addValidation";
 import {ConfigMediumHelper} from "./ConfigMediumHelper";
 
 export const ConfigMedium = () => {

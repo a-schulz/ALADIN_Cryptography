@@ -1,10 +1,10 @@
 import {useEffect, useState} from "react";
 import {useLocation, useNavigate} from "react-router-dom";
-import {Rsa} from "../../../backend/Rsa";
-import {getRandomInt} from "../../../backend/GetRandomInt";
+import {Rsa} from "../../../backend/rsaCryptograpy/Rsa";
+import {getRandomInt} from "../../../backend/rsaCryptograpy/GetRandomInt";
 import {EncryptDecryptHelper} from "./EncryptDecryptHelper";
-import {useEffectOnce} from "../Utils/useEffectOnce";
-import {fetchAndSetAll, fetchJson} from "../Utils/fetchHelper";
+import {useEffectOnce} from "../utils/useEffectOnce";
+import {fetchAndSetAll, fetchJson} from "../utils/fetchHelper";
 
 export const EncryptDecrypt = () => {
     // import('random-word-by-length')
