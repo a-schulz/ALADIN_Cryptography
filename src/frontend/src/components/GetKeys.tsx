@@ -1,6 +1,6 @@
 import {useState} from "react";
 import {useLocation, useNavigate} from "react-router-dom";
-import {Rsa} from "../../../backend/Rsa";
+import {Rsa} from "../../../backend/rsaCryptograpy/Rsa";
 import {GetKeysHelper} from "./GetKeysHelper";
 
 export const GetKeys = () => {

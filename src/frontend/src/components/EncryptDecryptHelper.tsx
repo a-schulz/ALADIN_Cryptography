@@ -3,7 +3,7 @@ import 'katex/dist/katex.min.css';
 // @ts-ignore
 import { InlineMath, BlockMath } from 'react-katex';
 import {useEffectOnce} from "../Utils/useEffectOnce";
-import {Rsa} from "../../../backend/Rsa";
+import {Rsa} from "../../../backend/rsaCryptograpy/Rsa";
 
 export const EncryptDecryptHelper = (props: {textToEncrypt:number, textToDecrypt:number, rsa:Rsa}) => {
 

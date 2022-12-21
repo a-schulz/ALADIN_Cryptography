@@ -2,7 +2,7 @@ import {AutomaticParameterSetter, PseudoSetter, SetPQ} from "./RsaParameterSette
 import {Difficulty} from "./Difficulty";
 import {RsaConfig} from "./RsaConfig";
 import {UserConfig} from "./UserConfig";
-import {configTypes} from "../backend/configTypes";
+import {configTypes} from "./configTypes";
 
 export class RsaConfigHandler {
     private RSAConfig: RsaConfig;

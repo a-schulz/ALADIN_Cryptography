@@ -1,5 +1,5 @@
-import {RsaConfig} from "../RsaConfig";
-import {Rsa} from "../Rsa";
+import {RsaConfig} from "../rsaCryptograpy/RsaConfig";
+import {Rsa} from "../rsaCryptograpy/Rsa";
 
 const text = "ALADIN";
 
@@ -52,7 +52,7 @@ console.log("Schritt für Schritt");
 const rsa = new Rsa(rsaConfig);
 console.log(rsa);
 console.log("Text: " + text);
-const textAsBytes = text2Binary(text)
+const textAsBytes = text2Binary(text);
 console.log("Byte: " + textAsBytes);
 const textAsDecimal = binary2Decimal(textAsBytes);
 console.log("Dezimal: " + textAsDecimal);

@@ -1,5 +1,5 @@
-import {Rsa} from "../Rsa";
-import {RsaConfig} from "../RsaConfig";
+import {Rsa} from "../rsaCryptograpy/Rsa";
+import {RsaConfig} from "../rsaCryptograpy/RsaConfig";
 
 
 const text = "ALA";

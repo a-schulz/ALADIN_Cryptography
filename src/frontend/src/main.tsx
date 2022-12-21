@@ -9,7 +9,6 @@ import {ConfigHard} from "./components/ConfigHard";
 import {GetKeys} from "./components/GetKeys";
 import {EncryptDecrypt} from "./components/EncryptDecrypt";
 import {NavBar} from "./components/NavBar";
-import Test from "./test/Test";
 import OrgChartTree from "./test/Tree";
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
@@ -22,7 +21,6 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
                 <Route path="/hard" element={<ConfigHard/>}/>
                 <Route path="/task/get-keys" element={<GetKeys/>}/>
                 <Route path="/task/encrypt-decrypt" element={<EncryptDecrypt/>}/>
-                <Route path="/test" element={<Test/>}/>
                 <Route path="/test/tree" element={<OrgChartTree/>}/>
             </Routes>
         </BrowserRouter>

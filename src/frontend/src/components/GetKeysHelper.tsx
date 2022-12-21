@@ -1,9 +1,9 @@
 import React, {EffectCallback, useEffect, useState} from 'react';
-import {ExtEuclidAlgo} from "../../../backend/ExtEuclidAlgo";
+import {ExtEuclidAlgo} from "../../../backend/rsaCryptograpy/ExtEuclidAlgo";
 // @ts-ignore
 import {InlineMath, BlockMath} from 'react-katex';
 import {useEffectOnce} from "../Utils/useEffectOnce";
-import {Rsa} from "../../../backend/Rsa";
+import {Rsa} from "../../../backend/rsaCryptograpy/Rsa";
 export const GetKeysHelper = (props: {rsa:Rsa}) => {
 
     const rsa = props.rsa;
