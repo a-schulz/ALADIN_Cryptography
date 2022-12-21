@@ -5,23 +5,36 @@ import {getRandomInt} from "../../../backend/rsaCryptograpy/GetRandomInt";
 import {EncryptDecryptHelper} from "./EncryptDecryptHelper";
 import {useEffectOnce} from "../utils/useEffectOnce";
 import {fetchAndSetAll, fetchJson} from "../utils/fetchHelper";
+import {addCustomValidity, addValidationAttributesToElements} from "../utils/inputValidation/addValidation";
+import {validationConstraints} from "../utils/inputValidation/validationConstraints";
+
+//Todo: Validation with hidden input?
+
+interface EncryptDecryptInput {
+    chiffratNumeric: number,
+    messageNumeric: number,
+    chiffratText: string,
+    messageText: string,
+}
 
 export const EncryptDecrypt = () => {
-    // import('random-word-by-length')
-    const randomWord = (length: number) => {
-        return "dummy";
-    }
+
     const location = useLocation();
     const navigate = useNavigate();
     const rsa = new Rsa(location.state._rsaConfig);
     const [numberToEncrypt, setNumberToEncrypt] = useState(getRandomInt(20));
     const [numberToDecrypt, setNumberToDecrypt] = useState(getRandomInt(20));
-    const [textToEncrypt, setTextToEncrypt] = useState(randomWord(6));
-    const [textToDecrypt, setTextToDecrypt] = useState(randomWord(6));
-    const [inputs, setInputs] = useState({
-        chiffrat: 0,
-        plainText: 0
-    });
+    const [textToEncrypt, setTextToEncrypt] = useState("");
+    const [textToDecrypt, setTextToDecrypt] = useState("");
+    const [inputs, setInputs] = useState({} as EncryptDecryptInput);
+
+    const validationConstraints: Record<string, validationConstraints> = {
+        chiffratNumeric: {required: true},
+        messageNumeric: {required: true},
+        chiffratText: {required: true},
+        messageText: {required: true},
+    };
+
 
     useEffectOnce(() => {
         fetchAndSetAll([
@@ -34,12 +47,13 @@ export const EncryptDecrypt = () => {
                     setter: setTextToDecrypt
                 }
             ]
-        )
+        );
+        addValidationAttributesToElements(validationConstraints);
+        addCustomValidity(validationConstraints);
     });
-
-
     // true if text should be used
     const [encryptText, setEncryptText] = useState("");
+
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const name = event.target.id;
@@ -47,10 +61,19 @@ export const EncryptDecrypt = () => {
         setInputs(values => ({...values, [name]: value}))
     }
 
+    const inputCorrect = (input: EncryptDecryptInput, rsa: Rsa) => {
+        if(rsa.encode(numberToEncrypt, rsa.publicKey) == inputs.chiffratNumeric &&
+        rsa.decode(numberToDecrypt) == inputs.messageNumeric &&
+        rsa.encode(textToEncrypt, rsa.publicKey) == inputs.chiffratText &&
+        rsa.decode(textToDecrypt) == inputs.messageText) {
+            return true;
+        }
+        return false;
+    }
+
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        console.log(textToEncrypt)
-        if (rsa.encode(numberToEncrypt, rsa.publicKey) == inputs.chiffrat && rsa.decode(numberToDecrypt) == inputs.plainText) {
+        if (!inputCorrect(inputs, rsa)) {
             alert("Correct")
         } else {
             alert("Wrong");
@@ -79,13 +102,13 @@ export const EncryptDecrypt = () => {
                 <h4>Encrypting/Decrypting text</h4>
                 <form onSubmit={(e) => handleSubmit(e)}>
                     <h3>You want to send your friend the following message: "{textToEncrypt}". Please encrypt it.</h3>
-                    <input type="number" placeholder="Enter your solution..." id="chiffrat" className="form-control"
-                           onChange={handleChange} required/>
+                    <input type="number" placeholder="Enter your solution..." id="chiffratText" className="form-control"
+                           onChange={handleChange}/>
 
                     <h3>You got the following message: "{textToDecrypt}". Decrypt it.</h3>
-                    <input type="number" placeholder="Enter the original message..." id="plainText"
+                    <input type="number" placeholder="Enter the original message..." id="messageText"
                            className="form-control"
-                           onChange={handleChange} required/>
+                           onChange={handleChange}/>
                     <button type="submit" className="btn btn-outline-primary" data-bs-toggle="modal"
                             data-bs-target="#staticBackdrop">Submit
                     </button>
@@ -95,13 +118,14 @@ export const EncryptDecrypt = () => {
                 <h4>Encrypting/Decrypting numbers</h4>
                 <form onSubmit={(e) => handleSubmit(e)}>
                     <h3>You want to send your friend the following message: "{numberToEncrypt}". Please encrypt it.</h3>
-                    <input type="number" placeholder="Enter your solution..." id="chiffrat" className="form-control"
-                           onChange={handleChange} required/>
+                    <input type="number" placeholder="Enter your solution..." id="chiffratNumeric"
+                           className="form-control"
+                           onChange={handleChange}/>
 
                     <h3>You got the following message: "{numberToDecrypt}". Decrypt it.</h3>
-                    <input type="number" placeholder="Enter the original message..." id="plainText"
+                    <input type="number" placeholder="Enter the original message..." id="messageNumeric"
                            className="form-control"
-                           onChange={handleChange} required/>
+                           onChange={handleChange}/>
                     <button type="submit" className="btn btn-outline-primary" data-bs-toggle="modal"
                             data-bs-target="#staticBackdrop">Submit
                     </button>
