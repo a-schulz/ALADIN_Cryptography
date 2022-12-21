@@ -75,7 +75,7 @@ export abstract class RsaParameterSetter {
 
     prepRsa(): void{
         //generating primes for RSA
-        const primes = generatePrimes(this.bitLength);
+        const primes = generatePrimes(this.bitLength, false);
         let choiceOfPrime = new Set<number>();
         while (choiceOfPrime.size < 2) {
             choiceOfPrime.add(primes[getRandomInt(primes.length - 1)]);

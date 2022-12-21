@@ -4,8 +4,19 @@
  * @returns {boolean}
  */
 export function isPrime(possiblePrime: number): boolean {
-    for (let i = 2; i < Math.sqrt(possiblePrime); i++) {
-        if (possiblePrime % i == 0) return false;
+    if (possiblePrime < 2) {
+        return false;
+    }
+    if (possiblePrime === 2) {
+        return true;
+    }
+    if (possiblePrime % 2 === 0) {
+        return false;
+    }
+    for (let i = 3; i <= Math.sqrt(possiblePrime); i += 2) {
+        if (possiblePrime % i === 0) {
+            return false;
+        }
     }
     return true;
 }
