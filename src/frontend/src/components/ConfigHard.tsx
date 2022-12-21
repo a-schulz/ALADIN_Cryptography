@@ -1,15 +1,18 @@
 import {useState} from "react";
 import {useLocation, useNavigate} from "react-router-dom";
-import {Difficulty} from "../../../backend/Difficulty";
-import {UserConfig} from "../../../backend/UserConfig";
-import {hasCommonDivider} from "../../../backend/HasCommonDivider";
-import {isPrime} from "../../../backend/IsPrime";
+import {Difficulty} from "../../../backend/rsaCryptograpy/Difficulty";
+import {UserConfig} from "../../../backend/rsaCryptograpy/UserConfig";
+import {hasCommonDivider} from "../../../backend/rsaCryptograpy/HasCommonDivider";
+import {isPrime} from "../../../backend/rsaCryptograpy/IsPrime";
+import {useEffectOnce} from "../utils/useEffectOnce";
+import {addCustomValidity, addValidationAttributesToElements} from "../utils/inputValidation/addValidation";
+import {validationConstraints} from "../utils/inputValidation/validationConstraints";
+import {ConfigHardHelper} from "./ConfigHardHelper";
 
 export const ConfigHard = () => {
     const location = useLocation();
 
     const userConfig = location.state;
-    console.log(userConfig)
     const [p, setP] = useState<number>(0);
     const [q, setQ] = useState<number>(0);
     const [e, setE] = useState<number>(0);
@@ -21,10 +24,25 @@ export const ConfigHard = () => {
     } as UserConfig;
     const navigate = useNavigate();
 
+    /**
+     * Containing the validity-checks and the ids of the elements as keys.
+     */
+    const validationConstraints: Record<string, validationConstraints> = {
+        e: {required: true},
+        p: {required: true},
+        q: {required: true},
+    };
+
+    useEffectOnce(() => {
+        addValidationAttributesToElements(validationConstraints);
+        addCustomValidity(validationConstraints);
+    })
+
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         if(!inputCorrect(inputs)){
-            alert("Your input is not correct!");
+            alert("Your input is not correct!\n" +
+                "Check you input or consider looking into the solution aids.");
             return;
         }
         navigate("/task/get-keys", {
@@ -48,7 +66,8 @@ export const ConfigHard = () => {
             input.p != input.q &&
             input.bitLength <= input.p.toString(2).length &&
             input.bitLength <= input.q.toString(2).length &&
-            hasCommonDivider(input.e, (input.p - 1) * (input.q -1) )
+            !hasCommonDivider(input.e, (input.p - 1) * (input.q -1)) &&
+            input.e > 1
         ) return true;
         return false;
     }
@@ -60,15 +79,16 @@ export const ConfigHard = () => {
             <form onSubmit={(e) => handleSubmit(e)}>
                 <label htmlFor="p" className="form-label">Choose a suitable value for p!</label>
                 <input type="text" placeholder="" id="p" className="form-control"
-                       onChange={(e) => setP(Number.parseInt(e.target.value))} required/>
+                       onChange={(e) => setP(Number.parseInt(e.target.value))}/>
                 <label htmlFor="q" className="form-label">Choose a suitable value for q!</label>
                 <input type="text" placeholder="" id="q" className="form-control"
-                       onChange={(e) => setQ(Number.parseInt(e.target.value))} required />
+                       onChange={(e) => setQ(Number.parseInt(e.target.value))} />
                 <label htmlFor="e" className="form-label">Choose a suitable value for e!</label>
                 <input type="text" placeholder="" id="e" className="form-control"
-                       onChange={(e) => setE(Number.parseInt(e.target.value))} required />
+                       onChange={(e) => setE(Number.parseInt(e.target.value))} />
                 <button type="submit" className="btn btn-outline-primary">Submit</button>
             </form>
+            <ConfigHardHelper bitLength={userConfig.bitLength}/>
         </div>
     )
 }

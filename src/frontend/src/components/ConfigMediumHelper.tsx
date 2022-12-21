@@ -59,6 +59,13 @@ export const ConfigMediumHelper = (props: { p: number, q: number }) => {
                                     <h5>Formula:</h5>
                                     <BlockMath math={'GCD(e, \\phi) = 1'}/>
                                     <InlineMath math={"\\phi = (p-1)\\times(q-1)"}/>
+                                    <p>E is coprime to <InlineMath
+                                        math={"\\phi"}/> and smaller than <InlineMath math={"\\phi"}/>. We can
+                                        use the <a href="https://en.wikipedia.org/wiki/Euclidean_algorithm">Euclidean
+                                            algorithm</a> to find the greatest common divisor of <InlineMath
+                                            math={"\\phi"}/> and e. If the greatest common divisor is 1, we have
+                                        found a
+                                        valid e.</p>
                                 </div>
                             </div>
                         </div>
