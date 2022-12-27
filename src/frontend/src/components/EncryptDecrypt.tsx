@@ -27,6 +27,8 @@ export const EncryptDecrypt = () => {
     const [textToEncrypt, setTextToEncrypt] = useState("");
     const [textToDecrypt, setTextToDecrypt] = useState("");
     const [inputs, setInputs] = useState({} as EncryptDecryptInput);
+    // true if text should be used
+    const [encryptText, setEncryptText] = useState(false);
 
     const validationConstraints: Record<string, validationConstraints> = {
         chiffratNumeric: {required: true},
@@ -34,7 +36,6 @@ export const EncryptDecrypt = () => {
         chiffratText: {required: true},
         messageText: {required: true},
     };
-
 
     useEffectOnce(() => {
         fetchAndSetAll([
@@ -51,9 +52,6 @@ export const EncryptDecrypt = () => {
         addValidationAttributesToElements(validationConstraints);
         addCustomValidity(validationConstraints);
     });
-    // true if text should be used
-    const [encryptText, setEncryptText] = useState("");
-
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const name = event.target.id;
@@ -62,22 +60,23 @@ export const EncryptDecrypt = () => {
     }
 
     const inputCorrect = (input: EncryptDecryptInput, rsa: Rsa) => {
-        if(rsa.encode(numberToEncrypt, rsa.publicKey) == inputs.chiffratNumeric &&
-        rsa.decode(numberToDecrypt) == inputs.messageNumeric &&
-        rsa.encode(textToEncrypt, rsa.publicKey) == inputs.chiffratText &&
-        rsa.decode(textToDecrypt) == inputs.messageText) {
-            return true;
+        if (encryptText) {
+            return false;
+            // rsa.encode(textToEncrypt, rsa.publicKey) == inputs.chiffratText &&
+            //     rsa.decode(textToDecrypt) == inputs.messageText
+
+        }else{
+           return (rsa.encode(numberToEncrypt, rsa.publicKey) == inputs.chiffratNumeric &&
+               rsa.decode(numberToDecrypt) == inputs.messageNumeric);
         }
-        return false;
     }
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         if (!inputCorrect(inputs, rsa)) {
-            alert("Correct")
-        } else {
-            alert("Wrong");
-
+            alert("Your solution is not correct." +
+            "Please check your input.\n" +
+            "Consider looking into the solution aids.");
         }
     }
 
