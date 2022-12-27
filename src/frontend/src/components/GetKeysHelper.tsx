@@ -120,8 +120,8 @@ export const GetKeysHelper = (props: {rsa:Rsa}) => {
                                             </li>
                                             <li className="list-group-item">
                                                 Now fill in e and <InlineMath math={"\\phi"}/> using the following formulas:
-                                                <p><InlineMath math={"ei = \\phi{i-1}"}/></p>
-                                                <p><InlineMath math={"\\phii = r{i-1}"}/></p>
+                                                <p><InlineMath math={"e_i = \\phi_{i-1}"}/></p>
+                                                <p><InlineMath math={"\\phi_i = r_{i-1}"}/></p>
                                             </li>
                                             <li className="list-group-item">
                                             Repeate step 2. to 4. until <InlineMath math={"r = 0"}/>
@@ -254,7 +254,7 @@ export const GetKeysHelper = (props: {rsa:Rsa}) => {
                                     </table>
 
                                     <p>Initial values of x=0 and y=1 in the last row. The values above can be calculated using the following formulas:</p>
-                                    <BlockMath math={"xi =  y{(i+1)},\\ yi =  x{(i + 1)} - (qi \\times y{(i+1)})"}/>
+                                    <BlockMath math={"x_i =  y_{(i+1)},\\ y_i =  x_{(i + 1)} - (q_i \\times y_{(i+1)})"}/>
                                     <p>Now you can work your way up and fill in the missing values using the formulas above.</p>
                                 </div>
                             </div>
@@ -333,13 +333,13 @@ export const GetKeysHelper = (props: {rsa:Rsa}) => {
                             <div id="panelsStayOpen-collapseWhatsD" className="accordion-collapse collapse"
                                  aria-labelledby="panelsStayOpen-headingWhatsD">
                                 <div className="accordion-body">
-                                    <p>Look at the value of <InlineMath math={"x1"}/> if this value is positive then this is your D! </p>
-                                    <p><InlineMath math={"D = x1"}/></p>
+                                    <p>Look at the value of <InlineMath math={"x_1"}/> if this value is positive then this is your D! </p>
+                                    <p><InlineMath math={"D = x_1"}/></p>
                                     <p>If it is negative than you have to do one more step. </p>
-                                    <p><InlineMath math={"D = \\phi1 - x1"}/></p>
+                                    <p><InlineMath math={"D = \\phi_1 - x_1"}/></p>
                                     <h5>The Formula:</h5>
-                                    <BlockMath math={"D=\\left\\{\\begin{array}{ll} x1, & x \\ge 0 \\\\\n" +
-                                        "\\phi1 + x1, & x<0\\end{array}\\right."}/>
+                                    <BlockMath math={"D=\\left\\{\\begin{array}{ll} x_1, & x \\ge 0 \\\\\n" +
+                                        "\\phi_1 - x_1, & x<0\\end{array}\\right."}/>
                                 </div>
                             </div>
                         </div>
