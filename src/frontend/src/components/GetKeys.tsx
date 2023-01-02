@@ -55,7 +55,8 @@ export const GetKeys = () => {
     const inputCorrect = (input: UserKeys, rsa: Rsa) => {
         if (input.publicE != rsa.publicKey["exponent"]) return false;
         if (input.privateD != rsa.privateKey["exponent"]) return false;
-        if (input.publicN != input.privateN && input.publicN != rsa.publicKey["divisor"]) return false;
+        if (input.publicN != input.privateN) return false;
+        if(input.publicN != rsa.publicKey["divisor"]) return false;
         return true;
     }
 
