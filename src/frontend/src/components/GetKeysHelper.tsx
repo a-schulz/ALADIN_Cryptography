@@ -355,7 +355,7 @@ export const GetKeysHelper = (props: {rsa:Rsa}) => {
                                  aria-labelledby="panelsStayOpen-headingSolution">
                                 <div className="accordion-body">
                                     <h5>Final solution:</h5>
-                                    <BlockMath math={"N = ("+ rsa.p + "-1)\\times (" + rsa.q+"-1) =" + rsa.publicKey["divisor"]}/>
+                                    <BlockMath math={"N = "+ rsa.p + "\\times" + rsa.q+  "=" + rsa.publicKey["divisor"]}/>
                                     <BlockMath math={formulaD}/>
                                 </div>
                             </div>
