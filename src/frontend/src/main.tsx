@@ -9,7 +9,7 @@ import {ConfigHard} from "./components/ConfigHard";
 import {GetKeys} from "./components/GetKeys";
 import {EncryptDecrypt} from "./components/EncryptDecrypt";
 import {NavBar} from "./components/NavBar";
-import OrgChartTree from "./tmp/Tree";
+import {Ascii} from "./tmp/Ascii";
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
     <React.StrictMode>
@@ -21,7 +21,7 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
                 <Route path="/hard" element={<ConfigHard/>}/>
                 <Route path="/task/get-keys" element={<GetKeys/>}/>
                 <Route path="/task/encrypt-decrypt" element={<EncryptDecrypt/>}/>
-                <Route path="/test/tree" element={<OrgChartTree/>}/>
+                <Route path="/test/ascii" element={<Ascii/>}/>
             </Routes>
         </BrowserRouter>
     </React.StrictMode>

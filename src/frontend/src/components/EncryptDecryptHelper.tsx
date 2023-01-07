@@ -5,7 +5,7 @@ import { InlineMath, BlockMath } from 'react-katex';
 import {useEffectOnce} from "../utils/useEffectOnce";
 import {Rsa} from "../../../backend/rsaCryptograpy/Rsa";
 
-export const EncryptDecryptHelper = (props: {textToEncrypt:number, textToDecrypt:number, rsa:Rsa}) => {
+export const EncryptDecryptHelper = (props: {textToEncrypt:number, textToDecrypt:number, rsa:Rsa, encryptText:boolean}) => {
 
     const encryptFormula = 'Geheimtext = Klartext^e \\mod  N';
     const decryptFormula = 'Klartext = Geheimtext^d \\mod  N';
@@ -87,9 +87,9 @@ export const EncryptDecryptHelper = (props: {textToEncrypt:number, textToDecrypt
                                  aria-labelledby="panelsStayOpen-headingThree">
                                 <div className="accordion-body">
                                     <h5>Encryption:</h5>
-                                    <BlockMath math={encryptFormulaApplied + "=" + props.rsa.encode(props.textToEncrypt, props.rsa.publicKey)} />
+                                    <BlockMath math={encryptFormulaApplied + "=" + props.rsa.encodeNumeric(props.textToEncrypt, props.rsa.publicKey)} />
                                     <h5>Decryption:</h5>
-                                    <BlockMath math={decryptFormulaApplied + "=" + props.rsa.decode(props.textToDecrypt)} />
+                                    <BlockMath math={decryptFormulaApplied + "=" + props.rsa.decodeNumeric(props.textToDecrypt)} />
                                 </div>
                             </div>
                         </div>

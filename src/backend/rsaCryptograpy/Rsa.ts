@@ -11,6 +11,8 @@ import {RsaConfig} from "./RsaConfig";
 import {hasCommonDivider} from "./HasCommonDivider";
 import {RsaKey} from "./RsaKey";
 import {ExtEuclidAlgo} from "./ExtEuclidAlgo";
+import {ascii} from "../../frontend/src/tmp/Ascii";
+import {char2DecimalAscii} from "../utils/converterFunctions";
 
 export class Rsa {
     private _p!: number;
@@ -138,7 +140,7 @@ export class Rsa {
      * @param {number} number
      * @returns {number}
      */
-    decode(number: number): number {
+    decodeNumeric(number: number): number {
         return Number(BigInt(number) ** BigInt(this.privateKey["exponent"]) % BigInt(this.privateKey["divisor"]));
     }
 
@@ -148,7 +150,48 @@ export class Rsa {
      * @param {number} publicKey
      * @returns {number}
      */
-    encode(number: number, publicKey: RsaKey): number {
+    encodeNumeric(number: number, publicKey: RsaKey): number {
         return Number(BigInt(number) ** BigInt(publicKey["exponent"]) % BigInt(publicKey["divisor"]));
+    }
+
+    /**
+     * Decodes a given string using its own private key.
+     * @returns {string}
+     * @param s
+     */
+    decodeString(s: string): string {
+        const regexp = new RegExp(/\[.*?\]/g);
+        let index = 0;
+        let result: number[] = [];
+        const matches = s.matchAll(regexp);
+        for (const match of matches) {
+            if(char2DecimalAscii(match[0]) > -1) {
+                result = result.concat(s.slice(index, match.index).split("").map((char) => char2DecimalAscii(char)));
+                result.push(char2DecimalAscii(match[0]));
+            }else {
+                // @ts-ignore
+                result = result.concat(s.slice(index, match.index + match[0].length).split("").map((char) => char2DecimalAscii(char)));
+            }
+            // @ts-ignore
+            index = match.index + match[0].length;
+        }
+        while(index < s.length) {
+            result.push(char2DecimalAscii(s[index]));
+            index++;
+        }
+        return result.map((number) => {
+            return ascii[this.decodeNumeric(number)].char
+        }).join("");
+    }
+
+    /**
+     * Encrypts a given string using the given public key.
+     * @param string
+     * @param publicKey
+     */
+    encodeString(string: string, publicKey: RsaKey): string {
+        return string.split("").map((char) => {
+            return ascii[this.encodeNumeric(char2DecimalAscii(char), publicKey)].char
+        }).join("");
     }
 }
