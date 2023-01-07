@@ -40,6 +40,8 @@ export const GetKeys = () => {
         const id = event.target.id;
         const value = Number.parseInt(event.target.value);
         setInputs(values => ({...values, [id]: value}))
+        console.log(inputs.publicN);
+        console.log(rsa.publicKey["divisor"]);
     }
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
