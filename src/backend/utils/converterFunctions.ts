@@ -1,4 +1,4 @@
-import {ascii} from "../../frontend/src/tmp/Ascii";
+import {ascii} from "../../frontend/src/components/Ascii";
 
 /**
  * Converts given text to array of corresponding decimal numbers. (ASCII)

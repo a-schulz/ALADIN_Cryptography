@@ -11,7 +11,7 @@ import {RsaConfig} from "./RsaConfig";
 import {hasCommonDivider} from "./HasCommonDivider";
 import {RsaKey} from "./RsaKey";
 import {ExtEuclidAlgo} from "./ExtEuclidAlgo";
-import {ascii} from "../../frontend/src/tmp/Ascii";
+import {ascii} from "../../frontend/src/components/Ascii";
 import {char2DecimalAscii} from "../utils/converterFunctions";
 
 export class Rsa {

@@ -1,28 +1,100 @@
-
 export const Ascii = () => {
     return (
-        <div>
+        <div className={"container"}>
             <h1>ASCII Table</h1>
-            <table className="table table-striped">
-                <thead>
-                <tr>
-                    <th scope="col">Decimal</th>
-                    <th scope="col">Character</th>
-                    <th scope="col">Description</th>
-                </tr>
-                </thead>
-                <tbody>
-                {Object.keys(ascii).map((key) => {
-                    return (
-                        <tr key={key}>
-                            <td>{key}</td>
-                            <td>{ascii[key].char}</td>
-                            <td>{ascii[key].name}</td>
+            <div className="row align-items-start">
+                <div className={"col"}>
+                    <table className="table table-striped">
+                        <thead>
+                        <tr>
+                            <th scope="col">Decimal</th>
+                            <th scope="col">Character</th>
+                            <th scope="col">Description</th>
                         </tr>
-                    )
-                })}
-                </tbody>
-            </table>
+                        </thead>
+                        <tbody>
+                        {Object.keys(ascii).filter((e) => Number.parseInt(e) <= 32).map((key) => {
+                            return (
+                                <tr key={key}>
+                                    <td>{key}</td>
+                                    <td>{ascii[key].char}</td>
+                                    <td>{ascii[key].name}</td>
+                                </tr>
+                            )
+                        })}
+                        </tbody>
+                    </table>
+                </div>
+                <div className={"col"}>
+                    <table className="table table-striped">
+                        <thead>
+                        <tr>
+                            <th scope="col">Decimal</th>
+                            <th scope="col">Character</th>
+                            <th scope="col">Description</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {Object.keys(ascii).filter((e) => Number.parseInt(e) > 32 && Number.parseInt(e) <= 64).map((key) => {
+                            return (
+                                <tr key={key}>
+                                    <td>{key}</td>
+                                    <td>{ascii[key].char}</td>
+                                    <td>{ascii[key].name}</td>
+                                </tr>
+                            )
+                        })}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div className="row align-items-start">
+                <div className={"col"}>
+                    <table className="table table-striped">
+                        <thead>
+                        <tr>
+                            <th scope="col">Decimal</th>
+                            <th scope="col">Character</th>
+                            <th scope="col">Description</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {Object.keys(ascii).filter((e) => Number.parseInt(e) > 64 && Number.parseInt(e) <= 96).map((key) => {
+                            return (
+                                <tr key={key}>
+                                    <td>{key}</td>
+                                    <td>{ascii[key].char}</td>
+                                    <td>{ascii[key].name}</td>
+                                </tr>
+                            )
+                        })}
+                        </tbody>
+                    </table>
+                </div>
+                <div className={"col"}>
+                    <table className="table table-striped">
+                        <thead>
+                        <tr>
+                            <th scope="col">Decimal</th>
+                            <th scope="col">Character</th>
+                            <th scope="col">Description</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {Object.keys(ascii).filter((e) => Number.parseInt(e) > 96).map((key) => {
+                            return (
+                                <tr key={key}>
+                                    <td>{key}</td>
+                                    <td>{ascii[key].char}</td>
+                                    <td>{ascii[key].name}</td>
+                                </tr>
+                            )
+                        })}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     );
 }

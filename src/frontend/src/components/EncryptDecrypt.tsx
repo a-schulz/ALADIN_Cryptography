@@ -1,5 +1,5 @@
 import {useState} from "react";
-import {useLocation, useNavigate} from "react-router-dom";
+import {useLocation} from "react-router-dom";
 import {Rsa} from "../../../backend/rsaCryptograpy/Rsa";
 import {getRandomInt} from "../../../backend/rsaCryptograpy/GetRandomInt";
 import {EncryptDecryptHelper} from "./EncryptDecryptHelper";
@@ -18,11 +18,10 @@ interface EncryptDecryptInput {
 export const EncryptDecrypt = () => {
 
     const location = useLocation();
-    const navigate = useNavigate();
     const rsaNumeric = new Rsa(location.state._rsaConfig);
     const rsaString = new Rsa({p: 7, q: 17, e: 5});
-    const [numberToEncrypt, setNumberToEncrypt] = useState(getRandomInt(20));
-    const [numberToDecrypt, setNumberToDecrypt] = useState(getRandomInt(20));
+    const [numberToEncrypt] = useState(getRandomInt(20));
+    const [numberToDecrypt] = useState(getRandomInt(20));
     const [textToEncrypt, setTextToEncrypt] = useState("");
     const [textToDecrypt, setTextToDecrypt] = useState("");
     const [inputs, setInputs] = useState({} as EncryptDecryptInput);
@@ -131,8 +130,8 @@ export const EncryptDecrypt = () => {
                     </button>
                 </form>
             </div>
-            <EncryptDecryptHelper textToEncrypt={numberToEncrypt} textToDecrypt={numberToDecrypt}
-                                  rsa={rsaNumeric} encryptText={encryptText}></EncryptDecryptHelper>
+            <EncryptDecryptHelper numberToEncrypt={numberToEncrypt} numberToDecrypt={numberToDecrypt}
+                                  rsaNumeric={rsaNumeric} rsaString={rsaString} encryptText={encryptText} textToDecrypt={textToDecrypt} textToEncrypt={textToEncrypt}></EncryptDecryptHelper>
         </div>
     )
 }
