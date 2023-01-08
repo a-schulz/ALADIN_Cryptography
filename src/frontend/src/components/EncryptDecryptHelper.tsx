@@ -4,7 +4,7 @@ import 'katex/dist/katex.min.css';
 import {InlineMath, BlockMath} from 'react-katex';
 import {useEffectOnce} from "../utils/useEffectOnce";
 import {Rsa} from "../../../backend/rsaCryptograpy/Rsa";
-import {char2DecimalAscii} from "../../../backend/utils/converterFunctions";
+import {char2DecimalAscii, string2CharAscii} from "../../../backend/utils/converterFunctions";
 import {ascii} from "./Ascii";
 
 export const EncryptDecryptHelper = (props: {
@@ -186,10 +186,9 @@ export const EncryptDecryptHelper = (props: {
                                             </tr>
                                             </thead>
                                             <tbody>
-                                            {props.textToEncrypt.split("").map((value) => {
+                                            {string2CharAscii(props.textToEncrypt).map((value) => {
                                                 return <tr>
-                                                    <td>{value}
-                                                    </td>
+                                                    <td>{value}</td>
                                                     <td>{char2DecimalAscii(value)}</td>
                                                     <td>{props.rsaString.encodeNumeric(char2DecimalAscii(value), props.rsaString.publicKey)}</td>
                                                     <td>{ascii[props.rsaString.encodeNumeric(char2DecimalAscii(value), props.rsaString.publicKey)].char}</td>
@@ -212,7 +211,7 @@ export const EncryptDecryptHelper = (props: {
                                             </tr>
                                             </thead>
                                             <tbody>
-                                            {props.textToDecrypt.split("").map((value) => {
+                                            {string2CharAscii(props.textToDecrypt).map((value) => {
                                                 return <tr>
                                                     <td>{value}
                                                     </td>

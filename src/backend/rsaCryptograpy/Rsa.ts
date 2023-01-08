@@ -12,7 +12,7 @@ import {hasCommonDivider} from "./HasCommonDivider";
 import {RsaKey} from "./RsaKey";
 import {ExtEuclidAlgo} from "./ExtEuclidAlgo";
 import {ascii} from "../../frontend/src/components/Ascii";
-import {char2DecimalAscii} from "../utils/converterFunctions";
+import {char2DecimalAscii, string2DecimalAscii} from "../utils/converterFunctions";
 
 export class Rsa {
     private _p!: number;
@@ -160,26 +160,7 @@ export class Rsa {
      * @param s
      */
     decodeString(s: string): string {
-        const regexp = new RegExp(/\[.*?\]/g);
-        let index = 0;
-        let result: number[] = [];
-        const matches = s.matchAll(regexp);
-        for (const match of matches) {
-            if(char2DecimalAscii(match[0]) > -1) {
-                result = result.concat(s.slice(index, match.index).split("").map((char) => char2DecimalAscii(char)));
-                result.push(char2DecimalAscii(match[0]));
-            }else {
-                // @ts-ignore
-                result = result.concat(s.slice(index, match.index + match[0].length).split("").map((char) => char2DecimalAscii(char)));
-            }
-            // @ts-ignore
-            index = match.index + match[0].length;
-        }
-        while(index < s.length) {
-            result.push(char2DecimalAscii(s[index]));
-            index++;
-        }
-        return result.map((number) => {
+        return string2DecimalAscii(s).map((number) => {
             return ascii[this.decodeNumeric(number)].char
         }).join("");
     }
@@ -190,8 +171,8 @@ export class Rsa {
      * @param publicKey
      */
     encodeString(string: string, publicKey: RsaKey): string {
-        return string.split("").map((char) => {
-            return ascii[this.encodeNumeric(char2DecimalAscii(char), publicKey)].char
+        return string2DecimalAscii(string).map((number) => {
+            return ascii[this.encodeNumeric(number, publicKey)].char
         }).join("");
     }
 }
