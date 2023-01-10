@@ -21,10 +21,10 @@ export const EncryptDecrypt = () => {
     const rsaNumeric = new Rsa(location.state._rsaConfig);
     const rsaString = new Rsa({p: 3, q: 43, e: 5});
     // N = 129 damit lassen sich alle Werte der ASCII-Tabelle darstellen
-    const [numberToEncrypt] = useState(getRandomInt(20));
-    const [numberToDecrypt] = useState(getRandomInt(20));
-    const [textToEncrypt, setTextToEncrypt] = useState("");
-    const [textToDecrypt, setTextToDecrypt] = useState("");
+    const [numberToEncrypt] = useState(9);
+    const [numberToDecrypt] = useState(17);
+    const [textToEncrypt, setTextToEncrypt] = useState("verses");
+    const [textToDecrypt, setTextToDecrypt] = useState(rsaString.encodeString("hidden", rsaString.publicKey));
     const [inputs, setInputs] = useState({} as EncryptDecryptInput);
     // true if text should be used
     const [encryptText, setEncryptText] = useState(false);
@@ -37,13 +37,13 @@ export const EncryptDecrypt = () => {
     };
 
     useEffectOnce(() => {
-        const fetchAndSet = async () => {
-            const response = await fetchJson("https://random-word-api.herokuapp.com/word?length=6");
-            setTextToEncrypt(response[0]);
-            const response2 = await fetchJson("https://random-word-api.herokuapp.com/word?length=6");
-            setTextToDecrypt(rsaString.encodeString(response2[0], rsaString.publicKey));
-        }
-        fetchAndSet();
+        // const fetchAndSet = async () => {
+        //     const response = await fetchJson("https://random-word-api.herokuapp.com/word?length=6");
+        //     setTextToEncrypt(response[0]);
+        //     const response2 = await fetchJson("https://random-word-api.herokuapp.com/word?length=6");
+        //     setTextToDecrypt(rsaString.encodeString(response2[0], rsaString.publicKey));
+        // }
+        // fetchAndSet();
         addValidationAttributesToElements(validationConstraints);
         addCustomValidity(validationConstraints);
     });
