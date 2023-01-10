@@ -19,7 +19,8 @@ export const EncryptDecrypt = () => {
 
     const location = useLocation();
     const rsaNumeric = new Rsa(location.state._rsaConfig);
-    const rsaString = new Rsa({p: 7, q: 17, e: 5});
+    const rsaString = new Rsa({p: 3, q: 43, e: 5});
+    // N = 129 damit lassen sich alle Werte der ASCII-Tabelle darstellen
     const [numberToEncrypt] = useState(getRandomInt(20));
     const [numberToDecrypt] = useState(getRandomInt(20));
     const [textToEncrypt, setTextToEncrypt] = useState("");

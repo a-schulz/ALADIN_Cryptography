@@ -100,17 +100,21 @@ export const EncryptDecryptHelper = (props: {
                                         <table className="table table-striped">
                                             <thead>
                                             <tr>
-                                                <th scope="col">Text</th>
-                                                <th scope="col">ASCII</th>
-                                                <th scope="col">Number</th>
+                                                <th scope="col">Character</th>
+                                                <th scope="col">Decimal ASCII</th>
                                             </tr>
                                             </thead>
                                             <tbody>
-                                            <tr>
-                                                <td>Test</td>
-                                                <td>T: 84<br/>e: 101<br/>s: 115<br/>t: 116</td>
-                                                <td>84, 101, 115, 116</td>
-                                            </tr>
+                                            {
+                                                string2CharAscii("Test").map((value) => {
+                                                    return (
+                                                        <tr>
+                                                            <td>{value}</td>
+                                                            <td>{char2DecimalAscii(value)}</td>
+                                                        </tr>
+                                                    )
+                                                })
+                                            }
                                             </tbody>
                                         </table>
                                     </div>
