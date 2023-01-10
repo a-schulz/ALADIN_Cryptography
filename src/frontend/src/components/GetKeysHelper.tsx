@@ -336,10 +336,10 @@ export const GetKeysHelper = (props: {rsa:Rsa}) => {
                                     <p>Look at the value of <InlineMath math={"x_1"}/> if this value is positive then this is your D! </p>
                                     <p><InlineMath math={"D = x_1"}/></p>
                                     <p>If it is negative than you have to do one more step. </p>
-                                    <p><InlineMath math={"D = \\phi_1 - x_1"}/></p>
+                                    <p><InlineMath math={"D = \\phi_1 + x_1"}/></p>
                                     <h5>The Formula:</h5>
                                     <BlockMath math={"D=\\left\\{\\begin{array}{ll} x_1, & x \\ge 0 \\\\\n" +
-                                        "\\phi_1 - x_1, & x<0\\end{array}\\right."}/>
+                                        "\\phi_1 + x_1, & x<0\\end{array}\\right."}/>
                                 </div>
                             </div>
                         </div>
