@@ -6,6 +6,7 @@ import {useEffectOnce} from "../utils/useEffectOnce";
 import {Rsa} from "../../../backend/rsaCryptograpy/Rsa";
 import {char2DecimalAscii, string2CharAscii} from "../../../backend/utils/converterFunctions";
 import {ascii} from "./Ascii";
+import {Link} from "react-router-dom";
 
 export const EncryptDecryptHelper = (props: {
     encryptText: boolean,
@@ -70,11 +71,7 @@ export const EncryptDecryptHelper = (props: {
                                         </ol>
                                         <h5>In detail</h5>
                                         First we need to convert the text to numbers. This is done by using the
-                                        <span className={"link-primary"}
-                                              onClick={() => {
-                                                  // @ts-ignore
-                                                  window.open("http://127.0.0.1:5173/~s82105/ascii", '_blank').focus();
-                                              }}> ASCII table</span>.
+                                        <Link to="/ascii" target="_blank" rel="noopener noreferrer"> ASCII table</Link>
                                         <br/>
                                         <br/>
                                         <small>
