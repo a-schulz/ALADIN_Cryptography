@@ -228,5 +228,6 @@ export const ascii = {
     125: {char: "}", name: "right curly bracket"},
     126: {char: "~", name: "tilde"},
     127: {char: "[DEL]", name: "delete"},
+    128: {char: "€", name: "euro sign"},
 };
 
