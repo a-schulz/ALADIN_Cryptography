@@ -2,7 +2,7 @@
   "compilerOptions": {
     "strictPropertyInitialization": false,
     "suppressImplicitAnyIndexErrors": true,
-    "module": "commonjs",
+    "module": "system",
     "noImplicitAny": true,
     "removeComments": true,
     "preserveConstEnums": true,
@@ -10,8 +10,38 @@
     "sourceMap": true,
     "target": "ES2020",
     "downlevelIteration": true,
-    "lib": ["DOM", "DOM.Iterable", "ESNext"]
+    "lib": [
+      "DOM",
+      "DOM.Iterable",
+      "ESNext"
+    ],
+    "jsx": "react-jsx",
+    "esModuleInterop": false,
+    "useDefineForClassFields": true,
+    "allowJs": false,
+    "skipLibCheck": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "moduleResolution": "Node",
+    "noEmit": true
   },
-  "include": ["src/**/*"],
-  "exclude": ["node_modules", "**/*.spec.ts"]
+  "include": [
+    "backend",
+    "frontend"
+  ],
+  "exclude": [
+    "node_modules",
+    "**/*.spec.ts"
+  ],
+  "typedocOptions": {
+    //  npx typedoc .
+    "entryPointStrategy": "expand",
+    "out": "../docs/typedoc",
+    "exclude": [
+      "node_modules/**/*",
+      "frontend/node_modules/**/*"
+    ],
+    "excludeExternals": true
+  }
 }
