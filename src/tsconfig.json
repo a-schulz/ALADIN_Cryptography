@@ -37,7 +37,7 @@
   "typedocOptions": {
     //  npx typedoc .
     "entryPointStrategy": "expand",
-    "out": "../docs/typedoc",
+    "out": "../docs",
     "exclude": [
       "node_modules/**/*",
       "frontend/node_modules/**/*"
