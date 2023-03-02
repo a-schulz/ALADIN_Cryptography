@@ -1,6 +1,7 @@
 {
   "devDependencies": {
-    "@types/node": "^18.11.0"
+    "@types/node": "^18.11.0",
+    "typedoc": "^0.23.26"
   },
   "dependencies": {
     "prompt-sync": "^4.2.0"
