@@ -1,8 +1,8 @@
 import {useState} from "react";
-import {RsaConfigHandler} from "../../../backend/rsaCryptograpy/RsaConfigHandler";
+import {RsaConfigHandler} from "../../../backend/rsaCryptography/RsaConfigHandler";
 import {useNavigate} from 'react-router-dom';
-import {Difficulty} from "../../../backend/rsaCryptograpy/Difficulty";
-import {UserConfig} from "../../../backend/rsaCryptograpy/UserConfig";
+import {Difficulty} from "../../../backend/rsaCryptography/Difficulty";
+import {UserConfig} from "../../../backend/rsaCryptography/UserConfig";
 import {validationConstraints} from "../utils/inputValidation/validationConstraints";
 import {addCustomValidity, addValidationAttributesToElements} from "../utils/inputValidation/addValidation";
 import {useEffectOnce} from "../utils/useEffectOnce";

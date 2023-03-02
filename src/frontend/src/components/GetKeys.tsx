@@ -1,6 +1,6 @@
 import {useState} from "react";
 import {useLocation, useNavigate} from "react-router-dom";
-import {Rsa} from "../../../backend/rsaCryptograpy/Rsa";
+import {Rsa} from "../../../backend/rsaCryptography/Rsa";
 import {GetKeysHelper} from "./GetKeysHelper";
 import {useEffectOnce} from "../utils/useEffectOnce";
 import {addCustomValidity, addValidationAttributesToElements} from "../utils/inputValidation/addValidation";

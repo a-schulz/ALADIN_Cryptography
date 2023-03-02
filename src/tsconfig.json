@@ -36,11 +36,15 @@
   ],
   "typedocOptions": {
     //  npx typedoc .
+    "name": "ALADIN Cryptography",
     "entryPointStrategy": "expand",
-    "out": "../docs",
+    "out": "../typedoc",
     "exclude": [
       "node_modules/**/*",
-      "frontend/node_modules/**/*"
+      "frontend/node_modules/**/*",
+      "frontend/src/components/**/*",
+      "frontend/src/*",
+      "frontend/*"
     ],
     "excludeExternals": true
   }

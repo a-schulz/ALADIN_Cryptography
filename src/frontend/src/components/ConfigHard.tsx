@@ -1,9 +1,9 @@
 import {useState} from "react";
 import {useLocation, useNavigate} from "react-router-dom";
-import {Difficulty} from "../../../backend/rsaCryptograpy/Difficulty";
-import {UserConfig} from "../../../backend/rsaCryptograpy/UserConfig";
-import {hasCommonDivider} from "../../../backend/rsaCryptograpy/HasCommonDivider";
-import {isPrime} from "../../../backend/rsaCryptograpy/IsPrime";
+import {Difficulty} from "../../../backend/rsaCryptography/Difficulty";
+import {UserConfig} from "../../../backend/rsaCryptography/UserConfig";
+import {hasCommonDivider} from "../../../backend/rsaCryptography/HasCommonDivider";
+import {isPrime} from "../../../backend/rsaCryptography/IsPrime";
 import {useEffectOnce} from "../utils/useEffectOnce";
 import {addCustomValidity, addValidationAttributesToElements} from "../utils/inputValidation/addValidation";
 import {validationConstraints} from "../utils/inputValidation/validationConstraints";

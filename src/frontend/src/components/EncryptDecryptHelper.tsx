@@ -3,7 +3,7 @@ import 'katex/dist/katex.min.css';
 // @ts-ignore
 import {InlineMath, BlockMath} from 'react-katex';
 import {useEffectOnce} from "../utils/useEffectOnce";
-import {Rsa} from "../../../backend/rsaCryptograpy/Rsa";
+import {Rsa} from "../../../backend/rsaCryptography/Rsa";
 import {char2DecimalAscii, string2CharAscii} from "../../../backend/utils/converterFunctions";
 import {ascii} from "./Ascii";
 import {Link} from "react-router-dom";

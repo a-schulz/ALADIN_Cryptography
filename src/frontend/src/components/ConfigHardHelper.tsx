@@ -3,11 +3,11 @@ import 'katex/dist/katex.min.css';
 // @ts-ignore
 import {BlockMath, InlineMath} from 'react-katex';
 import {useEffectOnce} from "../utils/useEffectOnce";
-import {RsaConfigHandler} from "../../../backend/rsaCryptograpy/RsaConfigHandler";
-import {Difficulty} from "../../../backend/rsaCryptograpy/Difficulty";
-import {calculateDividerSet} from "../../../backend/rsaCryptograpy/HasCommonDivider";
-import {Rsa} from "../../../backend/rsaCryptograpy/Rsa";
-import {getRandomInt} from "../../../backend/rsaCryptograpy/GetRandomInt";
+import {RsaConfigHandler} from "../../../backend/rsaCryptography/RsaConfigHandler";
+import {Difficulty} from "../../../backend/rsaCryptography/Difficulty";
+import {calculateDividerSet} from "../../../backend/rsaCryptography/HasCommonDivider";
+import {Rsa} from "../../../backend/rsaCryptography/Rsa";
+import {getRandomInt} from "../../../backend/rsaCryptography/GetRandomInt";
 
 export const ConfigHardHelper = (props: { bitLength: number }) => {
 

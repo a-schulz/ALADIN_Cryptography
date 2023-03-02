@@ -3,9 +3,9 @@ import 'katex/dist/katex.min.css';
 // @ts-ignore
 import {InlineMath, BlockMath} from 'react-katex';
 import {useEffectOnce} from "../utils/useEffectOnce";
-import {Rsa} from "../../../backend/rsaCryptograpy/Rsa";
-import {getRandomInt} from "../../../backend/rsaCryptograpy/GetRandomInt";
-import {calculateDividerSet} from "../../../backend/rsaCryptograpy/HasCommonDivider";
+import {Rsa} from "../../../backend/rsaCryptography/Rsa";
+import {getRandomInt} from "../../../backend/rsaCryptography/GetRandomInt";
+import {calculateDividerSet} from "../../../backend/rsaCryptography/HasCommonDivider";
 
 export const ConfigMediumHelper = (props: { p: number, q: number }) => {
 

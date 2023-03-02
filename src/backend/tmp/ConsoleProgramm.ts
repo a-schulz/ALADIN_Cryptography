@@ -6,10 +6,10 @@
  * -> Frontend anschließen
  */
 
-import {Rsa} from "../rsaCryptograpy/Rsa";
-import {RsaConfigHandler} from "../rsaCryptograpy/RsaConfigHandler";
-import {Difficulty} from "../rsaCryptograpy/Difficulty";
-import {UserConfig} from "../rsaCryptograpy/UserConfig";
+import {Rsa} from "../rsaCryptography/Rsa";
+import {RsaConfigHandler} from "../rsaCryptography/RsaConfigHandler";
+import {Difficulty} from "../rsaCryptography/Difficulty";
+import {UserConfig} from "../rsaCryptography/UserConfig";
 
 function main() {
     const prompt = require('prompt-sync')({sigint: true});
