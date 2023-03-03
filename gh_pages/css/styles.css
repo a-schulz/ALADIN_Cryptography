@@ -1,0 +1,9 @@
+.validation-error{
+    color: red;
+    display: block;
+}
+
+.highligt-string{
+    color: red;
+    font-weight: bold;
+}
