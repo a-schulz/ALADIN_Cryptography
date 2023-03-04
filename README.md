@@ -34,6 +34,22 @@ cd src/frontend
 npm run build
 ```
 
+## Note
+In src/frontend/main.tsx we specify the basename, which is the path to the folder where the index.html is located.
+If you want to use the application in a subfolder, you have to change this path.
+
+### Docs
+The documentation is generated with typedoc.
+```
+cd src
+npx typedoc .
+```
+The output at docs/docs is automatically deployed to github pages.
+
+### Deployment
+The frontend is automatically deployed to github pages.
+Just copy the content of the dist folder to the docs folder.
+
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
 

@@ -14,7 +14,7 @@ import {Ascii} from "./components/Ascii";
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
     <React.StrictMode>
         <NavBar></NavBar>
-        <BrowserRouter basename={'/~s82105'}>
+        <BrowserRouter basename={'/ALADIN_Cryptography'}>
             <Routes>
                 <Route path="/" element={<Config/>}/>
                 <Route path="/medium" element={<ConfigMedium/>}/>
