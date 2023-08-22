@@ -3,7 +3,10 @@
 I created this project during my studies.
 It's purpose is to generate exercises for students in different difficulties and with solution aids.
 
-Consisting out of RSA.
+The current implementation represents the RSA task type.
+
+[Deployed Demo](https://a-schulz.github.io/ALADIN_Cryptography/)
+[Deployed Software-Dokumentation](https://a-schulz.github.io/ALADIN_Cryptography/docs/)
 
 Used technologies:
 * Vite
